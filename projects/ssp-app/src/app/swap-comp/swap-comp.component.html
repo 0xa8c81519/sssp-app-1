@@ -18,22 +18,22 @@
             <img src="assets/static/img/exchange.png" alt="">
             <div class="blanceDiv"><span class="blance">{{"Balance"|translate}}</span>
                 <p>
-                    <span>{{boot.balance.coinsBalance[left].toFixed(9)}}</span>
-                    <span>{{boot.coins[left].symbol}}</span>
+                    <span>{{boot.balance.coinsBalance[left].toFormat(4,1)}}</span>
+                    <span>&nbsp;{{boot.coins[left].symbol}}</span>
                 </p>
                 <div style="float: right;">
                     <span>{{"Fee"|translate}}: 0.3%</span>
                 </div>
             </div>
             <div class="inputDiv">
-                <div>
+                <div class="leftDiv">
                     <input type="number" name="amt" [ngModel]="amt" (ngModelChange)="amtChanged($event)"
                         placeholder="{{'Enter an amount'|translate}}">
                     <span (click)="maxAmt()">{{'MAX'|translate}}</span>
                 </div>
-                <div>
-                    <input class="minInput" type="number" name="minAmt" [(ngModel)]="minAmt"
-                        placeholder="{{'Min Amount'|translate}}">
+                <div class="rightDiv">
+                    <!-- <input class="minInput" type="number" name="minAmt" [(ngModel)]="minAmt"
+                        placeholder="{{'Min Amount'|translate}}"> -->
                     <button (click)="approve()" [disabled]="!isApproveEnabled()"
                         [ngClass]="{myBtn: isApproveEnabled(),'myBtn-disabled':boot.accounts.length===0||!isApproveEnabled()}">{{'Approve'|translate}}</button>
                 </div>

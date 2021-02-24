@@ -22,6 +22,8 @@ export class PoolInfo {
     tokenBalance: BigNumber = new BigNumber(0);
     totalLPStaking: BigNumber = new BigNumber(0);
 
+    volume: BigNumber = new BigNumber(0);
+
     constructor(coinsLength: number) {
         this.coinsBalance = new Array(coinsLength);
         this.coinsAdminFee = new Array(coinsLength);

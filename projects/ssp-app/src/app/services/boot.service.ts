@@ -8,9 +8,9 @@ import { BigNumber } from 'bignumber.js';
 import { interval, Observable, Subject } from 'rxjs';
 import { Contract } from 'web3-eth-contract';
 import { environment } from '../../environments/environment';
-import BStableProxy from '../../abi/BStableProxy.json';
+import BStableProxyV2 from '../../abi/BStableProxyV2.json';
 import BEP20 from '../../abi/BEP20.json';
-import BStableToken from '../../abi/BStableToken.json';
+import BStableTokenV2 from '../../abi/BStableTokenV2.json';
 import BStablePool from '../../abi/BStablePool.json';
 import { AddlpSlippageConfirmComponent } from '../addlp-slippage-confirm/addlp-slippage-confirm.component';
 import { ApproveDlgComponent } from '../approve-dlg/approve-dlg.component';
@@ -105,7 +105,7 @@ export class BootService {
 
     private initContracts(): Promise<any> {
         let denominator = new BigNumber(10).exponentiatedBy(18);
-        this.proxyContract = new this.web3.eth.Contract(BStableProxy.abi, this.chainConfig.contracts.proxy.address);
+        this.proxyContract = new this.web3.eth.Contract(BStableProxyV2.abi, this.chainConfig.contracts.proxy.address);
         this.proxyContract.methods.getTotalAllocPoint().call().then(points => {
             if (points) {
                 this.poolInfo.totalAllocPoint = new BigNumber(points).div(denominator);
@@ -115,7 +115,7 @@ export class BootService {
         });
         return this.proxyContract.methods.getTokenAddress().call().then(tokenAddress => {
             if (tokenAddress) {
-                this.tokenContract = new this.web3.eth.Contract(BStableToken.abi, tokenAddress);
+                this.tokenContract = new this.web3.eth.Contract(BStableTokenV2.abi, tokenAddress);
                 this.tokenContract.methods.balanceOf(this.accounts[0]).call().then(balance => {
                     if (balance) {
                         this.balance.tokenBalance = new BigNumber(balance).div(denominator);
@@ -129,11 +129,6 @@ export class BootService {
                 this.tokenContract.methods.totalSupply().call().then(totalSupply => {
                     if (totalSupply) {
                         this.poolInfo.tokenTotalSupply = new BigNumber(totalSupply).div(denominator);
-                    }
-                });
-                this.tokenContract.methods.availableSupply().call().then(supply => {
-                    if (supply) {
-                        this.poolInfo.tokenAvailableSupply = new BigNumber(supply).div(denominator);
                     }
                 });
             }
@@ -168,6 +163,8 @@ export class BootService {
                     this.poolInfo.totalVolReward = new BigNumber(res._totalVolReward).div(denominator);
                 }
                 return true;
+            }).catch(e => {
+                console.log(e);
             });
         });
     }
@@ -397,6 +394,17 @@ export class BootService {
                 }).catch(e => {
                     console.log(e);
                 });
+                this.poolContract.methods.getVolume().call({ from: this.accounts[0] }).then(volumeStr => {
+                    this.poolInfo.volume = new BigNumber(volumeStr).div(denominator);
+                }).catch(e => {
+                    console.log(e);
+                });
+                this.poolContract.methods.getFee().call({ from: this.accounts[0] }).then(feeStr => {
+                    this.poolInfo.fee = new BigNumber(feeStr).div(new BigNumber(10).exponentiatedBy(10));
+                });
+                this.poolContract.methods.getAdminFee().call({ from: this.accounts[0] }).then(feeStr => {
+                    this.poolInfo.adminFee = new BigNumber(feeStr).div(new BigNumber(10).exponentiatedBy(10));
+                });
                 this.proxyContract.methods.getUserInfo(this.chainConfig.contracts.pid, this.accounts[0]).call({ from: this.accounts[0] }).then(res => {
                     if (res && res._amount) {
                         this.balance.stakingLP = new BigNumber(res._amount).div(denominator);
@@ -558,8 +566,8 @@ export class BootService {
     private async _exchange(i: number, j: number, amt: string, minAmt: string): Promise<any> {
         amt = this.web3.utils.toWei(String(amt), 'ether');
         minAmt = this.web3.utils.toWei(String(minAmt), 'ether');
-        let data = this.proxyContract.methods.exchange(this.chainConfig.contracts.pid, i, j, amt, minAmt).encodeABI();
-        let txdata = { from: this.accounts[0], to: this.chainConfig.contracts.proxy.address, value: 0, data: data };
+        let data = this.poolContract.methods.exchange(i, j, amt, minAmt).encodeABI();
+        let txdata = { from: this.accounts[0], to: this.poolAddress, value: 0, data: data };
         return this.getTXData(txdata).then(data => {
             return this.web3.eth.sendTransaction(data).catch(e => {
                 console.log(e);

@@ -37,4 +37,14 @@ export class RewardInfoComponent implements OnInit {
     tokenBalance() {
         return this.boot.poolInfo.tokenBalance.multipliedBy(this.allocationPercent()).div(100);
     }
+
+    getAPY() {
+        let interestRate;
+        if (this.boot.poolInfo.totalSupply.comparedTo(0) === 0) {
+            interestRate = new BigNumber(0);
+        } else {
+            interestRate = this.boot.poolInfo.volume.multipliedBy(this.boot.poolInfo.fee).multipliedBy(new BigNumber(1).minus(this.boot.poolInfo.adminFee)).div(this.boot.poolInfo.totalSupply);
+        }
+        return new BigNumber(1).plus(interestRate.div(365)).exponentiatedBy(356).minus(1).multipliedBy(100).toFormat(4, 1);
+    }
 }

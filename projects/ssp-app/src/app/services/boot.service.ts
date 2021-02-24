@@ -113,6 +113,15 @@ export class BootService {
         }).catch(e => {
             console.log(e);
         });
+        this.proxyContract.methods.getStartBlock().call().then(startBlock => {
+            this.poolInfo.startBlock = new BigNumber(startBlock);
+        });
+        this.proxyContract.methods.getTokenPerBlock().call().then(res => {
+            this.poolInfo.tokenPerBlock = new BigNumber(res).div(denominator);
+        });
+        this.proxyContract.methods.getBonusEndBlock().call().then(res => {
+            this.poolInfo.bonusEndBlock = new BigNumber(res);
+        });
         return this.proxyContract.methods.getTokenAddress().call().then(tokenAddress => {
             if (tokenAddress) {
                 this.tokenContract = new this.web3.eth.Contract(BStableTokenV2.abi, tokenAddress);

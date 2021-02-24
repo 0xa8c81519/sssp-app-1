@@ -24,6 +24,10 @@ export class PoolInfo {
 
     volume: BigNumber = new BigNumber(0);
 
+    tokenPerBlock: BigNumber = new BigNumber(0);
+    startBlock: BigNumber = new BigNumber(0);
+    bonusEndBlock: BigNumber = new BigNumber(0);
+
     constructor(coinsLength: number) {
         this.coinsBalance = new Array(coinsLength);
         this.coinsAdminFee = new Array(coinsLength);

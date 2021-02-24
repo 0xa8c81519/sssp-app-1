@@ -36,10 +36,18 @@
             <div>Pool's APY:</div>
             <div>{{getAPY()}}%</div>
         </div>
-        <!-- <div class="sum">
-            <div>{{boot.tokenSymbol}} Balance:</div>
-            <div>{{tokenBalance().toFormat(4,1)}}</div>
-        </div> -->
+        <div class="sum">
+            <div>Start Block:</div>
+            <div>{{boot.poolInfo.startBlock.toFormat(0,1)}}</div>
+        </div>
+        <div class="sum">
+            <div>Bonus End Block(10x):</div>
+            <div>{{boot.poolInfo.bonusEndBlock.toFormat(0,1)}}</div>
+        </div>
+        <div class="sum">
+            <div>Token Per Block:</div>
+            <div>{{boot.poolInfo.tokenPerBlock.toFormat(0,1)}} {{boot.tokenSymbol}}</div>
+        </div>
         <!-- <div class="sum">
             <div>{{boot.liquiditySymbol}} Balance:</div>
             <div>{{boot.poolInfo.totalLPStaking.toFormat(4,1)}}</div>

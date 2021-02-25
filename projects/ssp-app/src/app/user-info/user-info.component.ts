@@ -1,16 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BootService } from '../services/boot.service';
 
 @Component({
-  selector: 'app-user-info',
-  templateUrl: './user-info.component.html',
-  styleUrls: ['./user-info.component.scss']
+    selector: 'app-user-info',
+    templateUrl: './user-info.component.html',
+    styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
+    @Output() loading: EventEmitter<any> = new EventEmitter();
+    @Output() loaded: EventEmitter<any> = new EventEmitter();
+    constructor(public boot: BootService) { }
 
-  constructor(public boot: BootService) { }
+    ngOnInit(): void {
+    }
 
-  ngOnInit(): void {
-  }
-
+    claim(i) {
+        this.loading.emit();
+        this.boot.claimTestCoin(i).then(() => {
+            this.loaded.emit();
+            this.boot.loadData().then();
+        });
+    }
 }

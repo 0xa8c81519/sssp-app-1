@@ -1,3 +1,5 @@
+@import '../global.scss';
+
 .assetDiv {
     margin-top: 20px;
     width: 100%;
@@ -103,12 +105,15 @@
     font-weight: 400;
     color: #6B6B6B;
 }
-.assetDiv .main .sum div:nth-child(1){
+
+.assetDiv .main .sum div:nth-child(1) {
     flex-direction: row;
 }
-.assetDiv .main .sum div:nth-child(2){
+
+.assetDiv .main .sum div:nth-child(2) {
     flex-direction: row-reverse;
 }
+
 // .assetDiv .main .sum div:nth-child(0n+2) {
 //     // float: right;
 //     width: 50%;

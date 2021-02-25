@@ -9,7 +9,7 @@ import { interval, Observable, Subject } from 'rxjs';
 import { Contract } from 'web3-eth-contract';
 import { environment } from '../../environments/environment';
 import BStableProxyV2 from '../../abi/BStableProxyV2.json';
-import BEP20 from '../../abi/BEP20.json';
+import StableCoin from '../../abi/StableCoin.json';
 import BStableTokenV2 from '../../abi/BStableTokenV2.json';
 import BStablePool from '../../abi/BStablePool.json';
 import { AddlpSlippageConfirmComponent } from '../addlp-slippage-confirm/addlp-slippage-confirm.component';
@@ -145,7 +145,7 @@ export class BootService {
                 if (res && res._coins) {
                     this.contracts.splice(0, this.contracts.length);
                     res._coins.forEach(e => {
-                        this.contracts.push(new this.web3.eth.Contract(BEP20.abi, e));
+                        this.contracts.push(new this.web3.eth.Contract(StableCoin.abi, e));
                         this.contractsAddress.push(e);
                     });
                 }
@@ -942,6 +942,18 @@ export class BootService {
             });
         }).catch(e => {
             this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" }, height: '20em', width: '32em' });
+            console.log(e);
+        });
+    }
+
+    public async claimTestCoin(i:number): Promise<any> {
+        let data = this.contracts[i].methods.claimCoins().encodeABI();
+        let txdata = { from: this.accounts[0], to: this.contractsAddress[i], value: 0, data: data };
+        return this.getTXData(txdata).then(data => {
+            return this.web3.eth.sendTransaction(data).catch(e => {
+                console.log(e);
+            });
+        }).catch(e => {
             console.log(e);
         });
     }

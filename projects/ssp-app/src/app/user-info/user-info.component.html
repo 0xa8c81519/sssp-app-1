@@ -5,8 +5,9 @@
             <p>User's Info</p>
         </div>
         <div class="sum" *ngFor="let coin of boot.coins;let i=index">
-            <div>{{coin.symbol}}:</div>
+            <div>{{coin.symbol}}:&nbsp;</div>
             <div>{{boot.balance.coinsBalance[i].toFormat(4,1)}}</div>
+            <div style="width: 10%;">&nbsp;<button class="myBtn" style="padding: 0 .7em;" (click)="claim(i)">Claim</button></div>
         </div>
         <div class="sum">
             <div>{{boot.liquiditySymbol}}:</div>

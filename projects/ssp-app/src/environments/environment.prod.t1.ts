@@ -4,22 +4,22 @@ export const environment = {
     liquiditySymbol: "BSLP-01",
     tokenSymbol: "BST",
     virtualPriceDiff: 0.006,
-    coins: [{ symbol: 'bstDAI' }, { symbol: 'bstBUSD' }, { symbol: 'bstUSDT' }],
+    coins: [{ symbol: 'tDAI' }, { symbol: 'tUSD' }, { symbol: 'tUSDT' }],
     chains: {
         56: {
             enabled: false,
-            name: 'BSC Mainnet',
+            name: 'Mainnet',
             rpc: 'https://bsc-dataseed.binance.org/',
             contracts: {
             }
         },
         97: {
             enabled: true,
-            name: 'BSC Testnet',
+            name: 'Testnet',
             rpc: 'https://data-seed-prebsc-1-s1.binance.org:8545/',
             contracts: {
                 proxy: {
-                    address: "0xE6e6AE6791AC27DEf268a83015Fa287Fe6874f18"
+                    address: "0xAcDe76E0175779088b8557a21b00F16D56651d25"
                 },
                 pid: 0
             }

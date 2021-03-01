@@ -181,4 +181,8 @@ export class SwapCompComponent implements OnInit {
             return false;
         }
     }
+
+    getFee() {
+        return this.boot.poolInfo.fee.multipliedBy(100).toFixed(1, 1);
+    }
 }

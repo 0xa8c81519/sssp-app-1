@@ -100,6 +100,15 @@ export class BootService {
             // @ts-ignore
             this.binanceWeb3 = new Web3_1_3(window.BinanceChain);
         }
+        this.wcProvider = new WalletConnectProvider({
+            // infuraId: "a1b8fe06fc1349b1b812bdb7b8f79465",
+            rpc: {
+                // @ts-ignore
+                56: environment.chains[56].rpc,
+                // @ts-ignore
+                97: environment.chains[97].rpc,
+            },
+        });
     }
     isMetaMaskInstalled() {
         //@ts-ignore
@@ -210,11 +219,11 @@ export class BootService {
         } else {
             chainId = _chainId;
         }
-        let chainConfig = environment.chains[chainId];
-        if (!chainConfig || !chainConfig.enabled) {
-            return { isSupported: false, chainId: chainId, config: chainConfig };
+        this.chainConfig = environment.chains[chainId];
+        if (!this.chainConfig || !this.chainConfig.enabled) {
+            return { isSupported: false, chainId: chainId, config: this.chainConfig };
         } else {
-            return { isSupported: true, chainId: chainId, config: chainConfig };
+            return { isSupported: true, chainId: chainId, config: this.chainConfig };
         }
     }
 
@@ -271,14 +280,27 @@ export class BootService {
                 observer.next();
             });
         });
-        this.connected.subscribe(() => {
+        this.connected.subscribe((info) => {
             console.log("connect!");
-            if (!this.wcWeb3 && provider) { // 监听wc的链接状态，连上以后才能初始化
-                //@ts-ignore
-                this.wcWeb3 = new Web3_1_2(provider);
+            console.log(info);
+            if (!this.wcWeb3 && !this.web3) {
+                this.wcWeb3 = new Web3_1_2(this.wcProvider);
                 this.web3 = this.wcWeb3;
-                this.initProviderEvent(provider);
-                this.getNetworkInfo(provider);
+                this.initProviderEvent(this.wcProvider);
+                this.getNetworkInfo(this.wcProvider).then(networkInfo => {
+                    if (networkInfo.isSupported) {
+                        this.chainConfig = networkInfo.config;
+                        this.chainId = networkInfo.chainId;
+                        this.wcProvider.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
+                            this.accounts = accounts;
+                            this.walletReady.next();
+                            this.loadData().then();
+                        });
+                    } else {
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
+                        return;
+                    }
+                });
             }
             this.applicationRef.tick();
         });
@@ -300,18 +322,11 @@ export class BootService {
      * connect to wallet connect
      */
     public connectWC() {
-        this.wcProvider = new WalletConnectProvider({
-            // infuraId: "a1b8fe06fc1349b1b812bdb7b8f79465",
-            rpc: {
-                // @ts-ignore
-                56: environment.chains[56].rpc,
-                // @ts-ignore
-                97: environment.chains[97].rpc,
-            },
-        });
+
         // Subscribe to session connection
         this.wcProvider.on("connect", async () => {
             console.log("WalletConnect connect");
+
         });
         // Subscribe to session disconnection
         this.wcProvider.on("disconnect", (code: number, reason: string) => {
@@ -319,14 +334,12 @@ export class BootService {
         });
         //  Enable session (triggers QR Code modal)
         this.wcProvider.enable().then(res => {
-            if (this.wcProvider.connected && this.wcWeb3) {
-                this.web3 = this.wcWeb3;
-                this.initProviderEvent(this.wcProvider);
+            if (this.wcProvider.connected) {
                 this.getNetworkInfo(this.wcProvider).then(networkInfo => {
                     if (networkInfo.isSupported) {
                         this.chainConfig = networkInfo.config;
                         this.chainId = networkInfo.chainId;
-                        this.wcProvider.request({ methond: 'eth_accounts', parma: [] }).then(accounts => {
+                        this.wcProvider.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
                             this.accounts = accounts;
                             this.walletReady.next();
                             this.loadData().then();
@@ -336,13 +349,6 @@ export class BootService {
                         return;
                     }
                 });
-            } else if (this.wcProvider.connected && !this.wcWeb3) {
-                // @ts-ignore
-                this.wcWeb3 = new Web3_1_2(this.wcProvider);
-                this.web3 = this.wcWeb3;
-                this.localStorage.set(ConstVal.KEY_WEB3_TYPE, "walletconnect");
-                this.initProviderEvent(this.wcProvider);
-                this.getNetworkInfo(this.wcProvider);
             }
         }).catch(e => {
             // @ts-ignore
@@ -364,7 +370,12 @@ export class BootService {
                 // @ts-ignore
                 this.initProviderEvent(window.ethereum);
                 // @ts-ignore
-                this.getNetworkInfo(window.ethereum);
+                this.getNetworkInfo(window.ethereum).then(networkInfo => {
+                    if (!networkInfo.isSupported) {
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
+                        return;
+                    }
+                });
                 // @ts-ignore
                 window.ethereum.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
                     this.accounts = accounts;
@@ -386,12 +397,18 @@ export class BootService {
                 // @ts-ignore
                 this.initProviderEvent(window.BinanceChain);
                 // @ts-ignore
-                this.getNetworkInfo(window.BinanceChain);
+                this.getNetworkInfo(window.BinanceChain).then(networkInfo => {
+                    if (!networkInfo.isSupported) {
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
+                        return;
+                    }
+                });
                 // @ts-ignore
                 window.BinanceChain.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
                     this.accounts = accounts;
                     this.walletReady.next();
-                    this.loadData().then();
+                    this.loadData().then(() => {
+                    });
                 });
             });
         }

@@ -4,6 +4,8 @@ import { HeaderComponent, LanguageService } from 'app-lib';
 import { MatDialog } from '@angular/material/dialog';
 import { ChooseWalletDlgComponent } from './choose-wallet-dlg/choose-wallet-dlg.component';
 import { IntallWalletDlgComponent } from './intall-wallet-dlg/intall-wallet-dlg.component';
+import { LocalStorageService } from 'angular-web-storage';
+import { ConstVal } from './model/const-val';
 
 @Component({
     selector: 'app-root',
@@ -18,15 +20,17 @@ export class AppComponent {
     @ViewChild('header')
     header: HeaderComponent;
 
-    constructor(public boot: BootService, public lang: LanguageService, private dialog: MatDialog) {
+    constructor(public boot: BootService, public lang: LanguageService, private dialog: MatDialog, private localStorage: LocalStorageService) {
         if (this.boot.isMetaMaskInstalled() || this.boot.isBinanceInstalled()) {
-            let web3Type = localStorage.getItem('web3Type');
-            if (web3Type && web3Type === 'walletconnect') {
+            let wallet = this.localStorage.get(ConstVal.KEY_WEB3_TYPE);
+            if (wallet && wallet === 'walletconnect') {
                 this.boot.connectWC();
-            } else if (web3Type && web3Type === 'metamask') {
+            } else if (wallet && wallet === 'metamask') {
                 this.boot.connentMetaMask();
-            } else if (web3Type === 'binance') {
-                this.boot.connectBinance();
+            } else if (wallet === 'binance') {
+                setTimeout(() => {
+                    this.boot.connectBinance();
+                }, 1000);
             } else {
                 this.chooseWallet();
             }

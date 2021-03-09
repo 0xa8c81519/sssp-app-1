@@ -19,6 +19,8 @@ import { PoolInfo } from '../model/pool-info';
 import { SwapConfirmComponent } from '../swap-confirm/swap-confirm.component';
 import { UnsupportedNetworkComponent } from '../unsupported-network/unsupported-network.component';
 import { WalletExceptionDlgComponent } from '../wallet-exception-dlg/wallet-exception-dlg.component';
+import { LocalStorageService } from 'angular-web-storage';
+import { ConstVal } from '../model/const-val';
 
 const Web3_1_3 = require('web3_1_3');
 const Web3_1_2 = require('web3_1_2');
@@ -68,7 +70,14 @@ export class BootService {
 
     virtualPrice: BigNumber;
 
-    constructor(private dialog: MatDialog, private applicationRef: ApplicationRef) {
+    //Obserable
+    accountsChanged: Observable<any>;
+    chainChanged: Observable<any>;
+    connected: Observable<any>;
+    disconnected: Observable<any>;
+
+
+    constructor(private dialog: MatDialog, private applicationRef: ApplicationRef, private localStorage: LocalStorageService) {
         this.balance.coinsBalance = new Array();
         this.poolInfo.coinsBalance = new Array();
         this.coins.forEach(e => {
@@ -98,7 +107,7 @@ export class BootService {
     }
     isBinanceInstalled() {
         // @ts-ignore
-        return window.BinanceChain;
+        return window.BinanceChain ? true : false;
     }
 
 
@@ -190,127 +199,107 @@ export class BootService {
         }
     }
 
-    private async init() {
-        if (this.web3) {
-            if (this.web3.currentProvider) {
-                // Subscribe to accounts change
-                let accountsChanged = new Observable((observer) => {
-                    this.web3.currentProvider.on("accountsChanged", async (accounts: string[]) => {
-                        observer.next(accounts);
-                    });
-                });
-                accountsChanged.subscribe(async (accounts: string[]) => {
-                    console.log('accounts: ' + accounts);
-                    if (accounts.length > 0) {
-                        this.accounts = accounts;
-                        await this.loadData();
-                    } else {
-                        this.accounts = accounts;
-                        this.balance.clear();
-                    }
-                    this.applicationRef.tick();
-                });
-
-                let chainChanged = new Observable((observer) => {
-                    this.web3.currentProvider.on("chainChanged", async (chainId: string) => {
-                        observer.next(chainId);
-                    });
-                });
-                chainChanged.subscribe(async (chainId: string) => {
-                    console.log('chainId: ' + chainId);
-                    chainId = String(chainId);
-                    if (chainId.indexOf('0x') === 0) {
-                        chainId = this.web3.utils.hexToNumber(chainId);
-                    } else {
-                        chainId = await this.web3.eth.getChainId();
-                    }
-                    let networkInfo = await this.getNetworkInfo(chainId);
-                    if (networkInfo.isSupported) {
-                        this.chainConfig = environment.chains[chainId];
-                        this.chainId = chainId;
-                        await this.loadData();
-                    } else {
-                        if (!this.web3.currentProvider.isMetaMask) {
-                            this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: chainId }, height: '20em', width: '32em' });
-                            this.balance.clear();
-                            this.poolInfo.clear();
-                            // this.accounts = [];
-                        }
-                    }
-                    this.applicationRef.tick();
-                });
-
-                // Subscribe to session connection
-                let connected = new Observable((observer) => {
-                    this.web3.currentProvider.on("connect", () => {
-                        observer.next();
-                    });
-                });
-                connected.subscribe(() => {
-                    console.log("connect!");
-                    if (!this.wcWeb3 && this.wcProvider) { // 监听wc的链接状态，连上以后才能初始化
-                        //@ts-ignore
-                        this.wcWeb3 = new Web3_1_2(this.wcProvider);
-                        this.web3 = this.wcWeb3;
-                        this.init();
-                    }
-                    this.applicationRef.tick();
-                });
-
-                // Subscribe to session disconnection
-                let disconnected = new Observable((observer) => {
-                    this.web3.currentProvider.on("disconnect", (code: number, reason: string) => {
-                        observer.next({ code: code, reason: reason });
-                    });
-                });
-                disconnected.subscribe((res: any) => {
-                    console.log('disconnect!');
-                    console.log(res);
-                    window.location.reload();
-                });
-
-            }
-
-            let networkInfo = await this.getNetworkInfo();
-            if (networkInfo.isSupported) {
-                this.chainConfig = networkInfo.config;
-                this.chainId = networkInfo.chainId;
-                this.accounts = await this.web3.eth.getAccounts();
-                this.walletReady.next();
-                await this.loadData();
-            } else {
-                this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
-                return;
-            }
-        }
-    }
-
-    async getNetworkInfo(_chainId?: string) {
-        if (this.web3) {
-            let chainId;
-            if (!_chainId) {
-                if (this.web3.currentProvider && this.web3.currentProvider.chainId && String(this.web3.currentProvider.chainId).indexOf('0x') === 0) {
-                    chainId = this.web3.utils.hexToNumber(this.web3.currentProvider.chainId);
-                } else if (this.web3.currentProvider && String(this.web3.currentProvider.chainId).indexOf('0x') !== 0) {
-                    chainId = await this.web3.eth.getChainId();
-                }
-            } else {
-                chainId = _chainId;
-            }
-            let chainConfig = environment.chains[chainId];
-            if (!chainConfig || !chainConfig.enabled) {
-                return { isSupported: false, chainId: chainId, config: chainConfig };
-            } else {
-                return { isSupported: true, chainId: chainId, config: chainConfig };
+    async getNetworkInfo(provider: any, _chainId?: string) {
+        let chainId;
+        if (!_chainId) {
+            if (provider && provider.chainId && String(provider.chainId).indexOf('0x') === 0) {
+                chainId = this.web3.utils.hexToNumber(provider.chainId);
+            } else if (provider && String(provider.chainId).indexOf('0x') !== 0) {
+                chainId = await this.web3.eth.getChainId();
             }
         } else {
-            throw "There is no web3 object yet."
+            chainId = _chainId;
+        }
+        let chainConfig = environment.chains[chainId];
+        if (!chainConfig || !chainConfig.enabled) {
+            return { isSupported: false, chainId: chainId, config: chainConfig };
+        } else {
+            return { isSupported: true, chainId: chainId, config: chainConfig };
         }
     }
+
+    private initProviderEvent(provider: any) {
+        this.accountsChanged = new Observable((observer) => {
+            provider.on("accountsChanged", async (accounts: string[]) => {
+                observer.next(accounts);
+            });
+        });
+        this.accountsChanged.subscribe(async (accounts: string[]) => {
+            console.log('accounts: ' + accounts);
+            if (accounts.length > 0) {
+                this.accounts = accounts;
+                await this.loadData();
+            } else {
+                this.accounts = accounts;
+                this.balance.clear();
+            }
+            this.applicationRef.tick();
+        });
+
+        this.chainChanged = new Observable((observer) => {
+            provider.on("chainChanged", async (chainId: string) => {
+                observer.next(chainId);
+            });
+        });
+        this.chainChanged.subscribe(async (chainId: string) => {
+            console.log('chainId: ' + chainId);
+            chainId = String(chainId);
+            if (chainId.indexOf('0x') === 0) {
+                chainId = this.web3.utils.hexToNumber(chainId);
+            } else {
+                chainId = await this.web3.eth.getChainId();
+            }
+            let networkInfo = await this.getNetworkInfo(chainId);
+            if (networkInfo.isSupported) {
+                this.chainConfig = environment.chains[chainId];
+                this.chainId = chainId;
+                await this.loadData();
+            } else {
+                if (!provider.isMetaMask) {
+                    this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: chainId }, height: '20em', width: '32em' });
+                    this.balance.clear();
+                    this.poolInfo.clear();
+                    // this.accounts = [];
+                }
+            }
+            this.applicationRef.tick();
+        });
+
+        // Subscribe to session connection
+        this.connected = new Observable((observer) => {
+            provider.on("connect", () => {
+                observer.next();
+            });
+        });
+        this.connected.subscribe(() => {
+            console.log("connect!");
+            if (!this.wcWeb3 && provider) { // 监听wc的链接状态，连上以后才能初始化
+                //@ts-ignore
+                this.wcWeb3 = new Web3_1_2(provider);
+                this.web3 = this.wcWeb3;
+                this.initProviderEvent(provider);
+                this.getNetworkInfo(provider);
+            }
+            this.applicationRef.tick();
+        });
+
+        // Subscribe to session disconnection
+        this.disconnected = new Observable((observer) => {
+            provider.on("disconnect", (code: number, reason: string) => {
+                observer.next({ code: code, reason: reason });
+            });
+        });
+        this.disconnected.subscribe((res: any) => {
+            console.log('disconnect!');
+            console.log(res);
+            window.location.reload();
+        });
+    }
+
     /**
      * connect to wallet connect
      */
-    public async connectWC() {
+    public connectWC() {
         this.wcProvider = new WalletConnectProvider({
             // infuraId: "a1b8fe06fc1349b1b812bdb7b8f79465",
             rpc: {
@@ -332,13 +321,28 @@ export class BootService {
         this.wcProvider.enable().then(res => {
             if (this.wcProvider.connected && this.wcWeb3) {
                 this.web3 = this.wcWeb3;
-                this.init();
+                this.initProviderEvent(this.wcProvider);
+                this.getNetworkInfo(this.wcProvider).then(networkInfo => {
+                    if (networkInfo.isSupported) {
+                        this.chainConfig = networkInfo.config;
+                        this.chainId = networkInfo.chainId;
+                        this.wcProvider.request({ methond: 'eth_accounts', parma: [] }).then(accounts => {
+                            this.accounts = accounts;
+                            this.walletReady.next();
+                            this.loadData().then();
+                        });
+                    } else {
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
+                        return;
+                    }
+                });
             } else if (this.wcProvider.connected && !this.wcWeb3) {
                 // @ts-ignore
                 this.wcWeb3 = new Web3_1_2(this.wcProvider);
                 this.web3 = this.wcWeb3;
-                localStorage.setItem("web3Type", "walletconnect");
-                this.init();
+                this.localStorage.set(ConstVal.KEY_WEB3_TYPE, "walletconnect");
+                this.initProviderEvent(this.wcProvider);
+                this.getNetworkInfo(this.wcProvider);
             }
         }).catch(e => {
             // @ts-ignore
@@ -349,27 +353,47 @@ export class BootService {
 
     }
 
-    public async connentMetaMask() {
+    public connentMetaMask() {
         if (this.isMetaMaskInstalled()) {
             //@ts-ignore
-            await window.ethereum.enable();
-            // @ts-ignore
-            this.metamaskWeb3 = new Web3_1_3(window.ethereum);
-            this.web3 = this.metamaskWeb3;
-            localStorage.setItem("web3Type", "metamask");
-            this.init();
+            window.ethereum.request({ method: 'eth_requestAccounts', param: [] }).then(() => {
+                // @ts-ignore
+                this.metamaskWeb3 = new Web3_1_3(window.ethereum);
+                this.web3 = this.metamaskWeb3;
+                this.localStorage.set(ConstVal.KEY_WEB3_TYPE, "metamask");
+                // @ts-ignore
+                this.initProviderEvent(window.ethereum);
+                // @ts-ignore
+                this.getNetworkInfo(window.ethereum);
+                // @ts-ignore
+                window.ethereum.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
+                    this.accounts = accounts;
+                    this.walletReady.next();
+                    this.loadData().then();
+                });
+            });
         }
     }
 
-    public async connectBinance() {
+    public connectBinance() {
         if (this.isBinanceInstalled()) {
             // @ts-ignore
-            await window.BinanceChain.enable();
-            // @ts-ignore
-            this.binanceWeb3 = new Web3_1_3(window.BinanceChain);
-            this.web3 = this.binanceWeb3;
-            localStorage.setItem("web3Type", "binance");
-            this.init();
+            window.BinanceChain.request({ method: 'eth_requestAccounts', param: [] }).then(() => {
+                // @ts-ignore
+                this.binanceWeb3 = new Web3_1_3(window.BinanceChain);
+                this.web3 = this.binanceWeb3;
+                this.localStorage.set(ConstVal.KEY_WEB3_TYPE, "binance");
+                // @ts-ignore
+                this.initProviderEvent(window.BinanceChain);
+                // @ts-ignore
+                this.getNetworkInfo(window.BinanceChain);
+                // @ts-ignore
+                window.BinanceChain.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
+                    this.accounts = accounts;
+                    this.walletReady.next();
+                    this.loadData().then();
+                });
+            });
         }
     }
 
@@ -946,7 +970,7 @@ export class BootService {
         });
     }
 
-    public async claimTestCoin(i:number): Promise<any> {
+    public async claimTestCoin(i: number): Promise<any> {
         let data = this.contracts[i].methods.claimCoins().encodeABI();
         let txdata = { from: this.accounts[0], to: this.contractsAddress[i], value: 0, data: data };
         return this.getTXData(txdata).then(data => {

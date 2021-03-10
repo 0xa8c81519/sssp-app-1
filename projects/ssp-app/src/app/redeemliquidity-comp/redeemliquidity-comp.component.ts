@@ -131,7 +131,7 @@ export class RedeemliquidityCompComponent implements OnInit {
         let res = await this.boot.calcWithdrawOneCoin(lps, this.redeemToIndex);
         this.amts.forEach((e, i, arr) => {
             if (Number(this.redeemToIndex) === i) {
-                arr[i] = Number(new BigNumber(res).dividedBy(new BigNumber(10).exponentiatedBy(18)).toFixed(9));
+                arr[i] = Number(new BigNumber(res.toString()).dividedBy(new BigNumber(10).exponentiatedBy(18)).toFixed(9));
             } else {
                 arr[i] = null;
             }

@@ -41,6 +41,12 @@ export class AddliquidityCompComponent implements OnInit {
         this.boot.walletReady.subscribe(res => {
             this.updateApproveStatus();
         });
+        this.boot.initContractsCompleted.subscribe(res => {
+            this.boot.approvalStatusChange.subscribe(res => {
+                this.updateApproveStatus();
+            });
+        });
+
     }
 
     ngOnInit(): void {
@@ -82,7 +88,7 @@ export class AddliquidityCompComponent implements OnInit {
     }
 
     async addLiquidity() {
-        await this.boot.loadData();
+        // await this.boot.loadData();
         this.loadStatus = LoadStatus.Loading;
         this.loading.emit();
         let amtsStr = new Array<string>();
@@ -119,7 +125,7 @@ export class AddliquidityCompComponent implements OnInit {
         this.boot.addLiquidity(amtsStr, lp).then(r => {
             this.updateApproveStatus();
             this.loadStatus = LoadStatus.Loaded;
-            this.boot.loadData();
+            // this.boot.loadData();
             this.loaded.emit();
         });
         // }

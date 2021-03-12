@@ -57,13 +57,16 @@ export class RedeemliquidityCompComponent implements OnInit {
         this.boot.walletReady.subscribe(() => {
             this.updateLPApproveStatus();
         });
+        this.boot.lpApprovalStatusChange.subscribe(() => {
+            this.updateLPApproveStatus();
+        });
     }
 
     ngOnInit(): void {
     }
 
     async redeemCoin() {
-        await this.boot.loadData();
+        // await this.boot.loadData();
         if (this.redeemPercent && this.redeemPercent !== 0) { // 输入要赎回流动性的数量（百分比）
             let lps = this.boot.balance.lp.multipliedBy(this.redeemPercent).dividedBy(100).toFixed(18, BigNumber.ROUND_UP);
             if (Number(this.redeemToIndex) >= 0 && Number(this.redeemToIndex) <= 2) { // 赎回成一种币
@@ -71,7 +74,7 @@ export class RedeemliquidityCompComponent implements OnInit {
                 this.loading.emit();
                 this.boot.redeemToOneCoin(lps, this.redeemToIndex, this.amts[this.redeemToIndex]).then(res => {
                     this.status = ActionStatus.TrasactionEnd;
-                    this.boot.loadData();
+                    // this.boot.loadData();
                     this.loaded.emit();
                     this.redeemPercentChange(0);
                 });
@@ -84,7 +87,7 @@ export class RedeemliquidityCompComponent implements OnInit {
                 });
                 this.boot.redeemToAll(lps, amts).then(res => {
                     this.status = ActionStatus.TrasactionEnd;
-                    this.boot.loadData();
+                    // this.boot.loadData();
                     this.loaded.emit();
                     this.redeemPercentChange(0);
                 });
@@ -99,7 +102,7 @@ export class RedeemliquidityCompComponent implements OnInit {
             })
             this.boot.redeemImBalance(amtsStr).then(r => {
                 this.status = ActionStatus.TrasactionEnd;
-                this.boot.loadData();
+                // this.boot.loadData();
                 this.loaded.emit();
                 this.redeemPercentChange(0);
             });
@@ -180,8 +183,7 @@ export class RedeemliquidityCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.approveLP(this.depositLPAmt.toFixed(9, BigNumber.ROUND_DOWN), this.boot.chainConfig.contracts.proxy.address).then(() => {
-            this.updateLPApproveStatus();
-            this.boot.loadData();
+            // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
         });
@@ -191,7 +193,7 @@ export class RedeemliquidityCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.depositLP(this.depositLPAmt.toFixed(18, BigNumber.ROUND_DOWN)).then(() => {
-            this.boot.loadData();
+            // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
             this.depositPercentChange(0);
@@ -209,7 +211,7 @@ export class RedeemliquidityCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.withdrawLP(this.withdrawLPAmt.toFixed(18, BigNumber.ROUND_DOWN)).then(() => {
-            this.boot.loadData();
+            // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
             this.withdrawLPPercentChange(0);
@@ -220,7 +222,7 @@ export class RedeemliquidityCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.emergencyWithdraw().then(() => {
-            this.boot.loadData();
+            // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
         });
@@ -230,7 +232,7 @@ export class RedeemliquidityCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.withdrawLP("0").then(() => {
-            this.boot.loadData();
+            // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
         });

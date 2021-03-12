@@ -43,6 +43,11 @@ export class SwapCompComponent implements OnInit {
         this.boot.walletReady.subscribe(res => {
             this.updateApproveStatus();
         });
+        this.boot.initContractsCompleted.subscribe(res => {
+            this.boot.approvalStatusChange.subscribe(res => {
+                this.updateApproveStatus();
+            });
+        });
     }
 
     ngOnInit(): void {
@@ -116,7 +121,7 @@ export class SwapCompComponent implements OnInit {
             // } else {
             this.boot.exchange(Number(this.left), Number(this.right), this.amt, this.minAmt ? this.minAmt : '0').then(res => {
                 console.log(res);
-                this.boot.loadData();
+                // this.boot.loadData();
                 this.loaded.emit();
                 this.loadStatus = LoadStatus.Loaded;
                 this.updateApproveStatus();

@@ -18,7 +18,7 @@ export class UserInfoComponent implements OnInit {
         this.loading.emit();
         this.boot.claimTestCoin(i).then(() => {
             this.loaded.emit();
-            this.boot.loadData().then();
+            // this.boot.loadData();
         });
     }
 }

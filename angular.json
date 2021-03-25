@@ -331,7 +331,8 @@
                             }
                         ],
                         "styles": [
-                            "libs/styles.scss"
+                            "libs/styles.scss",
+                            "projects/ssp-home/src/styles.scss"
                         ],
                         "scripts": []
                     },

@@ -1,83 +1,171 @@
-<div class="maxDiv" id="maxDiv">
-    <lib-header [needWallet]="false" #header></lib-header>
-    <div class="trade-pc">
-        <div class="main">
-            <div class="center">
-                <!-- <div class="chrismas">
-                    <div>
-                        <a *ngIf="lang.curLanguage.indexOf('en')===0"
-                            href="https://bstable.medium.com/christmas-event-swap-or-become-a-lp-on-bstable-to-get-free-bnb-71b59e57240a"
-                            target="_blank">
-                            <img src="assets/static/img/chrismas_en.svg">
-                        </a>
-                        <a *ngIf="lang.curLanguage.indexOf('zh')===0"
-                            href="https://shimo.im/docs/9XkHRPvYP8PPRKjW/"
-                            target="_blank">
-                            <img src="assets/static/img/chrismas_zh.svg">
-                        </a>
-                    </div>
-                </div> -->
-                <div class="tittleDiv">
-                    <p>{{"Choose a Pool"|translate}}</p>
-                </div>
-                <div class="pool">
-                    <div class="centerDiv">
-                        <div class="leftPart">
-                            <div class="top">
-                                <div></div>
-                                <p>{{"Pool 1"|translate}}</p>
-                            </div>
-                            <div class="coinDiv">
-                                <p>bstDAI / bstBUSD/ bstUSDT </p>
-                            </div>
-                        </div>
-                        <div class="rightPart">
-                            <div class="btn">
-                                <a href="/p1">{{"Enter"|translate}}</a>
-                            </div>
-                        </div>
-                    </div>
+<div class="top" [ngClass]="{'backdrop-filter':!isAndroid,open:topOpen}">
+    <div class="nav">
+        <div class="img">
+            <img src="assets/static/img/BSTLOGO.png" alt="bstable.logo">
+        </div>
+        <div class="menu" [ngClass]="{blue:menuMouseOn}" (mouseenter)="onMenuMouseEnter()"
+            (mouseleave)="onMenuMouseLeave()" (click)="onMenuClick()">
+            <svg t="1615387319091" class="line" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="1227" width="200" height="200" [ngStyle]="{display:topOpen?'none':'block'}">
+                <path
+                    d="M831.616 288H192.384c-3.584 0-6.528 2.304-6.528 5.12v40.704c0 2.784 2.944 5.088 6.528 5.088h639.232c3.584 0 6.528-2.304 6.528-5.12V293.12c0-2.784-2.944-5.088-6.528-5.088z m0 397.12H192.384c-3.584 0-6.528 2.24-6.528 5.056v40.736c0 2.784 2.944 5.088 6.528 5.088h639.232c3.584 0 6.528-2.304 6.528-5.12v-40.704c0-2.784-2.944-5.088-6.528-5.088z m0-198.56H192.384c-3.584 0-6.528 2.272-6.528 5.088v40.704c0 2.816 2.944 5.12 6.528 5.12h639.232c3.584 0 6.528-2.304 6.528-5.12v-40.704c0-2.816-2.944-5.12-6.528-5.12z"
+                    p-id="1228" fill="#fff"></path>
+            </svg>
+            <svg t="1615387156338" class="x" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                p-id="1091" width="200" height="200" [ngStyle]="{display:!topOpen?'none':'block'}">
+                <path
+                    d="M804.544 649.76l-553.6-319.616c-3.072-1.792-6.784-1.28-8.16 1.152l-20.384 35.264c-1.376 2.432 0 5.888 3.104 7.68l553.6 319.616c3.104 1.792 6.784 1.28 8.192-1.152l20.352-35.264c1.408-2.432 0-5.888-3.104-7.68z m-25.44-319.616l-553.6 319.616c-3.104 1.792-4.48 5.248-3.104 7.68l20.384 35.264c1.376 2.432 5.088 2.944 8.192 1.152l553.6-319.616c3.072-1.792 4.48-5.248 3.072-7.68l-20.352-35.264c-1.408-2.432-5.088-2.944-8.192-1.152z"
+                    p-id="1092" fill="#fff"></path>
+            </svg>
+        </div>
+    </div>
+    <div class="list">
+        <ul>
+            <app-menu-item [itemText]="'Pool 1'" [targetUrl]="'/p1'"></app-menu-item>
+            <app-menu-item [itemText]="'Pool 2'" [targetUrl]="'/p2'"></app-menu-item>
+            <app-menu-item [itemText]="'Tutorial'"></app-menu-item>
+        </ul>
+    </div>
+</div>
+<div class="exchange">
+    <div class="cont" [ngClass]="{filter:topOpen}" (mouseleave)="onExchangeContMouseLeave()" (mouseenter)="onExchangeContMouseEnter()">
+        <div class="title">
+            <span>Bstable.finance </span>the BSC chain <br> stablecoin flash swap
+        </div>
+        <div class="btn" [ngClass]="{blue:btnMouseOn}" (mouseenter)="onBtnMouseEnter()"
+            (mouseleave)="onBtnMouseLeave()">
+            <div class="text">Experience now</div>
+            <div class="icon">
+                <img src="assets/static/img/to.png" alt="">
+            </div>
+        </div>
+        <div class="bgc-box" [ngClass]="{'animation':bgcBoxMouseOn,'animation2':!bgcBoxMouseOn}"
+            (mouseenter)="onBgcBoxMouseEnter()" (mouseleave)="onBgcBoxMouseLeave()">
 
-                </div>
-                <div class="pool">
-                    <div class="centerDiv">
-                        <div class="leftPart">
-                            <div class="top">
-                                <div></div>
-                                <p>{{"Pool 2"|translate}}</p>
-                            </div>
-                            <div class="coinDiv">
-                                <p>BTCB / renBTC/ anyBTC </p>
-                            </div>
-                        </div>
-                        <div class="rightPart">
-                            <div class="btn">
-                                <a href="/p2">{{"Enter"|translate}}</a>
-                            </div>
-                        </div>
-                    </div>
+            <img class="bgc" src="assets/static/img/background.png" alt="">
+            <img class="floor" src="assets/static/img/floor.png" alt="">
+            <img class="person" src="assets/static/img/person.png" alt="">
+            <img class="plant" src="assets/static/img/plant.png" alt="">
+            <img class="laptop" src="assets/static/img/laptop.png" alt="">
+            <img class="Kxian" src="assets/static/img/Kxian.png" alt="">
+            <img class="swap" src="assets/static/img/swap.png" alt="">
+            <img class="bar" src="assets/static/img/bar.png" alt="">
+            <img class="plane" src="assets/static/img/plane.png" alt="">
+            <img class="line" src="assets/static/img/line.png" alt="">
+            <img class="btc" src="assets/static/img/btc.png" alt="">
 
+        </div>
+    </div>
+    <div class="item" [ngClass]="{filter:topOpen}">
+        <ul>
+            <li class="left">
+                <div class="img">
+                    <img src="assets/static/img/secure.png" alt="">
                 </div>
-                <!-- <div class="pool">
-                    <div class="centerDiv">
-                        <div class="leftPart">
-                            <div class="top">
-                                <div></div>
-                                <p>{{"Pool 3"|translate}}</p>
-                            </div>
-                            <div class="coinDiv">
-                                <p>QUSD / DAI / VAI</p>
-                            </div>
-                        </div>
-                        <div class="rightPart">
-                            <div class="btn">
-                                <a href="https://p3.bstable.finance/" target="_blank">{{"Enter"|translate}}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                <div class="name">Secure</div>
+            </li>
+            <li class="middle">
+                <div class="img">
+                    <img src="assets/static/img/professional.png" alt="">
+                </div>
+                <div class="name">Professional</div>
+            </li>
+            <li class="right">
+                <div class="img">
+                    <img src="assets/static/img/efficient.png" alt="">
+                </div>
+                <div class="name">Efficient</div>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="introduce">
+    <div class="cont" [ngClass]="{filter:topOpen}">
+        <div class="img">
+            <img src="assets/static//img/Artwork.png" alt="">
+        </div>
+        <div class="right">
+            <div class="title">Description</div>
+            <div class="text">
+                <div class="text-cont">
+                    bStable is an open-source, automated market maker (AMM) mechanism especially designed to enable
+                    token
+                    swaps between any stablecoin on Binance Smart Chain (BSC) at low fees and with minimal price
+                    slippage.
+                    Combining an efficient, decentralized stablecoin swap platform on BSC with a multi-stablecoin
+                    “savings
+                    account,” bStable will allow users to add their funds to the protocol’s liquidity to earn
+                    passive
+                    income. Soon, getting from stablecoin to stablecoin on BSC will become as easy as possible.
+                </div>
+                <div class="bg"></div>
             </div>
         </div>
     </div>
-    <lib-footer></lib-footer>
+</div>
+<div class="footer" [ngClass]="{filter:topOpen}">
+    <div class="cont">
+        <div class="logo">
+            <img src="assets/static/img/logo-footer.png" alt="">
+        </div>
+        <div class="text">
+            Bstable.finance the BSC chain stablecoin flash swap
+        </div>
+        <div class="links">
+            <ul>
+                <li>
+                    <div class="img">
+                        <svg t="1615304616178" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                            p-id="1227" width="200" height="200">
+                            <path
+                                d="M472.32 930.112a77.12 77.12 0 0 1-77.344-76.544l-0.32-54.816c-152 33.088-184.096-64.48-184.096-64.48-24.864-63.136-60.672-79.904-60.672-79.904-49.6-33.952 3.744-33.28 3.744-33.28 54.848 3.84 83.712 56.32 83.712 56.32 48.736 83.52 127.872 59.392 159.04 45.44 4.896-35.328 19.072-59.424 34.688-73.088-121.376-13.792-248.96-60.704-248.96-270.048 0-59.648 21.344-108.384 56.32-146.656-5.664-13.792-24.384-69.376 5.28-144.64 0 0 45.92-14.656 150.304 56.032 44.608-12.128 90.56-18.304 136.8-18.368a522.88 522.88 0 0 1 136.864 18.368c104.32-70.688 150.144-56 150.144-56 29.76 75.296 11.04 130.848 5.376 144.608 35.008 38.24 56.224 87.008 56.224 146.656 0 209.92-127.84 256.096-249.504 269.632 19.584 16.96 37.056 50.176 37.056 101.184 0 73.152-0.256 102.976-0.256 102.976a77.12 77.12 0 0 1-77.28 76.608h-117.12z"
+                                fill="#6B7595" p-id="1228">
+                            </path>
+                        </svg>
+                    </div>
+                </li>
+                <li>
+                    <div class="img">
+                        <svg t="1615304908234" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                            p-id="1635" width="200" height="200">
+                            <path
+                                d="M852.96 328.416h-26.56c-9.984 0-23.936 14.304-23.936 23.52v334.336c0 9.344 13.952 21.824 23.904 21.824h26.592v79.424h-241.28v-79.456h50.496v-351.36h-2.336L541.888 787.52h-91.232l-116.48-430.848h-2.912v351.392h50.496v79.456H179.808v-79.456h25.92c10.624 0 24.544-12.448 24.544-21.792V351.968c0-9.216-13.92-23.552-24.576-23.552h-25.92V248.96h252.576l82.816 311.776h2.4l83.616-311.776h251.776v79.456z"
+                                fill="#6B7595" p-id="1636"></path>
+                        </svg>
+                    </div>
+                </li>
+                <li>
+                    <div class="img">
+                        <svg t="1615304928116" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                            p-id="1771" width="200" height="200">
+                            <path
+                                d="M406.464 819.584l12.032-181.6 329.664-297.024c14.592-13.312-3.008-19.776-22.336-8.16L318.88 589.92l-176-55.808c-37.76-10.72-38.208-36.928 8.608-55.808l685.536-264.416c31.328-14.176 61.376 7.712 49.344 55.808l-116.736 549.888c-8.16 39.04-31.776 48.512-64.416 30.464l-177.696-131.36-85.44 82.88c-9.856 9.856-18.016 18.016-35.616 18.016z"
+                                fill="#6B7595" p-id="1772"></path>
+                        </svg>
+                    </div>
+                </li>
+                <li>
+                    <div class="img">
+                        <svg t="1615304943064" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                            p-id="1907" width="200" height="200">
+                            <path
+                                d="M904.128 288.704a304.224 304.224 0 0 1-87.52 23.52 151.36 151.36 0 0 0 66.816-83.712c-29.152 17.376-62.08 30.08-96.448 36.672a151.488 151.488 0 0 0-111.008-48 151.872 151.872 0 0 0-151.936 151.968c0 11.744 1.44 23.52 3.776 34.784a431.872 431.872 0 0 1-313.28-158.976 150.72 150.72 0 0 0-20.672 76.672c0 52.672 26.784 99.232 67.712 126.528a153.344 153.344 0 0 1-68.672-19.264v1.856a151.968 151.968 0 0 0 121.856 149.12 160.608 160.608 0 0 1-40 5.152c-9.888 0-19.296-0.928-28.672-2.336a152.192 152.192 0 0 0 142.048 105.376 304.32 304.32 0 0 1-188.64 64.896c-12.704 0-24.48-0.48-36.704-1.856a429.312 429.312 0 0 0 233.312 68.16c279.424 0 432.32-231.424 432.32-432.256 0-6.592 0-13.184-0.48-19.776a326.496 326.496 0 0 0 76.192-78.528z"
+                                fill="#6B7595" p-id="1908"></path>
+                        </svg>
+                    </div>
+                </li>
+                <li>
+                    <div class="img">
+                        <svg t="1615304884678" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                            p-id="1499" width="200" height="200">
+                            <path
+                                d="M672.704 341.024c10.944 0 21.76 0.8 32.48 1.952-29.184-134.4-174.432-234.336-340.224-234.336C179.584 108.64 27.712 233.696 27.712 392.448c0 91.616 50.56 166.88 134.944 225.28L128.928 718.08l117.888-58.496c42.208 8.224 76.032 16.736 118.144 16.736 10.56 0 21.024-0.512 31.456-1.344a245.76 245.76 0 0 1-10.432-69.888c0-145.792 126.528-264.096 286.72-264.096z m-181.28-90.496c25.376 0 42.176 16.544 42.176 41.664 0 24.992-16.8 41.76-42.176 41.76-25.28 0-50.656-16.768-50.656-41.76 0-25.12 25.344-41.664 50.656-41.664zM255.36 333.952c-25.28 0-50.784-16.768-50.784-41.76 0-25.12 25.504-41.664 50.784-41.664 25.28 0 42.112 16.544 42.112 41.664 0 24.992-16.832 41.76-42.112 41.76z m725.12 267.136c0-133.408-134.912-242.144-286.464-242.144-160.448 0-286.784 108.736-286.784 242.144 0 133.632 126.336 242.144 286.784 242.144 33.6 0 67.456-8.32 101.184-16.704l92.48 50.112-25.344-83.36c67.712-50.304 118.144-116.928 118.144-192.192zM601.056 559.36c-16.768 0-33.728-16.512-33.728-33.376 0-16.64 16.96-33.376 33.728-33.376 25.504 0 42.24 16.736 42.24 33.376 0 16.864-16.736 33.376-42.24 33.376z m185.472 0c-16.64 0-33.472-16.512-33.472-33.376 0-16.64 16.832-33.376 33.472-33.376 25.28 0 42.24 16.736 42.24 33.376 0 16.864-16.96 33.376-42.24 33.376z"
+                                fill="#6B7595" p-id="1500"></path>
+                        </svg>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </div>

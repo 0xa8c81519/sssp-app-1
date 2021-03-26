@@ -5,9 +5,11 @@ import { BootService } from '../services/boot.service';
 @Component({
     selector: 'app-choose-wallet-dlg',
     templateUrl: './choose-wallet-dlg.component.html',
-    styleUrls: ['./choose-wallet-dlg.component.scss']
+    styleUrls: ['./choose-wallet-dlg.component.less']
 })
 export class ChooseWalletDlgComponent implements OnInit {
+
+    hidden = false;
 
     constructor(public boot: BootService, public dialogRef: MatDialogRef<ChooseWalletDlgComponent>) { }
 
@@ -27,6 +29,14 @@ export class ChooseWalletDlgComponent implements OnInit {
     connectMetaMask() {
         this.dialogRef.close();
         this.boot.connentMetaMask();
+    }
+
+    open() {
+        this.hidden = false;
+    }
+
+    close() {
+        this.hidden = true;
     }
 
 }

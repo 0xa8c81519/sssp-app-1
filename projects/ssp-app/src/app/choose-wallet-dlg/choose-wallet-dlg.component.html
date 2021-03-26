@@ -1,29 +1,34 @@
-<h1 mat-dialog-title>{{"Choose a Wallet"|translate}}</h1>
-<div mat-dialog-content>
-    <div class="row">
+<div class="dialog-2" [ngStyle]="{display:hidden?'none':''}">
+    <div class="center backdrop-filter">
+        <div class="title">Choose a Wallet</div>
         <ul>
-            <li>
-                <a (click)="connectMetaMask()" *ngIf="boot.isMetaMaskInstalled()">
-                    <img src="assets/static/img/wallet/metamask.png" alt="">
-                    <span>MetaMask</span>
-                </a>
+            <li class="active">
+                <div class="icon">
+                    <img src="assets/static//img/btc.png" alt="">
+                </div>
+                <div class="name" index='0'>BTC</div>
             </li>
             <li>
-                <a (click)="connectBinance()" *ngIf="boot.isBinanceInstalled()">
-                    <img src="assets/static/img/wallet/binanceWLT.jpg" alt="">
-                    <span>Binance</span>
-                </a>
+                <div class="icon">
+                    <img src="assets/static//img/btc.png" alt="">
+                </div>
+                <div class="name" index='1'>BTC</div>
             </li>
             <li>
-                <a (click)="connectWC()">
-                    <img src="assets/static/img/wallet/walletconnect.png" alt="">
-                    <span>WalletConnect</span>
-                </a>
+                <div class="icon">
+                    <img src="assets/static//img/btc.png" alt="">
+                </div>
+                <div class="name" index='2'>BTC</div>
             </li>
+            <li>
+                <div class="icon">
+                    <img src="assets/static//img/btc.png" alt="">
+                </div>
+                <div class="name" index='3'>BTC</div>
+            </li>
+            <div class="checked">
+            </div>
         </ul>
+
     </div>
-</div>
-<div mat-dialog-actions>
-    <!-- <button mat-button (click)="goToBsc()">{{"Yes"|translate}}</button>
-  <button mat-button mat-dialog-close>{{"No"|translate}}</button> -->
 </div>

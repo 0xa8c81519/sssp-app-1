@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BootService } from './services/boot.service';
 import { HeaderComponent, LanguageService } from 'app-lib';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,19 +6,24 @@ import { ChooseWalletDlgComponent } from './choose-wallet-dlg/choose-wallet-dlg.
 import { IntallWalletDlgComponent } from './intall-wallet-dlg/intall-wallet-dlg.component';
 import { LocalStorageService } from 'angular-web-storage';
 import { ConstVal } from './model/const-val';
+import { cwd } from 'process';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     title = 'sssp-app';
+    isAndroid;
 
     curTab = 0;
 
     @ViewChild('header')
     header: HeaderComponent;
+
+    @ViewChild('cwDlg')
+    cwDlg: ChooseWalletDlgComponent;
 
     constructor(public boot: BootService, public lang: LanguageService, private dialog: MatDialog, private localStorage: LocalStorageService) {
         if (this.boot.isMetaMaskInstalled() || this.boot.isBinanceInstalled()) {
@@ -36,6 +41,11 @@ export class AppComponent {
             }
         }
     }
+    ngOnInit(): void {
+        const isMobile = (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i))
+        const u = navigator.userAgent;
+        this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
+    }
 
 
 
@@ -44,10 +54,11 @@ export class AppComponent {
     }
 
     chooseWallet() {
-        let dlgRef = this.dialog.open(ChooseWalletDlgComponent, { width: '30em' });
-        dlgRef.afterClosed().toPromise().then(res => {
-            this.header.onLoaded();
-        });
+        // let dlgRef = this.dialog.open(ChooseWalletDlgComponent, { width: '30em' });
+        // dlgRef.afterClosed().toPromise().then(res => {
+        //     this.header.onLoaded();
+        // });
+        this.cwDlg.open();
     }
 
     public async connectWallet() {

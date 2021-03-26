@@ -29,6 +29,7 @@ import { WalletExceptionDlgComponent } from './wallet-exception-dlg/wallet-excep
 import { MatIconModule } from '@angular/material/icon';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { RewardInfoComponent } from './reward-info/reward-info.component';
+import { DialogTipComponent } from './dialog-tip/dialog-tip.component';
 
 @NgModule({
     declarations: [
@@ -48,7 +49,8 @@ import { RewardInfoComponent } from './reward-info/reward-info.component';
         AddlpSlippageConfirmComponent,
         WalletExceptionDlgComponent,
         UserInfoComponent,
-        RewardInfoComponent
+        RewardInfoComponent,
+        DialogTipComponent
     ],
     imports: [
         BrowserModule,

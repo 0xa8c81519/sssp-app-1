@@ -1,32 +1,16 @@
-<div class="dialog-2" [ngStyle]="{display:hidden?'none':''}">
-    <div class="center backdrop-filter">
+<div class="dialog-2" [ngStyle]="{display:hidden?'none':''}" (click)="close()">
+    <div class="center backdrop-filter" [ngStyle]="{opacity:hidden?0:1}">
         <div class="title">Choose a Wallet</div>
         <ul>
-            <li class="active">
-                <div class="icon">
-                    <img src="assets/static//img/btc.png" alt="">
-                </div>
-                <div class="name" index='0'>BTC</div>
-            </li>
-            <li>
-                <div class="icon">
-                    <img src="assets/static//img/btc.png" alt="">
-                </div>
-                <div class="name" index='1'>BTC</div>
-            </li>
-            <li>
-                <div class="icon">
-                    <img src="assets/static//img/btc.png" alt="">
-                </div>
-                <div class="name" index='2'>BTC</div>
-            </li>
-            <li>
-                <div class="icon">
-                    <img src="assets/static//img/btc.png" alt="">
-                </div>
-                <div class="name" index='3'>BTC</div>
-            </li>
-            <div class="checked">
+            <app-wallet-item [isMobile]="isMobile" [index]="0" (onMouseEnter)="onItemMouseEnter($event)"
+                (onMouseLeave)="onItemMouseLeave($event)"></app-wallet-item>
+            <app-wallet-item [isMobile]="isMobile" [index]="1" (onMouseEnter)="onItemMouseEnter($event)"
+                (onMouseLeave)="onItemMouseLeave($event)"></app-wallet-item>
+            <app-wallet-item [isMobile]="isMobile" [index]="2" (onMouseEnter)="onItemMouseEnter($event)"
+                (onMouseLeave)="onItemMouseLeave($event)"></app-wallet-item>
+            <app-wallet-item [isMobile]="isMobile" [index]="3" (onMouseEnter)="onItemMouseEnter($event)"
+                (onMouseLeave)="onItemMouseLeave($event)"></app-wallet-item>
+            <div class="checked" [ngStyle]="{top:(70*selectedIndex)+'px',display:isMobile?'none':''}">
             </div>
         </ul>
 

@@ -1,9 +1,10 @@
-import { EventEmitter, Output } from '@angular/core';
+import { EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
 import { environment } from '../../environments/environment';
 import { ChooseWalletDlgComponent } from '../choose-wallet-dlg/choose-wallet-dlg.component';
+import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
 import { IntallWalletDlgComponent } from '../intall-wallet-dlg/intall-wallet-dlg.component';
 import { PriceDiffComponent } from '../price-diff/price-diff.component';
 import { BootService } from '../services/boot.service';
@@ -19,9 +20,12 @@ export enum LoadStatus {
 @Component({
     selector: 'app-swap-comp',
     templateUrl: './swap-comp.component.html',
-    styleUrls: ['./swap-comp.component.scss']
+    styleUrls: ['./swap-comp.component.less']
 })
 export class SwapCompComponent implements OnInit {
+    @Input('hidden')
+    hidden = false;
+
     left: string = '0';
 
     right: string = '1';
@@ -38,6 +42,9 @@ export class SwapCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
+
+    @ViewChild('coinsDlg')
+    coinsDlg: CoinsDlgComponent;
 
     constructor(public boot: BootService, private dialog: MatDialog) {
         this.boot.walletReady.subscribe(res => {
@@ -189,5 +196,9 @@ export class SwapCompComponent implements OnInit {
 
     getFee() {
         return this.boot.poolInfo.fee.multipliedBy(100).toFixed(1, 1);
+    }
+
+    chooseCoin(type) {
+        this.coinsDlg.open();
     }
 }

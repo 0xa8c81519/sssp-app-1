@@ -1,40 +1,74 @@
-<!-- 增加流动性 -->
-<div class="addLiqui-pc">
-    <div class="main">
-
-        <div class="coinDiv" *ngFor="let coin of boot.coins;let i=index;">
-            <div class="firstPart">
-                <div>
-                    <img src="assets/static/img/coins/{{boot.poolId}}-c{{i}}.png" alt="">
-                    <span>{{coin.symbol}}</span>
-                </div>
-                <div>
-                    <!-- <span>{{'Balance'|translate}}</span> -->
-                    <span>{{boot.balance.coinsBalance[i].toFixed(9)}}</span>
-                    <!-- <span>{{coin.symbol}}</span> -->
+<!-- add -->
+<div class="add-box" [ngStyle]="{display:hidden?'none':'flex'}">
+    <div class="box-cont">
+        <div class="left">
+            <div class="box-top">Balance: 9786</div>
+            <!-- <div class="num">0</div> -->
+            <input type="num" class="num" value="0">
+        </div>
+        <div class="right">
+            <div class="approve">
+                <div class="text blue">
+                    Approve
                 </div>
             </div>
-            <div class="second">
-                <input type="number" name="{{coin.symbol}}Amt" [ngModel]="amts[i]" (ngModelChange)="amtChange(i,$event)"
-                    placeholder="{{'Enter an amount'|translate}}">
-                <button style="margin-bottom: 1em;"
-                    [ngClass]="{myBtn:isApproveEnabled(i),'myBtn-disabled':!isApproveEnabled(i)||loadStatus===1}"
-                    (click)="approve(i)"
-                    [disabled]="!isApproveEnabled(i)||loadStatus===1">{{'Approve'|translate}}</button>
+            <div class="line">
+                <div class="line-cont"></div>
+            </div>
+            <div class="coin">
+                <div class="img">
+                    <img src="assets/static/img/btc.png" alt="">
+                </div>
+                <div class="name">BTC</div>
             </div>
         </div>
     </div>
-    <div class="butDiv">
-        <!-- <button (click)="approveDai()" style="margin-bottom: 1em;">Approve
-            DAI</button>
-        <button (click)="approveBusd()" style="margin-bottom: 1em;">Approve
-            BUSD</button>
-        <button (click)="approveUsdt()" style="margin-bottom: 1em;">Approve USDT</button> -->
-        <button *ngIf="boot.accounts.length>0" (click)="addLiquidity()"
-            [disabled]="!isAddLiquidityBtnEnabled()||loadStatus===1"
-            [ngClass]="{myBtn: isAddLiquidityBtnEnabled(),'myBtn-disabled':!isAddLiquidityBtnEnabled()||loadStatus===1}">{{'Add
-            Liquidity'|translate}}</button>
-        <button *ngIf="boot.accounts.length==0" (click)="connectWallet()" class="myBtn">{{'Connect to a
-            Wallet'|translate}}</button>
+    <div class="box-cont">
+        <div class="left">
+            <div class="box-top">Balance: 9786</div>
+            <!-- <div class="num">2222</div> -->
+            <input type="num" class="num" value="222">
+        </div>
+        <div class="right">
+            <div class="approve">
+                <div class="text">
+                    Approve
+                </div>
+            </div>
+            <div class="line">
+                <div class="line-cont"></div>
+            </div>
+            <div class="coin">
+                <div class="img">
+                    <img src="assets/static/img/btc.png" alt="">
+                </div>
+                <div class="name">BTC</div>
+            </div>
+        </div>
+    </div>
+    <div class="box-cont">
+        <div class="left">
+            <div class="box-top">Balance: 9786</div>
+            <input type="num" class="num" value="222">
+        </div>
+        <div class="right">
+            <div class="approve">
+                <div class="text">
+                    Approve
+                </div>
+            </div>
+            <div class="line">
+                <div class="line-cont"></div>
+            </div>
+            <div class="coin">
+                <div class="img">
+                    <img src="assets/static/img/btc.png" alt="">
+                </div>
+                <div class="name">BTC</div>
+            </div>
+        </div>
+    </div>
+    <div class="btn">
+        Connect to a Wallet
     </div>
 </div>

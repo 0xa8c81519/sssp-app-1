@@ -1,4 +1,4 @@
-.dialog-2 {
+.dialog {
     position: fixed;
     top: 0;
     left: 0;
@@ -15,16 +15,16 @@
         transition: 0.2s;
         width: 280px;
         height: 200px;
-        padding: 30px 30px;
+        padding: 20px 30px;
         background: RGBA(25, 25, 26, 0.95);
         border-radius: 12px;
         position: relative;
         border: 2px solid rgba(255, 255, 255, 0.06);
 
         .title {
-            height: 30px;
-            line-height: 30px;
-            margin-bottom: 30px;
+            height: 20px;
+            line-height: 20px;
+            margin-bottom: 3px;
         }
 
         ul {
@@ -33,7 +33,7 @@
             overflow: hidden;
             overflow-y: scroll;
 
-            
+
 
         }
 
@@ -48,10 +48,12 @@
         }
     }
 }
-@media (min-width: 768px) {
-    @paddingLeft: 86px;
 
-    .dialog-2 {
+
+
+/* 小屏幕（平板，大于等于 768px） */
+@media (min-width: 768px) {
+    .dialog {
         .center {
             width: 504px;
             height: 357px;
@@ -62,23 +64,23 @@
                 height: 32px;
                 font-size: 20px;
                 line-height: 32px;
-                margin-bottom: 26px;
             }
 
             ul {
-                height: 260px;
+                height: 330px;
+                overflow: hidden;
+                overflow-y: scroll;
 
-                
+
 
             }
 
             .checked {
                 position: absolute;
-                top: 0px;
+                top: 10px;
                 width: 504px;
-                height: 70px;
+                height: 60px;
             }
         }
     }
-    
 }

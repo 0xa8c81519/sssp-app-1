@@ -3,7 +3,7 @@
         <img src="assets/static/img/BSTLOGO.png" alt="">
     </div>
 </div>
-<div class="contant">
+<div class="contant" [ngClass]="{open:menuOpen}">
     <div class="contant-top">
         <div class="connect" (click)="chooseWallet()">
             <div class="center">
@@ -19,301 +19,36 @@
     </div>
     <div class="contant-box">
         <div class="tabs">
-            <ul>
-                <li class="swap active">
+            <ul #tabsUl>
+                <li class="swap" [ngClass]="{active:curTab===0}" (click)="changeTab(0)">
                     <div class="tab-name">Swap</div>
-                    <div class="bg"></div>
+                    <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
-                <li class="add">
+                <li class="add" [ngClass]="{active:curTab===1}" (click)="changeTab(1)">
                     <div class="tab-name">Add Liquidity</div>
-                    <div class="bg"></div>
+                    <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
-                <li class="manage ">
+                <li class="manage " [ngClass]="{active:curTab===2}" (click)="changeTab(2)">
                     <div class="tab-name">Manage Liquidity</div>
-                    <div class="bg"></div>
+                    <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
-                <li class="stake ">
+                <li class="stake " [ngClass]="{active:curTab===3}" (click)="changeTab(3)">
                     <div class="tab-name">Stake & Reward</div>
-                    <div class="bg"></div>
+                    <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
-                <div class="tabs-bg"></div>
+                <div class="tabs-bg" [ngStyle]="{display:!isMobile?'':'none'}" #tabsBg></div>
             </ul>
         </div>
         <div class="cont">
             <div class="main">
                 <div class="boxs">
                     <div class="box">
-                        <!-- swap -->
-                        <div class="swap-box">
-                            <div class="box-cont">
-                                <div class="left">
-                                    <div class="box-top">From</div>
-                                    <input type="num" class="num" value="0">
-                                </div>
-                                <div class="right">
-                                    <div class="balance">
-                                        <div class="text">
-                                            Balance: 9786
-                                        </div>
-                                        <div class="balance-bottom">
-                                            <div class="bottom-box blue">MAX</div>
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="l"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                    <div class="triangle">
-                                        <img src="assets/static//img/triangle.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="to">
-                                <img src="assets/static/img/exchange.png" alt="">
-                            </div>
-                            <div class="box-cont">
-                                <div class="left">
-                                    <div class="box-top">To</div>
-                                    <input type="num" class="num" value="0">
-                                </div>
-                                <div class="right">
-                                    <div class="balance">
-                                        <div class="text">
-                                            Balance: 9786
-                                        </div>
-                                        <div class="balance-bottom">
-                                            <div class="bottom-box">Approve</div>
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="l"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                    <div class="triangle">
-                                        <img src="assets/static//img/triangle.png" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="btn">
-                                Connect to a Wallet
-                            </div>
-                            <div class="fee">
-                                fee: <span>0.1%</span>
-                            </div>
-                        </div>
-                        <!-- add -->
-                        <div class="add-box">
-                            <div class="box-cont">
-                                <div class="left">
-                                    <div class="box-top">Balance: 9786</div>
-                                    <!-- <div class="num">0</div> -->
-                                    <input type="num" class="num" value="0">
-                                </div>
-                                <div class="right">
-                                    <div class="approve">
-                                        <div class="text blue">
-                                            Approve
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="line-cont"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-cont">
-                                <div class="left">
-                                    <div class="box-top">Balance: 9786</div>
-                                    <!-- <div class="num">2222</div> -->
-                                    <input type="num" class="num" value="222">
-                                </div>
-                                <div class="right">
-                                    <div class="approve">
-                                        <div class="text">
-                                            Approve
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="line-cont"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-cont">
-                                <div class="left">
-                                    <div class="box-top">Balance: 9786</div>
-                                    <input type="num" class="num" value="222">
-                                </div>
-                                <div class="right">
-                                    <div class="approve">
-                                        <div class="text">
-                                            Approve
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="line-cont"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="btn">
-                                Connect to a Wallet
-                            </div>
-                        </div>
-                        <!-- manage -->
-                        <div class="manage-box">
-                            <div class="title">
-                                <div class="left">
-                                    0.00000
-                                    <span>BSLP-01</span>
-                                </div>
-                                <div class="right">
-                                    0.1%
-                                </div>
-                            </div>
-                            <div class="box-cont">
-                                <div class="left">
-                                    <input type="num" class="num" value="0">
-                                </div>
-                                <div class="right">
-                                    <div class="approve">
-                                        <div class="text">
-                                            Approve
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="line-cont"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-cont">
-                                <div class="left">
-                                    <input type="num" class="num" value="0">
-                                </div>
-                                <div class="right">
-                                    <div class="approve">
-                                        <div class="text">
-                                            Approve
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="line-cont"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="box-cont">
-                                <div class="left">
-                                    <input type="num" class="num" value="0">
-                                </div>
-                                <div class="right">
-                                    <div class="approve">
-                                        <div class="text">
-                                            Approve
-                                        </div>
-                                    </div>
-                                    <div class="line">
-                                        <div class="line-cont"></div>
-                                    </div>
-                                    <div class="coin">
-                                        <div class="img">
-                                            <img src="assets/static/img/btc.png" alt="">
-                                        </div>
-                                        <div class="name">BTC</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="onoff">
-                                <div class="text">Redeem to all coins</div>
-                                <div class="bg-box">
-                                    <!-- <div class="bg"></div> -->
-                                    <div class="box"></div>
-                                </div>
-                            </div>
-                            <div class="btn">
-                                Connect to a Wallet
-                            </div>
-                        </div>
-                        <!-- stake -->
-                        <div class="stake-box">
-                            <div class="title">
-                                <div class="box"></div>
-                                <div class="text">stake & reward</div>
-                            </div>
-                            <div class="pand">
-                                <div class="pand-top">
-                                    <div class="left">
-                                        BSLP-01
-                                    </div>
-                                    <div class="right">
-                                        Balance: 9786
-                                    </div>
-                                </div>
-                                <div class="pand-bottom">
-                                    <input type="num" class="num" value="0">
-                                    <div class="text">Deposit LP</div>
-                                </div>
-                            </div>
-                            <div class="pand">
-                                <div class="pand-top">
-                                    <div class="left">
-                                        BSLP-01
-                                    </div>
-                                    <div class="right">
-                                        Balance: 9786
-                                    </div>
-                                </div>
-                                <div class="pand-bottom">
-                                    <input type="num" class="num" value="0">
-                                    <div class="text">Withdraw LP</div>
-                                </div>
-                            </div>
-                            <div class="stake-btn">
-                                <div class="left">
-                                    0.0000
-                                    <span>Pending BST</span>
-                                </div>
-                                <div class="right">
-                                    Get Pending BST
-                                </div>
-                            </div>
-                        </div>
+                        <app-swap-comp *ngIf="curTab===0" [hidden]="curTab===0?false:true"></app-swap-comp>
+                        <app-addliquidity-comp *ngIf="curTab===1" [hidden]="curTab===1?false:true">
+                        </app-addliquidity-comp>
+                        <app-redeemliquidity-comp *ngIf="curTab===2" [hidden]="curTab===2?false:true">
+                        </app-redeemliquidity-comp>
+                        <app-stake-comp *ngIf="curTab===3" [hidden]="curTab===3?false:true"></app-stake-comp>
                         <!-- 其他盒子 -->
                         <div class="other-box">
                             <div class="title">
@@ -480,8 +215,8 @@
         </div>
 
     </div>
-    <div class="nav backdrop-filter">
-        <div class="main">
+    <div class="nav backdrop-filter" [ngClass]="{open:menuOpen}">
+        <div class="main" [ngClass]="{bg4:menuOpen}">
             <ul>
                 <li class="home">
                     <svg t="1615906180270" class="icon-1" viewBox="0 0 1024 1024" version="1.1"
@@ -568,14 +303,14 @@
                 </li>
             </ul>
             <div class="menu">
-                <div class="menu-top">
+                <div class="menu-top" (click)="openMenu()">
                     <svg t="1615478044389" class="menu-icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="1686" width="200" height="200">
                         <path
                             d="M118.4 436.032h473.504a7.904 7.904 0 0 0 7.872-7.904v-55.232a7.904 7.904 0 0 0-7.872-7.904H118.368a7.904 7.904 0 0 0-7.872 7.904v55.232c0 4.352 3.52 7.904 7.872 7.904z m-7.904 201.248c0 4.32 3.52 7.872 7.872 7.872h473.536a7.904 7.904 0 0 0 7.872-7.872v-55.264a7.904 7.904 0 0 0-7.872-7.872H118.368a7.904 7.904 0 0 0-7.872 7.872v55.264zM891.776 157.824H118.4a7.904 7.904 0 0 0-7.872 7.904v55.232c0 4.352 3.52 7.904 7.872 7.904h773.44a7.904 7.904 0 0 0 7.872-7.904V165.76a7.904 7.904 0 0 0-7.904-7.904z m0 623.488H118.4a7.904 7.904 0 0 0-7.872 7.872v55.264c0 4.32 3.52 7.872 7.872 7.872h773.44a7.904 7.904 0 0 0 7.872-7.872v-55.264a7.904 7.904 0 0 0-7.904-7.872zM726.4 633.408L880.576 512a8.736 8.736 0 0 0 0-13.728l-154.208-121.536a8.768 8.768 0 0 0-14.208 6.816v242.976c0 7.296 8.384 11.424 14.208 6.88z"
                             fill="#43485C" p-id="1687"></path>
                     </svg>
-                    <div class="right">
+                    <div class="right" [ngStyle]="{display:!menuOpen?'none':''}">
                         <div class="skin">
                             <svg t="1615649277974" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                 xmlns="http://www.w3.org/2000/svg" p-id="1276" width="200" height="200">
@@ -674,101 +409,7 @@
 
     </div>
 </div>
-<div class="dialog" style="display: none;">
-    <div class="center backdrop-filter">
-        <div class="title">Select Token</div>
-        <ul>
-            <li class="active">
-                <div class="left">
-                    <div class="selected">
-                        <img src="assets/static//img/checked.png" alt="">
-                    </div>
-                    <div class="icon">
-                        <img src="assets/static//img/btc.png" alt="">
-                    </div>
-                    <div class="name" index='0'>BTC1</div>
-                </div>
-                <div class="right">Balance:9786</div>
-            </li>
-            <li>
-                <div class="left">
-                    <div class="selected">
-                        <img src="assets/static//img/checked.png" alt="">
-                    </div>
-                    <div class="icon">
-                        <img src="assets/static//img/btc.png" alt="">
-                    </div>
-                    <div class="name" index='1'>BTC2</div>
-                </div>
-                <div class="right">Balance:9786</div>
-            </li>
-            <li>
-                <div class="left">
-                    <div class="selected">
-                        <img src="assets/static//img/checked.png" alt="">
-                    </div>
-                    <div class="icon">
-                        <img src="assets/static//img/btc.png" alt="">
-                    </div>
-                    <div class="name" index='2'>BTC3</div>
-                </div>
-                <div class="right">Balance:9786</div>
-            </li>
-            <li>
-                <div class="left">
-                    <div class="selected">
-                        <img src="assets/static//img/checked.png" alt="">
-                    </div>
-                    <div class="icon">
-                        <img src="assets/static//img/btc.png" alt="">
-                    </div>
-                    <div class="name" index='3'>BTC4</div>
-                </div>
-                <div class="right">Balance:9786</div>
-            </li>
-            <li>
-                <div class="left">
-                    <div class="selected">
-                        <img src="assets/static//img/checked.png" alt="">
-                    </div>
-                    <div class="icon">
-                        <img src="assets/static//img/btc.png" alt="">
-                    </div>
-                    <div class="name" index='4'>BTC5</div>
-                </div>
-                <div class="right">Balance:9786</div>
-            </li>
-            <li>
-                <div class="left">
-                    <div class="selected">
-                        <img src="assets/static//img/checked.png" alt="">
-                    </div>
-                    <div class="icon">
-                        <img src="assets/static//img/btc.png" alt="">
-                    </div>
-                    <div class="name" index='5'>BTC6</div>
-                </div>
-                <div class="right">Balance:9786</div>
-            </li>
-            <li>
-                <div class="left">
-                    <div class="selected">
-                        <img src="assets/static//img/checked.png" alt="">
-                    </div>
-                    <div class="icon">
-                        <img src="assets/static//img/btc.png" alt="">
-                    </div>
-                    <div class="name" index='6'>BT7C</div>
-                </div>
-                <div class="right">Balance:9786</div>
-            </li>
-            <div class="checked">
 
-            </div>
-        </ul>
-
-    </div>
-</div>
 
 <app-dialog-tip [hidden]="false"></app-dialog-tip>
 <app-choose-wallet-dlg #cwDlg></app-choose-wallet-dlg>

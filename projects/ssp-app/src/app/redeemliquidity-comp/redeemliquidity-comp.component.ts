@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggle } from '@angular/material/slide-toggle';
@@ -17,9 +17,12 @@ export enum LoadStatus {
 @Component({
     selector: 'app-redeemliquidity-comp',
     templateUrl: './redeemliquidity-comp.component.html',
-    styleUrls: ['./redeemliquidity-comp.component.scss']
+    styleUrls: ['./redeemliquidity-comp.component.less']
 })
 export class RedeemliquidityCompComponent implements OnInit {
+
+    @Input('hidden')
+    hidden = true;
 
     amts: Array<number>;
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
 import { environment } from '../../environments/environment';
@@ -18,9 +18,12 @@ export enum LoadStatus {
 @Component({
     selector: 'app-addliquidity-comp',
     templateUrl: './addliquidity-comp.component.html',
-    styleUrls: ['./addliquidity-comp.component.scss']
+    styleUrls: ['./addliquidity-comp.component.less']
 })
 export class AddliquidityCompComponent implements OnInit {
+
+    @Input('hidden')
+    hidden = true;
 
     amts: Array<number>;
 

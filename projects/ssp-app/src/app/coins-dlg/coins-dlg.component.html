@@ -1,0 +1,14 @@
+<div class="dialog" [ngStyle]="{display:hidden?'none':''}" (click)="close()">
+    <div class="center backdrop-filter">
+        <div class="title">Select Token</div>
+        <ul>
+            <app-coin-item [selected]="indexSelected===0" [index]="0" (coinMouseEnter)="onMouseEnter($event)" (coinMouseLeave)="onMouseLeave($event)" (selectedCoin)="onSelectedCoin($event)"></app-coin-item>
+            <app-coin-item [selected]="indexSelected===1" [index]="1" (coinMouseEnter)="onMouseEnter($event)" (coinMouseLeave)="onMouseLeave($event)" (selectedCoin)="onSelectedCoin($event)"></app-coin-item>
+            <app-coin-item [selected]="indexSelected===2" [index]="2" (coinMouseEnter)="onMouseEnter($event)" (coinMouseLeave)="onMouseLeave($event)" (selectedCoin)="onSelectedCoin($event)"></app-coin-item>
+            <div class="checked" #checkedEle >
+
+            </div>
+        </ul>
+
+    </div>
+</div>

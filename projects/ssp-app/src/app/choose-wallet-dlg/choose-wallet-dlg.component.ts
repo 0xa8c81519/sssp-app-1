@@ -11,23 +11,25 @@ export class ChooseWalletDlgComponent implements OnInit {
 
     hidden = false;
 
-    constructor(public boot: BootService, public dialogRef: MatDialogRef<ChooseWalletDlgComponent>) { }
+    selectedIndex = 0;
+    isMobile = false;
+
+    constructor(public boot: BootService) { }
 
     ngOnInit(): void {
+        let regEx = navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i);
+        this.isMobile = regEx != null && regEx.length > 0;
     }
 
     connectWC() {
-        this.dialogRef.close();
         this.boot.connectWC();
     }
 
     connectBinance() {
-        this.dialogRef.close();
         this.boot.connectBinance();
     }
 
     connectMetaMask() {
-        this.dialogRef.close();
         this.boot.connentMetaMask();
     }
 
@@ -36,7 +38,16 @@ export class ChooseWalletDlgComponent implements OnInit {
     }
 
     close() {
-        this.hidden = true;
+        setTimeout(() => {
+            this.hidden = true;
+        }, 200);
     }
 
+    onItemMouseEnter(event) {
+        this.selectedIndex = event.index;
+    }
+
+    onItemMouseLeave(event) {
+        this.selectedIndex = event.index;
+    }
 }

@@ -30,6 +30,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { UserInfoComponent } from './user-info/user-info.component';
 import { RewardInfoComponent } from './reward-info/reward-info.component';
 import { DialogTipComponent } from './dialog-tip/dialog-tip.component';
+import { WalletItemComponent } from './wallet-item/wallet-item.component';
+import { StakeCompComponent } from './stake-comp/stake-comp.component';
+import { CoinsDlgComponent } from './coins-dlg/coins-dlg.component';
+import { CoinItemComponent } from './coin-item/coin-item.component';
 
 @NgModule({
     declarations: [
@@ -50,7 +54,11 @@ import { DialogTipComponent } from './dialog-tip/dialog-tip.component';
         WalletExceptionDlgComponent,
         UserInfoComponent,
         RewardInfoComponent,
-        DialogTipComponent
+        DialogTipComponent,
+        WalletItemComponent,
+        StakeCompComponent,
+        CoinsDlgComponent,
+        CoinItemComponent
     ],
     imports: [
         BrowserModule,

@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, Input, OnInit, EventEmitter, Output, SecurityContext } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-wallet-item',
@@ -19,7 +20,16 @@ export class WalletItemComponent implements OnInit {
     mouseLeave: EventEmitter<any> = new EventEmitter();
     mouseOn = false;
 
-    constructor() { }
+    @Input('walletImg')
+    walletImg;
+
+    @Input('walletName')
+    walletName;
+
+    @Output('onClick')
+    clickEvent = new EventEmitter();
+
+    constructor(private sanitizer: DomSanitizer) { }
 
     ngOnInit(): void {
     }
@@ -32,6 +42,14 @@ export class WalletItemComponent implements OnInit {
     onLiMouseLeave() {
         this.mouseOn = false;
         this.mouseLeave.emit({ index: this.index });
+    }
+
+    safeImgSrc() {
+        return this.sanitizer.sanitize(SecurityContext.URL, this.walletImg);
+    }
+
+    onClick() {
+        this.clickEvent.emit();
     }
 
 }

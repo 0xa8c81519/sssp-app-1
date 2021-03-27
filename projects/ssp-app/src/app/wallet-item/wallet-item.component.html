@@ -1,6 +1,6 @@
-<li [ngClass]="{active:mouseOn,bg:mouseOn&&isMobile}" (mouseenter)="onLiMouseEnter()" (mouseleave)="onLiMouseLeave()">
+<li [ngClass]="{active:mouseOn,bg:mouseOn&&isMobile}" (mouseenter)="onLiMouseEnter()" (mouseleave)="onLiMouseLeave()" (click)="onClick()">
     <div class="icon">
-        <img src="assets/static//img/btc.png" alt="">
+        <img src="{{safeImgSrc()}}" alt="">
     </div>
-    <div class="name" index='0'>BTC</div>
+    <div class="name" index='0'>{{walletName}}</div>
 </li>

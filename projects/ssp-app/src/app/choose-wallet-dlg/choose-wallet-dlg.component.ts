@@ -9,7 +9,7 @@ import { BootService } from '../services/boot.service';
 })
 export class ChooseWalletDlgComponent implements OnInit {
 
-    hidden = false;
+    hidden = true;
 
     selectedIndex = 0;
     isMobile = false;

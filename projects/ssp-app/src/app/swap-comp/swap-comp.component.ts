@@ -26,15 +26,15 @@ export class SwapCompComponent implements OnInit {
     @Input('hidden')
     hidden = false;
 
-    left: string = '0';
+    left = 0;
 
-    right: string = '1';
+    right = 1;
 
     balance: BigNumber;
 
-    amt: string;
+    amt = '0';
 
-    minAmt: string;
+    minAmt: string = '0';
 
     approveStatus: ApproveStatus = ApproveStatus.None;
 
@@ -43,8 +43,11 @@ export class SwapCompComponent implements OnInit {
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
 
-    @ViewChild('coinsDlg')
-    coinsDlg: CoinsDlgComponent;
+    @ViewChild('coinsDlgLeft')
+    coinsDlgLeft: CoinsDlgComponent;
+
+    @ViewChild('coinsDlgRight')
+    coinsDlgRight: CoinsDlgComponent;
 
     constructor(public boot: BootService, private dialog: MatDialog) {
         this.boot.walletReady.subscribe(res => {
@@ -62,34 +65,34 @@ export class SwapCompComponent implements OnInit {
     chooseLeft(val) {
         this.left = val;
         if (this.left === this.right) {
-            if (this.right !== '2') {
-                this.right = String(Number(this.right) + 1);
+            if (this.right !== 2) {
+                this.right = this.right + 1;
             } else {
-                this.right = '0';
+                this.right = 0;
             }
         }
         this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-            this.minAmt = res.toFixed(9, BigNumber.ROUND_UP);
+            this.minAmt = res.toFixed(4, BigNumber.ROUND_UP);
         });
     }
     chooseRight(val) {
         this.right = val;
         if (this.left === this.right) {
-            if (this.left !== '2') {
-                this.left = String(Number(this.right) + 1);
+            if (this.left !== 2) {
+                this.left = this.right + 1;
             } else {
-                this.left = '0';
+                this.left = 0;
             }
         }
         this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-            this.minAmt = res.toFixed(9, BigNumber.ROUND_UP);
+            this.minAmt = res.toFixed(4, BigNumber.ROUND_UP);
         });
     }
 
     maxAmt() {
-        this.amt = this.boot.balance.coinsBalance[this.left].toFixed(9);
+        this.amt = this.boot.balance.coinsBalance[this.left].toFixed(4, 1);
         this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-            this.minAmt = res.toFixed(9, BigNumber.ROUND_UP);
+            this.minAmt = res.toFixed(4, BigNumber.ROUND_UP);
         });
         this.updateApproveStatus();
     }
@@ -107,7 +110,7 @@ export class SwapCompComponent implements OnInit {
     }
 
     async exchange() {
-        if (this.amt) {
+        if (this.amt && this.isExchangeEnabled()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
             let amtsStr = new Array();
@@ -160,7 +163,7 @@ export class SwapCompComponent implements OnInit {
         this.amt = val;
         if (!new BigNumber(this.left).isNaN() && !new BigNumber(this.right).isNaN() && !new BigNumber(this.amt).isNaN()) {
             this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-                this.minAmt = res.toFixed(9, BigNumber.ROUND_DOWN);
+                this.minAmt = res.toFixed(4, BigNumber.ROUND_DOWN);
             });
         }
         this.updateApproveStatus();
@@ -198,7 +201,22 @@ export class SwapCompComponent implements OnInit {
         return this.boot.poolInfo.fee.multipliedBy(100).toFixed(1, 1);
     }
 
-    chooseCoin(type) {
-        this.coinsDlg.open();
+    openCoinLeftDlg() {
+        this.coinsDlgLeft.open(this.left);
+    }
+
+    openCoinRightDlg() {
+        this.coinsDlgRight.open(this.right);
+    }
+
+    onLeftCoinSelected(selectedIndex_) {
+        this.left = selectedIndex_;
+        this.chooseLeft(selectedIndex_);
+        this.updateApproveStatus();
+    }
+
+    onRightCoinSelected(selectedIndex_) {
+        this.right = selectedIndex_;
+        this.chooseRight(selectedIndex_);
     }
 }

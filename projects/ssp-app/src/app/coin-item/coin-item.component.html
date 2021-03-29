@@ -4,9 +4,10 @@
             <img src="assets/static//img/checked.png" alt="">
         </div>
         <div class="icon">
-            <img src="assets/static//img/btc.png" alt="">
+            <img src="{{safeImgSrc()}}" alt="">
         </div>
-        <div class="name" index='0'>BTC1</div>
+        <div class="name" index='0'>{{symbol}}</div>
     </div>
-    <div class="right">Balance:9786</div>
+    <div class="right">{{"Balance"|translate}}: {{boot.balance.coinsBalance[index].toFormat(4,1)}}
+    </div>
 </li>

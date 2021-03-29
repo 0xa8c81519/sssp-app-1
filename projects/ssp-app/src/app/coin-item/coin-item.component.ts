@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SecurityContext } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { BootService } from '../services/boot.service';
 
 @Component({
     selector: 'app-coin-item',
@@ -22,7 +24,13 @@ export class CoinItemComponent implements OnInit {
     @Input('selected')
     selected = false;
 
-    constructor() { }
+    @Input('coinImg')
+    coinImg;
+
+    @Input('symbol')
+    symbol;
+
+    constructor(private sanitizer: DomSanitizer, public boot: BootService) { }
 
     ngOnInit(): void {
     }
@@ -42,6 +50,10 @@ export class CoinItemComponent implements OnInit {
 
     cancel() {
         this.selected = false;
+    }
+
+    safeImgSrc() {
+        return this.sanitizer.sanitize(SecurityContext.URL, this.coinImg);
     }
 
 }

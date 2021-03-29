@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, Output, Renderer2, ViewChild, EventEmitter } from '@angular/core';
+import { BootService } from '../services/boot.service';
 
 @Component({
     selector: 'app-coins-dlg',
@@ -16,17 +17,21 @@ export class CoinsDlgComponent implements OnInit {
     @ViewChild('checkedEle')
     checkedEle: ElementRef;
 
+    @Output('coinSelected')
+    coinsSelected = new EventEmitter();
+
     isMobile = false;
 
-    constructor(private render: Renderer2) { }
+    constructor(private render: Renderer2, public boot: BootService) { }
 
     ngOnInit(): void {
         let regEx = navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i);
         this.isMobile = regEx != null && regEx.length > 0;
     }
 
-    open() {
+    open(selectedIndex) {
         this.hidden = false;
+        this.indexSelected = selectedIndex;
     }
 
     close() {
@@ -64,6 +69,7 @@ export class CoinsDlgComponent implements OnInit {
 
     onSelectedCoin(index) {
         this.indexSelected = index;
+        this.coinsSelected.emit(index);
     }
 
 }

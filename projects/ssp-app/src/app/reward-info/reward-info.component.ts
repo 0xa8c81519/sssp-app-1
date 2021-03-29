@@ -5,7 +5,7 @@ import { BootService } from '../services/boot.service';
 @Component({
     selector: 'app-reward-info',
     templateUrl: './reward-info.component.html',
-    styleUrls: ['./reward-info.component.scss']
+    styleUrls: ['./reward-info.component.less']
 })
 export class RewardInfoComponent implements OnInit {
 

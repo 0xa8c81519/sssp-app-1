@@ -4,7 +4,7 @@ import { BootService } from '../services/boot.service';
 @Component({
     selector: 'app-user-info',
     templateUrl: './user-info.component.html',
-    styleUrls: ['./user-info.component.scss']
+    styleUrls: ['./user-info.component.less']
 })
 export class UserInfoComponent implements OnInit {
     @Output() loading: EventEmitter<any> = new EventEmitter();

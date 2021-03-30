@@ -5,7 +5,6 @@ import { MatSlideToggle } from '@angular/material/slide-toggle';
 import BigNumber from 'bignumber.js';
 import { BootService } from '../services/boot.service';
 import { ChooseWalletDlgComponent } from '../choose-wallet-dlg/choose-wallet-dlg.component';
-import { IntallWalletDlgComponent } from '../intall-wallet-dlg/intall-wallet-dlg.component';
 
 export enum ActionStatus {
     None, Transfering, TrasactionEnd
@@ -46,6 +45,8 @@ export class RedeemliquidityCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
+    @Output('chooseWallet') chooseWlt=new EventEmitter();
+    @Output('installWallet') installWlt=new EventEmitter();
 
     slideToggleColor: ThemePalette = "accent";
 
@@ -119,11 +120,11 @@ export class RedeemliquidityCompComponent implements OnInit {
         this.redeemPercent = val;
         // if (this.redeemPercent && this.redeemPercent !== 0) {
         //     if (this.redeemToThree.checked) {
-                let lps = this.boot.balance.lp.multipliedBy(this.redeemPercent).dividedBy(100);
-                this.amts.forEach((e, i, arr) => {
-                    let amt = this.boot.poolInfo.coinsRealBalance[i].multipliedBy(lps).div(this.boot.poolInfo.totalSupply);
-                    arr[i] = Number(amt.toFixed(4, BigNumber.ROUND_DOWN))
-                });
+        let lps = this.boot.balance.lp.multipliedBy(this.redeemPercent).dividedBy(100);
+        this.amts.forEach((e, i, arr) => {
+            let amt = this.boot.poolInfo.coinsRealBalance[i].multipliedBy(lps).div(this.boot.poolInfo.totalSupply);
+            arr[i] = Number(amt.toFixed(4, BigNumber.ROUND_DOWN))
+        });
         //     } else {
         //         this.redeemToIndexChange(this.redeemToIndex).then();
         //     }
@@ -153,14 +154,14 @@ export class RedeemliquidityCompComponent implements OnInit {
 
     public async connectWallet() {
         if (!this.boot.isMetaMaskInstalled() && !this.boot.isBinanceInstalled()) {
-            this.dialog.open(IntallWalletDlgComponent, { width: '30em' });
+            this.installWlt.emit();
             return;
         } else {
             this.chooseWallet();
         }
     }
     chooseWallet() {
-        this.dialog.open(ChooseWalletDlgComponent, { width: '30em' });
+        this.chooseWlt.emit();
     }
 
     updateLPApproveStatus() {

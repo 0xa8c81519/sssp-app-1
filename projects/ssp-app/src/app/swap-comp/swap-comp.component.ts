@@ -1,12 +1,7 @@
-import { EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import { environment } from '../../environments/environment';
-import { ChooseWalletDlgComponent } from '../choose-wallet-dlg/choose-wallet-dlg.component';
 import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
-import { IntallWalletDlgComponent } from '../intall-wallet-dlg/intall-wallet-dlg.component';
-import { PriceDiffComponent } from '../price-diff/price-diff.component';
 import { BootService } from '../services/boot.service';
 
 export enum ApproveStatus {
@@ -42,6 +37,8 @@ export class SwapCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
+    @Output('chooseWallet') chooseWlt = new EventEmitter();
+    @Output('installWallet') installWlt = new EventEmitter();
 
     @ViewChild('coinsDlgLeft')
     coinsDlgLeft: CoinsDlgComponent;
@@ -150,14 +147,14 @@ export class SwapCompComponent implements OnInit {
 
     public async connectWallet() {
         if (!this.boot.isMetaMaskInstalled() && !this.boot.isBinanceInstalled()) {
-            this.dialog.open(IntallWalletDlgComponent, { width: '30em' });
+            this.installWlt.emit();
             return;
         } else {
             this.chooseWallet();
         }
     }
     chooseWallet() {
-        this.dialog.open(ChooseWalletDlgComponent, { width: '30em' });
+        this.chooseWlt.emit();
     }
     amtChanged(val) {
         this.amt = val;

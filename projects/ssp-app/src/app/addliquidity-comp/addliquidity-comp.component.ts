@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
 import { environment } from '../../environments/environment';
 import { ChooseWalletDlgComponent } from '../choose-wallet-dlg/choose-wallet-dlg.component';
-import { IntallWalletDlgComponent } from '../intall-wallet-dlg/intall-wallet-dlg.component';
 import { PriceDiffComponent } from '../price-diff/price-diff.component';
 import { BootService } from '../services/boot.service';
 
@@ -33,6 +32,8 @@ export class AddliquidityCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
+    @Output('chooseWallet') chooseWallt=new EventEmitter();
+    @Output('installWallet') installChooseWallt=new EventEmitter();
 
     constructor(public boot: BootService, private dialog: MatDialog) {
         this.amts = new Array<number>();
@@ -188,7 +189,7 @@ export class AddliquidityCompComponent implements OnInit {
 
     public async connectWallet() {
         if (!this.boot.isMetaMaskInstalled() && !this.boot.isBinanceInstalled()) {
-            this.dialog.open(IntallWalletDlgComponent, { width: '30em' });
+            this.installChooseWallt.emit();
             return;
         } else {
             this.chooseWallet();
@@ -196,6 +197,6 @@ export class AddliquidityCompComponent implements OnInit {
     }
 
     chooseWallet() {
-        this.dialog.open(ChooseWalletDlgComponent, { width: '30em' });
+        this.chooseWallt.emit();
     }
 }

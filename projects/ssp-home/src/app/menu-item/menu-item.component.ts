@@ -16,6 +16,9 @@ export class MenuItemComponent implements OnInit {
     @Input("targetUrl")
     url = "#";
 
+    @Input('target')
+    target='_selft'
+
     constructor(private sanitizer: DomSanitizer) { }
 
     ngOnInit(): void {

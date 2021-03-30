@@ -1,6 +1,6 @@
 <li>
     <div class="title" [ngClass]="{hover:mouseOn}" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
-        <a href='{{safeUrl()}}'>{{itemText}}</a>
+        <a href='{{safeUrl()}}' target="{{target}}">{{itemText}}</a>
     </div>
     <div class="shadow" [ngClass]="{hover:mouseOn}" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
         {{itemText}}

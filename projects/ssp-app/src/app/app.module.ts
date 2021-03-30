@@ -15,7 +15,7 @@ import { AddliquidityCompComponent } from './addliquidity-comp/addliquidity-comp
 import { AddlpConfirmComponent } from './addlp-confirm/addlp-confirm.component';
 import { AppComponent } from './app.component';
 import { ChooseWalletDlgComponent } from './choose-wallet-dlg/choose-wallet-dlg.component';
-import { IntallWalletDlgComponent } from './intall-wallet-dlg/intall-wallet-dlg.component';
+import { InstallWalletDlgComponent } from './intall-wallet-dlg/install-wallet-dlg.component';
 import { PoolInfoComponent } from './pool-info/pool-info.component';
 import { RedeemConfirmComponent } from './redeem-confirm/redeem-confirm.component';
 import { RedeemliquidityCompComponent } from './redeemliquidity-comp/redeemliquidity-comp.component';
@@ -39,7 +39,7 @@ import { CoinItemComponent } from './coin-item/coin-item.component';
     declarations: [
         AppComponent,
         PoolInfoComponent,
-        IntallWalletDlgComponent,
+        InstallWalletDlgComponent,
         SwapCompComponent,
         AddliquidityCompComponent,
         RedeemliquidityCompComponent,

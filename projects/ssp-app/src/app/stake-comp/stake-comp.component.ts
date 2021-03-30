@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
 import { ChooseWalletDlgComponent } from '../choose-wallet-dlg/choose-wallet-dlg.component';
-import { IntallWalletDlgComponent } from '../intall-wallet-dlg/intall-wallet-dlg.component';
 import { BootService } from '../services/boot.service';
 export enum ActionStatus {
     None, Transfering, TrasactionEnd
@@ -42,6 +41,8 @@ export class StakeCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
+    @Output('chooseWallet') chooseWlt=new EventEmitter();
+    @Output('installWallet') installWlt=new EventEmitter();
 
 
 
@@ -145,14 +146,14 @@ export class StakeCompComponent implements OnInit {
 
     public async connectWallet() {
         if (!this.boot.isMetaMaskInstalled() && !this.boot.isBinanceInstalled()) {
-            this.dialog.open(IntallWalletDlgComponent, { width: '30em' });
+            this.installWlt.emit();
             return;
         } else {
             this.chooseWallet();
         }
     }
     chooseWallet() {
-        this.dialog.open(ChooseWalletDlgComponent, { width: '30em' });
+        this.chooseWlt.emit();
     }
 
     updateLPApproveStatus() {

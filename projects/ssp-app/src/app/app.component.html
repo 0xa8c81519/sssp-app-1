@@ -57,12 +57,12 @@
             <div class="main">
                 <div class="boxs">
                     <div class="box">
-                        <app-swap-comp *ngIf="curTab===0" [hidden]="curTab===0?false:true"></app-swap-comp>
-                        <app-addliquidity-comp *ngIf="curTab===1" [hidden]="curTab===1?false:true">
+                        <app-swap-comp *ngIf="curTab===0" [hidden]="curTab===0?false:true" (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()"></app-swap-comp>
+                        <app-addliquidity-comp *ngIf="curTab===1" [hidden]="curTab===1?false:true" (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()">
                         </app-addliquidity-comp>
-                        <app-redeemliquidity-comp *ngIf="curTab===2" [hidden]="curTab===2?false:true">
+                        <app-redeemliquidity-comp *ngIf="curTab===2" [hidden]="curTab===2?false:true" (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()">
                         </app-redeemliquidity-comp>
-                        <app-stake-comp *ngIf="curTab===3" [hidden]="curTab===3?false:true"></app-stake-comp>
+                        <app-stake-comp *ngIf="curTab===3" [hidden]="curTab===3?false:true" (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()"></app-stake-comp>
                         <!-- 其他盒子 -->
                         <app-user-info></app-user-info>
                         <app-reward-info></app-reward-info>
@@ -292,3 +292,4 @@
 
 <app-dialog-tip [hidden]="true"></app-dialog-tip>
 <app-choose-wallet-dlg #cwDlg></app-choose-wallet-dlg>
+<app-install-wallet-dlg #installWltDlg></app-install-wallet-dlg>

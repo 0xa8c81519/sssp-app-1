@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ChooseWalletDlgComponent } from './choose-wallet-dlg/choose-wallet-dlg.component';
 import { LocalStorageService } from 'angular-web-storage';
 import { ConstVal } from './model/const-val';
+import { InstallWalletDlgComponent } from './intall-wallet-dlg/install-wallet-dlg.component';
 
 @Component({
     selector: 'app-root',
@@ -30,6 +31,9 @@ export class AppComponent implements OnInit {
 
     @ViewChild('cwDlg')
     cwDlg: ChooseWalletDlgComponent;
+
+    @ViewChild('installWltDlg')
+    installWltDlg: InstallWalletDlgComponent;
 
     @ViewChild('tabsUl')
     tabsUl: ElementRef;

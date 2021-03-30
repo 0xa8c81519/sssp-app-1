@@ -215,6 +215,11 @@ img {
                 .active {
                     .name {
                         color: #fff !important;
+
+                        a {
+                            color: #fff;
+                            text-decoration: none;
+                        }
                     }
 
                     .icon-2 {
@@ -376,6 +381,7 @@ img {
             width: 0;
             white-space: nowrap;
             transform: translateX(-200px);
+
         }
 
         &.open {
@@ -801,26 +807,37 @@ img {
                         justify-content: flex-start;
                         cursor: pointer;
 
-                        .name {
-                            font-size: 16px;
+                        a {
+                            color: #6B7595;
+                            text-decoration: none;
+                            display: flex;
+                            justify-content: flex-start;
+
+                            .name {
+                                font-size: 16px;
+                            }
+
+                            svg {
+                                margin: 0 32px;
+                                margin-right: 10px;
+                                transition: 0.5s;
+                                width: 26px;
+                                height: 26px;
+                                font-size: 20px;
+                            }
+
+                            .icon-1 {
+
+                                display: block;
+                            }
+
+                            .icon-2 {
+                                display: none;
+                            }
                         }
 
-                        svg {
-                            margin: 0 32px;
-                            margin-right: 10px;
-                            transition: 0.5s;
-                            width: 26px;
-                            height: 26px;
-                            font-size: 20px;
-                        }
-
-                        .icon-1 {
-
-                            display: block;
-                        }
-
-                        .icon-2 {
-                            display: none;
+                        a:hover {
+                            color: #fff;
                         }
                     }
 

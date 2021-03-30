@@ -113,21 +113,21 @@ export class RedeemliquidityCompComponent implements OnInit {
     }
 
     redeemPercentChange(val) {
-        if (!this.redeemPercent || this.redeemPercent === 0) {
-            this.redeemToThree.checked = true;
-        }
+        // if (!this.redeemPercent || this.redeemPercent === 0) {
+        //     this.redeemToThree.checked = true;
+        // }
         this.redeemPercent = val;
-        if (this.redeemPercent && this.redeemPercent !== 0) {
-            if (this.redeemToThree.checked) {
+        // if (this.redeemPercent && this.redeemPercent !== 0) {
+        //     if (this.redeemToThree.checked) {
                 let lps = this.boot.balance.lp.multipliedBy(this.redeemPercent).dividedBy(100);
                 this.amts.forEach((e, i, arr) => {
                     let amt = this.boot.poolInfo.coinsRealBalance[i].multipliedBy(lps).div(this.boot.poolInfo.totalSupply);
-                    arr[i] = Number(amt.toFixed(9, BigNumber.ROUND_DOWN))
+                    arr[i] = Number(amt.toFixed(4, BigNumber.ROUND_DOWN))
                 });
-            } else {
-                this.redeemToIndexChange(this.redeemToIndex).then();
-            }
-        }
+        //     } else {
+        //         this.redeemToIndexChange(this.redeemToIndex).then();
+        //     }
+        // }
     }
 
     async redeemToIndexChange(val) {

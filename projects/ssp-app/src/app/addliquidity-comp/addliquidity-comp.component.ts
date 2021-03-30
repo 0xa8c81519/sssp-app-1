@@ -152,34 +152,34 @@ export class AddliquidityCompComponent implements OnInit {
         this.boot.poolInfo.coinsBalance.forEach(e => {
             r = r && (e.comparedTo(0) === 0);
         });
-        if (r) { // 池中余额全部为0
-            let re = true;
-            this.amts.forEach((e, i) => {
-                let amt = new BigNumber(e);
-                re = re && !this.isApproveEnabled(i) && amt.comparedTo(0) > 0;
-            });
-            return re;
-        } else {
-            let allAmtIs0 = true;
-            this.amts.forEach(e => {
-                let n = new BigNumber(e);
-                allAmtIs0 = allAmtIs0 && (n.isNaN() || n.comparedTo(0) === 0);
-            });
-            if (allAmtIs0) {
-                return false;
-            } else {
-                let re = false;
-                this.amts.forEach((e, i) => {
-                    let n = new BigNumber(e);
-                    if (n.isNaN() || n.comparedTo(0) === 0 || this.isApproveEnabled(i)) {
+        // if (r) { // 池中余额全部为0
+        let re = true;
+        this.amts.forEach((e, i) => {
+            let amt = new BigNumber(e);
+            re = re && !this.isApproveEnabled(i) && amt.comparedTo(0) > 0;
+        });
+        return re;
+        // } else {
+        //     let allAmtIs0 = true;
+        //     this.amts.forEach(e => {
+        //         let n = new BigNumber(e);
+        //         allAmtIs0 = allAmtIs0 && (n.isNaN() || n.comparedTo(0) === 0);
+        //     });
+        //     if (allAmtIs0) {
+        //         return false;
+        //     } else {
+        //         let re = false;
+        //         this.amts.forEach((e, i) => {
+        //             let n = new BigNumber(e);
+        //             if (n.isNaN() || n.comparedTo(0) === 0 || this.isApproveEnabled(i)) {
 
-                    } else {
-                        re = true;
-                    }
-                });
-                return re;
-            }
-        }
+        //             } else {
+        //                 re = true;
+        //             }
+        //         });
+        //         return re;
+        //     }
+        // }
     }
     amtChange(i: number, val: any) {
         this.amts[i] = val;

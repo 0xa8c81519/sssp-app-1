@@ -80,6 +80,7 @@
 
                     &.blue {
                         color: #fff;
+                        cursor: pointer;
                     }
                 }
             }
@@ -131,6 +132,16 @@
     .btn {
         height: 45px;
         background: #16A16A;
+        border-radius: 7px;
+        font-size: 11px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .btn-disabled {
+        height: 45px;
+        background: #cccccc;
         border-radius: 7px;
         font-size: 11px;
         display: flex;
@@ -202,7 +213,6 @@
                         line-height: 20px;
                         width: auto;
                         font-size: 9px;
-                        cursor: pointer;
                     }
                 }
 
@@ -240,6 +250,17 @@
         }
 
         .btn {
+            height: 20%;
+            min-height: 40px;
+            max-height: 70px;
+            border-radius: 14px;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-disabled {
             height: 20%;
             min-height: 40px;
             max-height: 70px;

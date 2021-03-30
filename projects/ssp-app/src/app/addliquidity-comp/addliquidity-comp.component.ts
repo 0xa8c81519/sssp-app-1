@@ -81,16 +81,21 @@ export class AddliquidityCompComponent implements OnInit {
         }
     }
     approve(i: number) {
-        this.loadStatus = LoadStatus.Loading;
-        this.loading.emit();
-        this.boot.approve(i, String(this.amts[i] ? this.amts[i] : 0), this.boot.poolAddress).then(r => {
-            this.updateApproveStatus();
-            this.loadStatus = LoadStatus.Loaded;
-            this.loaded.emit();
-        });
+        if (this.isApproveEnabled(i) && this.loadStatus !== 1) {
+            this.loadStatus = LoadStatus.Loading;
+            this.loading.emit();
+            this.boot.approve(i, String(this.amts[i] ? this.amts[i] : 0), this.boot.poolAddress).then(r => {
+                this.updateApproveStatus();
+                this.loadStatus = LoadStatus.Loaded;
+                this.loaded.emit();
+            });
+        }
     }
 
     async addLiquidity() {
+        if (!this.isAddLiquidityBtnEnabled() || this.loadStatus === 1) {
+            return
+        }
         // await this.boot.loadData();
         this.loadStatus = LoadStatus.Loading;
         this.loading.emit();

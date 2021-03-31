@@ -35,13 +35,15 @@
         <div class="title">
             <span>Bstable.finance </span>the BSC chain <br> stablecoin flash swap
         </div>
-        <div class="btn" [ngClass]="{blue:btnMouseOn}" (mouseenter)="onBtnMouseEnter()"
-            (mouseleave)="onBtnMouseLeave()">
-            <div class="text">Experience now</div>
-            <div class="icon">
-                <img src="assets/static/img/to.png" alt="">
+        <a href="/p1">
+            <div class="btn" [ngClass]="{blue:btnMouseOn}" (mouseenter)="onBtnMouseEnter()"
+                (mouseleave)="onBtnMouseLeave()">
+                <div class="text">Experience now</div>
+                <div class="icon">
+                    <img src="assets/static/img/to.png" alt="">
+                </div>
             </div>
-        </div>
+        </a>
         <div class="bgc-box" [ngClass]="{'animation':bgcBoxMouseOn,'animation2':!bgcBoxMouseOn}"
             (mouseenter)="onBgcBoxMouseEnter()" (mouseleave)="onBgcBoxMouseLeave()">
 

@@ -8,6 +8,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class MenuItemComponent implements OnInit {
 
+    @Input('empty')
+    empty = true;
+
     @Input("itemText")
     itemText;
 
@@ -17,7 +20,7 @@ export class MenuItemComponent implements OnInit {
     url = "#";
 
     @Input('target')
-    target='_selft'
+    target = '_selft'
 
     constructor(private sanitizer: DomSanitizer) { }
 

@@ -21,11 +21,14 @@
     </div>
     <div class="list">
         <ul>
-            <app-menu-item [itemText]="'Pool 1'" [targetUrl]="'/p1'"></app-menu-item>
-            <app-menu-item [itemText]="'Pool 2'" [targetUrl]="'/p2'"></app-menu-item>
-            <app-menu-item [itemText]="'Tutorial'"
+            <app-menu-item [itemText]="'Pool 1'" [targetUrl]="'/p1'" [empty]="false"></app-menu-item>
+            <app-menu-item [itemText]="'Pool 2'" [targetUrl]="'/p2'" [empty]="false"></app-menu-item>
+            <app-menu-item [itemText]="'Tutorial'" [empty]="false"
                 [targetUrl]="'https://www.notion.so/bStable-Docs-5614b5e416bc409baf24a0e2e6ca9035'" [target]="'_blank'">
             </app-menu-item>
+            <app-menu-item></app-menu-item>
+            <app-menu-item></app-menu-item>
+            <app-menu-item></app-menu-item>
         </ul>
     </div>
 </div>

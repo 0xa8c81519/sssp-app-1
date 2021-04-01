@@ -66,6 +66,18 @@
     },
     {
       "path": "./projects/pool2-test/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/pool1-stake/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/pool1-stake/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stake1-main/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/stake1-main/tsconfig.spec.json"
     }
     ]
 }

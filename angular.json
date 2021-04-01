@@ -296,145 +296,6 @@
                 }
             }
         },
-        "ssp-home": {
-            "projectType": "application",
-            "schematics": {
-                "@schematics/angular:component": {
-                    "style": "scss"
-                }
-            },
-            "root": "projects/ssp-home",
-            "sourceRoot": "projects/ssp-home/src",
-            "prefix": "app",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "outputPath": "dist/ssp-home",
-                        "index": "projects/ssp-home/src/index.html",
-                        "main": "projects/ssp-home/src/main.ts",
-                        "polyfills": "projects/ssp-home/src/polyfills.ts",
-                        "tsConfig": "projects/ssp-home/tsconfig.app.json",
-                        "aot": true,
-                        "assets": [
-                            "projects/ssp-home/src/assets",
-                            {
-                                "glob": "**/*",
-                                "input": "libs/shared-assets/",
-                                "output": "./assets"
-                            },
-                            {
-                                "glob": "favicon.ico",
-                                "input": "libs/",
-                                "output": "./"
-                            }
-                        ],
-                        "styles": [
-                            "projects/ssp-home/src/styles.scss"
-                        ],
-                        "scripts": []
-                    },
-                    "configurations": {
-                        "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "projects/ssp-home/src/environments/environment.ts",
-                                    "with": "projects/ssp-home/src/environments/environment.prod.ts"
-                                }
-                            ],
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "budgets": [
-                                {
-                                    "type": "initial",
-                                    "maximumWarning": "2mb",
-                                    "maximumError": "5mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb",
-                                    "maximumError": "10kb"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "ssp-home:build"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "ssp-home:build:production"
-                        }
-                    }
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "ssp-home:build"
-                    }
-                },
-                "test": {
-                    "builder": "@angular-devkit/build-angular:karma",
-                    "options": {
-                        "main": "projects/ssp-home/src/test.ts",
-                        "polyfills": "projects/ssp-home/src/polyfills.ts",
-                        "tsConfig": "projects/ssp-home/tsconfig.spec.json",
-                        "karmaConfig": "projects/ssp-home/karma.conf.js",
-                        "assets": [
-                            "projects/ssp-home/src/assets",
-                            {
-                                "glob": "**/*",
-                                "input": "libs/shared-assets/",
-                                "output": "./assets"
-                            },
-                            {
-                                "glob": "favicon.ico",
-                                "input": "libs/",
-                                "output": "./"
-                            }
-                        ],
-                        "styles": [
-                            "projects/ssp-home/src/styles.scss"
-                        ],
-                        "scripts": []
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": [
-                            "projects/ssp-home/tsconfig.app.json",
-                            "projects/ssp-home/tsconfig.spec.json",
-                            "projects/ssp-home/e2e/tsconfig.json"
-                        ],
-                        "exclude": [
-                            "**/node_modules/**"
-                        ]
-                    }
-                },
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "projects/ssp-home/e2e/protractor.conf.js",
-                        "devServerTarget": "ssp-home:serve"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "ssp-home:serve:production"
-                        }
-                    }
-                }
-            }
-        },
         "app-lib": {
             "projectType": "library",
             "root": "projects/app-lib",
@@ -985,6 +846,137 @@
                     "configurations": {
                         "production": {
                             "devServerTarget": "home-test:serve:production"
+                        }
+                    }
+                }
+            }
+        },
+        "pool1-test": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            },
+            "root": "projects/pool1-test",
+            "sourceRoot": "projects/pool1-test/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/pool1-test",
+                        "index": "projects/pool1-test/src/index.html",
+                        "main": "projects/pool1-test/src/main.ts",
+                        "polyfills": "projects/pool1-test/src/polyfills.ts",
+                        "tsConfig": "projects/pool1-test/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/pool1-test/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
+                        ],
+                        "styles": [
+                            "projects/pool1-test/src/styles.less",
+                            "projects/pool1-test/src/mat.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/pool1-test/src/environments/environment.ts",
+                                    "with": "projects/pool1-test/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "pool1-test:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "pool1-test:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "pool1-test:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/pool1-test/src/test.ts",
+                        "polyfills": "projects/pool1-test/src/polyfills.ts",
+                        "tsConfig": "projects/pool1-test/tsconfig.spec.json",
+                        "karmaConfig": "projects/pool1-test/karma.conf.js",
+                        "assets": [
+                            "projects/pool1-test/src/favicon.ico",
+                            "projects/pool1-test/src/assets"
+                        ],
+                        "styles": [
+                            "projects/pool1-test/src/styles.less"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/pool1-test/tsconfig.app.json",
+                            "projects/pool1-test/tsconfig.spec.json",
+                            "projects/pool1-test/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/pool1-test/e2e/protractor.conf.js",
+                        "devServerTarget": "pool1-test:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "pool1-test:serve:production"
                         }
                     }
                 }

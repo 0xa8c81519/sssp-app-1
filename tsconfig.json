@@ -42,6 +42,12 @@
     },
     {
       "path": "./projects/home-test/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/pool1-test/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/pool1-test/tsconfig.spec.json"
     }
     ]
 }

@@ -60,6 +60,12 @@
     },
     {
       "path": "./projects/pool2-main/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/pool2-test/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/pool2-test/tsconfig.spec.json"
     }
     ]
 }

@@ -7,10 +7,18 @@
     <div class="pand">
         <div class="pand-top">
             <div class="left">
+                {{boot.tokenSymbol}}
+            </div>
+            <div class="right">
+                {{"Balance"|translate}}: {{boot.balance.tokenBalance.toFormat(4,1)}}
+            </div>
+        </div>
+        <div class="pand-top">
+            <div class="left">
                 {{boot.liquiditySymbol}}
             </div>
             <div class="right">
-                {{"Balance"|translate}}: {{boot.balance.lp.toFixed(4,1)}}
+                {{"Balance"|translate}}: {{boot.balance.lp.toFormat(4,1)}}
             </div>
         </div>
         <div class="pand-bottom">

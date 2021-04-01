@@ -8,13 +8,13 @@ export const environment = {
         {
             text: "Pool 1",
             active: false,
-            url: "/p1",
+            url: "/pool1",
             target: "_self"
         },
         {
             text: "Pool 2",
             active: false,
-            url: "/p2",
+            url: "/pool2",
             target: "_self"
         },
         {

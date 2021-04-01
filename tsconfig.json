@@ -78,6 +78,12 @@
     },
     {
       "path": "./projects/stake1-main/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stake1-test/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/stake1-test/tsconfig.spec.json"
     }
     ]
 }

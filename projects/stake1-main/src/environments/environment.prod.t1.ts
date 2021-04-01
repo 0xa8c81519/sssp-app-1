@@ -11,9 +11,8 @@ export const environment = {
     },
     chains: {
         56: {
-            enabled: false,
+            enabled: true,
             name: 'Mainnet',
-            rpc: 'https://bsc-dataseed.binance.org/',
             contracts: {
                 proxy: {
                     address: "0xAcDe76E0175779088b8557a21b00F16D56651d25"

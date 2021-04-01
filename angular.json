@@ -819,6 +819,137 @@
                     }
                 }
             }
+        },
+        "pool2-main": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            },
+            "root": "projects/pool2-main",
+            "sourceRoot": "projects/pool2-main/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/pool2-main",
+                        "index": "projects/pool2-main/src/index.html",
+                        "main": "projects/pool2-main/src/main.ts",
+                        "polyfills": "projects/pool2-main/src/polyfills.ts",
+                        "tsConfig": "projects/pool2-main/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/pool2-main/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
+                        ],
+                        "styles": [
+                            "projects/pool2-main/src/styles.less",
+                            "projects/pool2-main/src/mat.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/pool2-main/src/environments/environment.ts",
+                                    "with": "projects/pool2-main/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "pool2-main:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "pool2-main:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "pool2-main:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/pool2-main/src/test.ts",
+                        "polyfills": "projects/pool2-main/src/polyfills.ts",
+                        "tsConfig": "projects/pool2-main/tsconfig.spec.json",
+                        "karmaConfig": "projects/pool2-main/karma.conf.js",
+                        "assets": [
+                            "projects/pool2-main/src/favicon.ico",
+                            "projects/pool2-main/src/assets"
+                        ],
+                        "styles": [
+                            "projects/pool2-main/src/styles.less"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/pool2-main/tsconfig.app.json",
+                            "projects/pool2-main/tsconfig.spec.json",
+                            "projects/pool2-main/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/pool2-main/e2e/protractor.conf.js",
+                        "devServerTarget": "pool2-main:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "pool2-main:serve:production"
+                        }
+                    }
+                }
+            }
         }
     },
     "defaultProject": "home-test",

@@ -24,6 +24,18 @@
     },
     {
       "path": "./projects/app-lib/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ssp-stake/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ssp-stake/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/home-main/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/home-main/tsconfig.spec.json"
     }
     ]
 }

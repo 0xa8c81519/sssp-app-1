@@ -474,6 +474,382 @@
                     }
                 }
             }
+        },
+        "ssp-stake": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            },
+            "root": "projects/ssp-stake",
+            "sourceRoot": "projects/ssp-stake/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/ssp-stake",
+                        "index": "projects/ssp-stake/src/index.html",
+                        "main": "projects/ssp-stake/src/main.ts",
+                        "polyfills": "projects/ssp-stake/src/polyfills.ts",
+                        "tsConfig": "projects/ssp-stake/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/ssp-stake/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
+                        ],
+                        "styles": [
+                            "projects/ssp-stake/src/styles.less",
+                            "projects/ssp-stake/src/mat.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/ssp-stake/src/environments/environment.ts",
+                                    "with": "projects/ssp-stake/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        },
+                        "p1": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/ssp-stake/src/environments/environment.ts",
+                                    "with": "projects/ssp-stake/src/environments/environment.prod.p1.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        },
+                        "p2": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/ssp-stake/src/environments/environment.ts",
+                                    "with": "projects/ssp-stake/src/environments/environment.prod.p2.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        },
+                        "t1": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/ssp-stake/src/environments/environment.ts",
+                                    "with": "projects/ssp-stake/src/environments/environment.prod.t1.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": true,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        },
+                        "t2": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/ssp-stake/src/environments/environment.ts",
+                                    "with": "projects/ssp-stake/src/environments/environment.prod.t2.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": true,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "ssp-stake:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "ssp-stake:build:production"
+                        },
+                        "p1": {
+                            "browserTarget": "ssp-stake:build:p1"
+                        },
+                        "p2": {
+                            "browserTarget": "ssp-stake:build:p2"
+                        },
+                        "t1": {
+                            "browserTarget": "ssp-stake:build:t1"
+                        },
+                        "t2": {
+                            "browserTarget": "ssp-stake:build:t2"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "ssp-stake:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/ssp-stake/src/test.ts",
+                        "polyfills": "projects/ssp-stake/src/polyfills.ts",
+                        "tsConfig": "projects/ssp-stake/tsconfig.spec.json",
+                        "karmaConfig": "projects/ssp-stake/karma.conf.js",
+                        "assets": [
+                            "projects/ssp-stake/src/favicon.ico",
+                            "projects/ssp-stake/src/assets"
+                        ],
+                        "styles": [
+                            "projects/ssp-stake/src/styles.less"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/ssp-stake/tsconfig.app.json",
+                            "projects/ssp-stake/tsconfig.spec.json",
+                            "projects/ssp-stake/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/ssp-stake/e2e/protractor.conf.js",
+                        "devServerTarget": "ssp-stake:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "ssp-stake:serve:production"
+                        }
+                    }
+                }
+            }
+        },
+        "home-main": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            },
+            "root": "projects/home-main",
+            "sourceRoot": "projects/home-main/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/home-main",
+                        "index": "projects/home-main/src/index.html",
+                        "main": "projects/home-main/src/main.ts",
+                        "polyfills": "projects/home-main/src/polyfills.ts",
+                        "tsConfig": "projects/home-main/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/home-main/src/favicon.ico",
+                            "projects/home-main/src/assets"
+                        ],
+                        "styles": [
+                            "projects/home-main/src/styles.less"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/home-main/src/environments/environment.ts",
+                                    "with": "projects/home-main/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "home-main:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "home-main:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "home-main:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/home-main/src/test.ts",
+                        "polyfills": "projects/home-main/src/polyfills.ts",
+                        "tsConfig": "projects/home-main/tsconfig.spec.json",
+                        "karmaConfig": "projects/home-main/karma.conf.js",
+                        "assets": [
+                            "projects/home-main/src/favicon.ico",
+                            "projects/home-main/src/assets"
+                        ],
+                        "styles": [
+                            "projects/home-main/src/styles.less"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/home-main/tsconfig.app.json",
+                            "projects/home-main/tsconfig.spec.json",
+                            "projects/home-main/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/home-main/e2e/protractor.conf.js",
+                        "devServerTarget": "home-main:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "home-main:serve:production"
+                        }
+                    }
+                }
+            }
         }
     },
     "defaultProject": "ssp-app",

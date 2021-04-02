@@ -1,0 +1,10 @@
+./build-home-test.sh
+./build-pool1-test.sh
+./build-pool2-test.sh
+./build-stake1-test.sh
+./build-stake2-test.sh
+./sync-home-test.sh
+./sync-pool1-test.sh
+./sync-pool2-test.sh
+./sync-stake1-test.sh
+./sync-stake2-test.sh

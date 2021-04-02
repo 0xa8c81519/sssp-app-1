@@ -14,13 +14,13 @@ export const environment = {
             target: "_self"
         },
         {
-            text: "Stake & Reward of Pool 1",
+            text: "Stake BSLP-01",
             active: false,
             url: "/stake1",
             target: "_self"
         },
         {
-            text: "Stake & Reward of Pool 2",
+            text: "Stake BSLP-02",
             active: false,
             url: "/stake2",
             target: "_self"

@@ -22,10 +22,6 @@ export class AppComponent implements OnInit {
         const isMobile = (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i))
         const u = navigator.userAgent;
         this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
-        // todo: delete
-        // if (this.isAndroid) {
-        //     $('.backdrop-filter').removeClass('backdrop-filter')
-        // }
     }
     onBgcBoxMouseEnter() {
         this.bgcBoxMouseOn = true;

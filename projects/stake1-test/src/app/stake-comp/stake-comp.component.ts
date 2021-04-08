@@ -40,8 +40,8 @@ export class StakeCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
-    @Output('chooseWallet') chooseWlt=new EventEmitter();
-    @Output('installWallet') installWlt=new EventEmitter();
+    @Output('chooseWallet') chooseWlt = new EventEmitter();
+    @Output('installWallet') installWlt = new EventEmitter();
 
 
 
@@ -59,6 +59,17 @@ export class StakeCompComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.boot.lpApprovalStatusChange.subscribe(() => {
+            // this.boot.loadData();
+            this.loaded.emit();
+            this.loadStatus = LoadStatus.Loaded;
+        });
+        this.boot.balanceChange.subscribe(() => {
+            // this.boot.loadData();
+            this.loaded.emit();
+            this.loadStatus = LoadStatus.Loaded;
+            this.depositPercentChange(0);
+        });
     }
 
     public async connectWallet() {
@@ -99,6 +110,8 @@ export class StakeCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.approveLP(this.depositLPAmt.toFixed(9, BigNumber.ROUND_DOWN), this.boot.chainConfig.contracts.proxy.address).then(() => {
+
+        }).catch(e => {
             // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
@@ -112,6 +125,8 @@ export class StakeCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.depositLP(this.depositLPAmt.toFixed(18, BigNumber.ROUND_DOWN)).then(() => {
+
+        }).catch(e => {
             // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
@@ -133,6 +148,8 @@ export class StakeCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.withdrawLP(this.withdrawLPAmt.toFixed(18, BigNumber.ROUND_DOWN)).then(() => {
+
+        }).catch(e => {
             // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
@@ -144,6 +161,7 @@ export class StakeCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.emergencyWithdraw().then(() => {
+        }).catch(e => {
             // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
@@ -154,6 +172,8 @@ export class StakeCompComponent implements OnInit {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
         this.boot.withdrawLP("0").then(() => {
+
+        }).catch(e => {
             // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;

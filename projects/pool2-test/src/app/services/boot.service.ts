@@ -77,6 +77,7 @@ export class BootService {
 
     approvalStatusChange: Subject<any> = new Subject();
     lpApprovalStatusChange: Subject<any> = new Subject();
+    balanceChange: Subject<any> = new Subject();
 
 
     constructor(private dialog: MatDialog, private applicationRef: ApplicationRef, private localStorage: LocalStorageService) {
@@ -153,10 +154,12 @@ export class BootService {
                     let filter_1 = contract.filters.Transfer(this.accounts[0], null, null);
                     contract.on(filter_1, (from, to, amt) => {
                         this.loadVariable();
+                        this.balanceChange.next();
                     });
                     let filter_2 = contract.filters.Transfer(null, this.accounts[0], null);
                     contract.on(filter_2, (from, to, amt) => {
                         this.loadVariable();
+                        this.balanceChange.next();
                     });
                 });
                 let filter_0 = this.poolContract.filters.Approval(this.accounts[0], null, null);
@@ -170,9 +173,11 @@ export class BootService {
                 // let filter_2 = this.poolContract.filters.Transfer(null, this.accounts[0], null);
                 this.poolContract.on('Transfer', (from, to, amt) => {
                     this.loadVariable();
+                    this.balanceChange.next();
                 });
                 this.tokenContract.on('Transfer', (from, to, amt) => {
                     this.loadVariable();
+                    this.balanceChange.next();
                 });
                 this.initContractsCompleted.next();
                 return true;

@@ -32,8 +32,8 @@ export class AddliquidityCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
-    @Output('chooseWallet') chooseWallt=new EventEmitter();
-    @Output('installWallet') installChooseWallt=new EventEmitter();
+    @Output('chooseWallet') chooseWallt = new EventEmitter();
+    @Output('installWallet') installChooseWallt = new EventEmitter();
 
     constructor(public boot: BootService, private dialog: MatDialog) {
         this.amts = new Array<number>();
@@ -54,6 +54,16 @@ export class AddliquidityCompComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.boot.approvalStatusChange.subscribe(() => {
+            this.updateApproveStatus();
+            this.loadStatus = LoadStatus.Loaded;
+            this.loaded.emit();
+        });
+        this.boot.balanceChange.subscribe(() => {
+            this.updateApproveStatus();
+            this.loadStatus = LoadStatus.Loaded;
+            this.loaded.emit();
+        })
     }
 
     // approve() {
@@ -86,7 +96,8 @@ export class AddliquidityCompComponent implements OnInit {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
             this.boot.approve(i, String(this.amts[i] ? this.amts[i] : 0), this.boot.poolAddress).then(r => {
-                this.updateApproveStatus();
+
+            }).catch(e => {
                 this.loadStatus = LoadStatus.Loaded;
                 this.loaded.emit();
             });
@@ -132,6 +143,8 @@ export class AddliquidityCompComponent implements OnInit {
         //     return;
         // } else {
         this.boot.addLiquidity(amtsStr, lp).then(r => {
+
+        }).catch(e => {
             this.updateApproveStatus();
             this.loadStatus = LoadStatus.Loaded;
             // this.boot.loadData();

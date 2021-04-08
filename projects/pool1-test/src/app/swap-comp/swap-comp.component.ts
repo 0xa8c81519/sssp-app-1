@@ -58,6 +58,16 @@ export class SwapCompComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.boot.approvalStatusChange.subscribe(() => {
+            this.loaded.emit();
+            this.updateApproveStatus();
+            this.loadStatus = LoadStatus.Loaded;
+        });
+        this.boot.balanceChange.subscribe(() => {
+            this.loaded.emit();
+            this.loadStatus = LoadStatus.Loaded;
+            this.updateApproveStatus();
+        });
     }
     chooseLeft(val) {
         this.left = val;
@@ -99,9 +109,11 @@ export class SwapCompComponent implements OnInit {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
             this.boot.approve(Number(this.left), this.amt, this.boot.poolAddress).then(() => {
-                this.loaded.emit();
-                this.updateApproveStatus();
+
+            }).catch(e => {
+                console.log(e);
                 this.loadStatus = LoadStatus.Loaded;
+                this.loaded.emit();
             });
         }
     }
@@ -129,6 +141,8 @@ export class SwapCompComponent implements OnInit {
             this.boot.exchange(Number(this.left), Number(this.right), this.amt, this.minAmt ? this.minAmt : '0').then(res => {
                 console.log(res);
                 // this.boot.loadData();
+
+            }).catch(e => {
                 this.loaded.emit();
                 this.loadStatus = LoadStatus.Loaded;
                 this.updateApproveStatus();

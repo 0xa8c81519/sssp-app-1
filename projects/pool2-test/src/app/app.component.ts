@@ -144,4 +144,12 @@ export class AppComponent implements OnInit {
         this.lang.changeLanguage(this.lang.curLanguage === 'zh' ? 'en' : 'zh');
     }
 
+    onLoading() {
+        this.header.onLoading();
+    }
+
+    onLoaded() {
+        this.header.onLoaded();
+    }
+
 }

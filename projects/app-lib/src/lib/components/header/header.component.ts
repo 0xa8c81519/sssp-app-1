@@ -9,34 +9,11 @@ import { BigNumber } from 'bignumber.js';
 })
 export class HeaderComponent implements OnInit {
 
-    @Input('needWallet')
-    needWallet: boolean = false;
     loading: boolean = false;
-    @Input('network')
-    network: string;
-    @Input('account')
-    account: string;
-    @Input('vpDiff')
-    vpDiff: BigNumber;
-    @Input('showPoolsMenu')
-    showPoolsMenu: boolean;
-
-    @Output('chooseWallet')
-    chooseWallet: EventEmitter<any> = new EventEmitter();
-
-    @Output('connectWallet')
-    connectWallet: EventEmitter<any> = new EventEmitter();
 
     constructor(public lang: LanguageService) { }
 
     ngOnInit(): void {
-    }
-    public onConnectWallet() {
-        this.loading = true;
-        this.connectWallet.emit();
-    }
-    public onChooseWallet() {
-        this.chooseWallet.emit();
     }
     onLoading() {
         this.loading = true;
@@ -44,12 +21,5 @@ export class HeaderComponent implements OnInit {
 
     onLoaded() {
         this.loading = false;
-    }
-    changeLang(lang: string) {
-        this.lang.changeLanguage(lang);
-    }
-
-    showVpWarning() {
-        return this.vpDiff && this.vpDiff.comparedTo(0.6) >= 0;
     }
 }

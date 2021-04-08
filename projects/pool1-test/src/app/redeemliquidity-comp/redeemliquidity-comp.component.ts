@@ -45,8 +45,8 @@ export class RedeemliquidityCompComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
-    @Output('chooseWallet') chooseWlt=new EventEmitter();
-    @Output('installWallet') installWlt=new EventEmitter();
+    @Output('chooseWallet') chooseWlt = new EventEmitter();
+    @Output('installWallet') installWlt = new EventEmitter();
 
     slideToggleColor: ThemePalette = "accent";
 
@@ -67,6 +67,12 @@ export class RedeemliquidityCompComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.boot.balanceChange.subscribe(() => {
+            this.status = ActionStatus.TrasactionEnd;
+            // this.boot.loadData();
+            this.loaded.emit();
+            this.redeemPercentChange(0);
+        });
     }
 
     async redeemCoin() {
@@ -77,6 +83,9 @@ export class RedeemliquidityCompComponent implements OnInit {
                 this.status = ActionStatus.Transfering;
                 this.loading.emit();
                 this.boot.redeemToOneCoin(lps, this.redeemToIndex, this.amts[this.redeemToIndex]).then(res => {
+
+                }).catch(e => {
+                    console.log(e);
                     this.status = ActionStatus.TrasactionEnd;
                     // this.boot.loadData();
                     this.loaded.emit();
@@ -90,6 +99,9 @@ export class RedeemliquidityCompComponent implements OnInit {
                     amts.push(String(e));
                 });
                 this.boot.redeemToAll(lps, amts).then(res => {
+
+                }).catch(e => {
+                    console.log(e);
                     this.status = ActionStatus.TrasactionEnd;
                     // this.boot.loadData();
                     this.loaded.emit();
@@ -105,6 +117,9 @@ export class RedeemliquidityCompComponent implements OnInit {
                 amtsStr.push(String(e));
             })
             this.boot.redeemImBalance(amtsStr).then(r => {
+
+            }).catch(e => {
+                console.log(e);
                 this.status = ActionStatus.TrasactionEnd;
                 // this.boot.loadData();
                 this.loaded.emit();

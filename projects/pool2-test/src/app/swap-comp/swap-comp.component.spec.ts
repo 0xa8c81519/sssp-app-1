@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SwapCompComponent } from './swap-comp.component';
+import { SwapCompComponent } from './swap-comp.component copy';
 
 describe('SwapCompComponent', () => {
   let component: SwapCompComponent;

@@ -4,6 +4,7 @@
     </div>
 </div>
 <div class="contant" [ngClass]="{open:menuOpen}">
+    <lib-header #header></lib-header>
     <div class="contant-top">
         <div class="connect" *ngIf="boot.accounts.length===0;else connected" (click)="chooseWallet()">
             <div class="center">
@@ -26,7 +27,8 @@
                     <div class="line">
                         <div class="line-cont"></div>
                     </div>
-                    <div class="text" style="overflow: hidden;text-overflow: ellipsis; width:70px;">{{boot.accounts[0]}}</div>
+                    <div class="text" style="overflow: hidden;text-overflow: ellipsis; width:70px;">{{boot.accounts[0]}}
+                    </div>
                 </div>
             </div>
         </ng-template>
@@ -54,12 +56,15 @@
                 <div class="boxs">
                     <div class="box">
                         <app-swap-comp *ngIf="curTab===0" [hidden]="curTab===0?false:true"
-                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()"></app-swap-comp>
+                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()" (loaded)="onLoaded()"
+                            (loading)="onLoading()"></app-swap-comp>
                         <app-addliquidity-comp *ngIf="curTab===1" [hidden]="curTab===1?false:true"
-                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()">
+                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()" (loaded)="onLoaded()"
+                            (loading)="onLoading()">
                         </app-addliquidity-comp>
                         <app-redeemliquidity-comp *ngIf="curTab===2" [hidden]="curTab===2?false:true"
-                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()">
+                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()" (loaded)="onLoaded()"
+                            (loading)="onLoading()">
                         </app-redeemliquidity-comp>
                         <!-- 其他盒子 -->
                         <app-user-info></app-user-info>

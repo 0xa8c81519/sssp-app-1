@@ -19,7 +19,7 @@ import { InstallWalletDlgComponent } from './intall-wallet-dlg/install-wallet-dl
 import { PoolInfoComponent } from './pool-info/pool-info.component';
 import { RedeemConfirmComponent } from './redeem-confirm/redeem-confirm.component';
 import { RedeemliquidityCompComponent } from './redeemliquidity-comp/redeemliquidity-comp.component';
-import { SwapCompComponent } from './swap-comp/swap-comp.component';
+import { SwapCompComponent } from './swap-comp/swap-comp.component copy';
 import { SwapConfirmComponent } from './swap-confirm/swap-confirm.component';
 import { UnsupportedNetworkComponent } from './unsupported-network/unsupported-network.component';
 import { PriceDiffComponent } from './price-diff/price-diff.component';

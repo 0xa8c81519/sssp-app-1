@@ -257,7 +257,7 @@ export class BootService {
                 });
             } else {
                 if (!provider.isMetaMask) {
-                    this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: chainId }, height: '20em', width: '32em' });
+                    this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: chainId } });
                     this.balance.clear();
                     this.poolInfo.clear();
                     // this.accounts = [];
@@ -322,7 +322,7 @@ export class BootService {
                             this.loadData();
                         });
                     } else {
-                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId } });
                         return;
                     }
                 });
@@ -350,7 +350,7 @@ export class BootService {
                 // @ts-ignore
                 this.getNetworkInfo(window.ethereum).then(networkInfo => {
                     if (!networkInfo.isSupported) {
-                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId } });
                         return;
                     } else {
                         // @ts-ignore
@@ -380,7 +380,7 @@ export class BootService {
                 // @ts-ignore
                 this.getNetworkInfo(window.BinanceChain).then(networkInfo => {
                     if (!networkInfo.isSupported) {
-                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId }, height: '20em', width: '32em' });
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId } });
                         return;
                     } else {
                         // @ts-ignore
@@ -570,7 +570,7 @@ export class BootService {
 
     public approveLP(amt: string, address: string): Promise<any> {
         if (this.proxyContract) {
-            let dialogRef = this.dialog.open(ApproveDlgComponent, { data: { amt: amt, symbol: this.liquiditySymbol }, height: '20em', width: '32em' });
+            let dialogRef = this.dialog.open(ApproveDlgComponent, { data: { amt: amt, symbol: this.liquiditySymbol } });
             return dialogRef.afterClosed().toPromise().then(async res => {
                 let amt;
                 if (res && res.continu && res.infinite === true) {
@@ -629,8 +629,9 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.proxyContract.connect(signer).deposit(this.chainConfig.contracts.pid, amt, { from: this.accounts[0], gasLimit: gas.toString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" }, height: '20em', width: '32em' });
+            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" } });
             console.log(e);
+            throw e;
         });
     }
 
@@ -640,8 +641,9 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.proxyContract.connect(signer).withdraw(this.chainConfig.contracts.pid, amt, { from: this.accounts[0], gasLimit: gas.toString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" }, height: '20em', width: '32em' });
+            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" } });
             console.log(e);
+            throw e;
         });
     }
 
@@ -650,8 +652,9 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.proxyContract.connect(signer).emergencyWithdraw(this.chainConfig.contracts.pid, { from: this.accounts[0], gasLimit: gas.toString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" }, height: '20em', width: '32em' });
+            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" } });
             console.log(e);
+            throw e;
         });
     }
 

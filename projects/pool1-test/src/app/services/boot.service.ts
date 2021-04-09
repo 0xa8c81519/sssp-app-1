@@ -22,6 +22,8 @@ import { LocalStorageService } from 'angular-web-storage';
 import { ConstVal } from '../model/const-val';
 import { ethers } from "ethers";
 import { resolve } from 'dns';
+import { HttpClient } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
 @Injectable({
     providedIn: 'root'
 })
@@ -80,7 +82,7 @@ export class BootService {
     balanceChange: Subject<any> = new Subject();
 
 
-    constructor(private dialog: MatDialog, private applicationRef: ApplicationRef, private localStorage: LocalStorageService) {
+    constructor(private dialog: MatDialog, private applicationRef: ApplicationRef, private localStorage: LocalStorageService, private http: HttpClient) {
         this.balance.coinsBalance = new Array();
         this.poolInfo.coinsBalance = new Array();
         this.coins.forEach(e => {
@@ -587,7 +589,7 @@ export class BootService {
             //         }
             //     });
             // } else {
-                return this._addLiquidity(amts);
+            return this._addLiquidity(amts);
             // }
         }
     }
@@ -1014,6 +1016,68 @@ export class BootService {
             return this.contracts[i].connect(signer).claimCoins({ from: this.accounts[0], gasLimit: gas.toString() });
         }).catch(e => {
             console.log(e);
+        });
+    }
+
+    public getSubgraph(): Promise<any> {
+        let query = "{\n" +
+            "volumes(first:1000,where:{poolId:" + this.chainConfig.contracts.pid + "}, orderBy:timestamp, orderDirection: desc) {\n"
+            + "id\n"
+            + "poolId\n"
+            + "volume\n"
+            + "timestamp\n"
+            + "}\n"
+            + "liquidities(first:1000,where:{poolId:" + this.chainConfig.contracts.pid + "}, orderBy:timestamp, orderDirection: desc) {\n"
+            + "id\n"
+            + "poolId\n"
+            + "liquidity\n"
+            + "timestamp\n"
+            + "}\n"
+            + "}\n";
+
+        return this.http.post<any>(environment.subgraphApi, { query: query }, {}).toPromise().then(res => {
+            let arr = [];
+            let datePipe = new DatePipe('en-US');
+            let d = '';
+            let v = new BigNumber(0);
+            res.data.volumes.forEach((e) => {
+                let timeStr = datePipe.transform(new Date(e.timestamp * 1000), 'yyyy-MM-dd');
+                if (d === '') {
+                    d = timeStr;
+                    v = new BigNumber(e.volume).div(new BigNumber(10).exponentiatedBy(18));
+                } else {
+                    if (d === timeStr) {
+                        v.plus(new BigNumber(e.volume).div(new BigNumber(10).exponentiatedBy(18)));
+                    } else {
+                        let obj = { time: d, value: v.toFixed(4) };
+                        arr.push(obj);
+                        d = timeStr;
+                        v = new BigNumber(e.volume).div(new BigNumber(10).exponentiatedBy(18));
+                    }
+                }
+            });
+            arr.reverse();
+            d = '';
+            v = new BigNumber(0);
+            let arrLp = [];
+            res.data.liquidities.forEach((e) => {
+                let timeStr = datePipe.transform(new Date(e.timestamp * 1000), 'yyyy-MM-dd');
+                if (d === '') {
+                    d = timeStr;
+                    v = new BigNumber(e.liquidity).div(new BigNumber(10).exponentiatedBy(18));
+                } else {
+                    if (d === timeStr) {
+                        v.plus(new BigNumber(e.liquidity).div(new BigNumber(10).exponentiatedBy(18)));
+                    } else {
+                        let obj = { time: d, value: v.toFixed(4) };
+                        arrLp.push(obj);
+                        d = timeStr;
+                        v = new BigNumber(e.liquidity).div(new BigNumber(10).exponentiatedBy(18));
+                    }
+                }
+            });
+            arrLp.reverse();
+            return { volume: arr, liquidity: arrLp };
         });
     }
 }

@@ -21,4 +21,5 @@ export const environment = {
             }
         },
     },
+    subgraphApi: "https://api.thegraph.com/subgraphs/name/0xa8c81519/my-subgraph"
 };

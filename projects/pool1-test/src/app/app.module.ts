@@ -33,6 +33,7 @@ import { DialogTipComponent } from './dialog-tip/dialog-tip.component';
 import { WalletItemComponent } from './wallet-item/wallet-item.component';
 import { CoinsDlgComponent } from './coins-dlg/coins-dlg.component';
 import { CoinItemComponent } from './coin-item/coin-item.component';
+import { TvVolumeComponent } from './tv-volume/tv-volume.component';
 
 @NgModule({
     declarations: [
@@ -56,7 +57,8 @@ import { CoinItemComponent } from './coin-item/coin-item.component';
         DialogTipComponent,
         WalletItemComponent,
         CoinsDlgComponent,
-        CoinItemComponent
+        CoinItemComponent,
+        TvVolumeComponent
     ],
     imports: [
         BrowserModule,

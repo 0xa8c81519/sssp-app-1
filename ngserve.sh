@@ -1,4 +1,4 @@
-npm b app-lib
+ng b app-lib
 case "$1" in
    'home')
        echo "====================OPEN--Home项目=========================="

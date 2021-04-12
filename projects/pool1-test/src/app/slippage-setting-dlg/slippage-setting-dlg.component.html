@@ -1,0 +1,22 @@
+<div class="dialog-setting" [ngStyle]="{display:hidden?'none':''}" (click)="close()">
+    <div class="center backdrop-filter" [ngStyle]="{opacity:hidden?0:1}" (click)="$event.stopPropagation()">
+        <div class="title">{{"Slippage Tolerance"|translate}}</div>
+        <div class="center-box">
+            <div class="left-box">
+                <div class="left-box-one">
+                    <span *ngFor="let item of numList;let i=index;" [ngClass]="{'activeS':active === i}"
+                          (click)="selectNumFn(i)">{{item.num}}</span>
+                </div>
+            </div>
+            <div class="right-box">
+                <div class="right-box-one">
+                    <input type="number" [placeholder]="'Enter percentage'|translate">%
+                </div>
+            </div>
+        </div>
+        <div class="bottom-btn">
+            <div class="btn yesBtn">{{'Yes' | translate}}</div>
+            <div class="btn noBtn">{{'No' | translate}}</div>
+        </div>
+    </div>
+</div>

@@ -116,7 +116,7 @@ export class AddliquidityCompComponent implements OnInit {
         this.amts.forEach((e, i) => {
             if (e > 0 && !this.isApproveEnabled(i)) {
                 amtsStr.push(String(e));
-            } else { // 
+            } else { //
                 amtsStr.push('0');
             }
             totalAmt = totalAmt.plus(e);

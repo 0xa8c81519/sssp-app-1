@@ -34,6 +34,7 @@ import { WalletItemComponent } from './wallet-item/wallet-item.component';
 import { CoinsDlgComponent } from './coins-dlg/coins-dlg.component';
 import { CoinItemComponent } from './coin-item/coin-item.component';
 import { TvVolumeComponent } from './tv-volume/tv-volume.component';
+import { SlippageSettingDlgComponent } from './slippage-setting-dlg/slippage-setting-dlg.component';
 
 @NgModule({
     declarations: [
@@ -58,7 +59,8 @@ import { TvVolumeComponent } from './tv-volume/tv-volume.component';
         WalletItemComponent,
         CoinsDlgComponent,
         CoinItemComponent,
-        TvVolumeComponent
+        TvVolumeComponent,
+        SlippageSettingDlgComponent
     ],
     imports: [
         BrowserModule,

@@ -23,6 +23,7 @@ export class SwapCompComponent implements OnInit {
     hidden = false;
 
     left = 0;
+    slippageNum;
 
     right = 1;
 
@@ -144,7 +145,10 @@ export class SwapCompComponent implements OnInit {
             //     this.loaded.emit();
             //     return;
             // } else {
-            this.boot.exchange(Number(this.left), Number(this.right), this.amt, this.minAmt ? this.minAmt : '0').then(res => {
+            console.log(this.minAmt);
+            console.log(this.slippageNum, 'slippageNum');
+            console.log(String(new BigNumber(this.minAmt).minus(this.slippageNum ? this.slippageNum : 0)));
+            this.boot.exchange(Number(this.left), Number(this.right), this.amt, this.minAmt ? String(new BigNumber(this.minAmt).minus(this.slippageNum ? this.slippageNum : 0)) : '0').then(res => {
                 console.log(res);
                 // this.boot.loadData();
 
@@ -243,5 +247,10 @@ export class SwapCompComponent implements OnInit {
         setTimeout(() => {
             this.settingDlg.open();
         }, 0);
+    }
+
+    onTaskData(e) {
+        console.log(e);
+        this.slippageNum = e;
     }
 }

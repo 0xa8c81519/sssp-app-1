@@ -4,19 +4,19 @@
         <div class="center-box">
             <div class="left-box">
                 <div class="left-box-one">
-                    <span *ngFor="let item of numList;let i=index;" [ngClass]="{'activeS':active === i}"
-                          (click)="selectNumFn(i)">{{item.num}}</span>
+                    <span *ngFor="let item of numList;let i=index;" [ngClass]="{'activeS':active === item.num}"
+                          (click)="selectNumFn(item.num)">{{item.num}}%</span>
                 </div>
             </div>
             <div class="right-box">
                 <div class="right-box-one">
-                    <input type="number" [placeholder]="'Enter percentage'|translate">%
+                    <input type="number" [placeholder]="'Enter percentage'|translate"  [ngModel]="slippageNum" (ngModelChange)="changeSlippageNum($event)">%
                 </div>
             </div>
         </div>
         <div class="bottom-btn">
-            <div class="btn yesBtn">{{'Yes' | translate}}</div>
-            <div class="btn noBtn">{{'No' | translate}}</div>
+            <div class="btn yesBtn" (click)="confirmSlippage()">{{'Yes' | translate}}</div>
+            <div class="btn noBtn" (click)="close()">{{'No' | translate}}</div>
         </div>
     </div>
 </div>

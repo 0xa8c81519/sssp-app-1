@@ -25,7 +25,7 @@
             <div class="pand-bottom">
                 <input type="num" style="width: 25%" class="num" name="depositPercent" [ngModel]="depositPercent"
                        (ngModelChange)="depositPercentChange($event)"><span style="font-size:22px;">%</span>
-                <div class="text" [ngClass]="{blue:needApproveLP&&(loadStatus===0||loadStatus===2)}"
+                <div class="text" *ngIf="needApproveLP&&(loadStatus===0||loadStatus===2)" [ngClass]="{blue:needApproveLP&&(loadStatus===0||loadStatus===2)}"
                      (click)="approveLP()">
                     Approve
                 </div>

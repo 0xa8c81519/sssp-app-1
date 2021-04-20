@@ -4,7 +4,7 @@
         <div class="left">
             <div class="box-top">{{"Balance"|translate}}: {{boot.balance.coinsBalance[i].toFormat(4,1)}}</div>
             <!-- <div class="num">0</div> -->
-            <input type="num" class="num" name="{{coin.symbol}}Amt" [ngModel]="amts[i]"
+            <input type="number" class="num" name="{{coin.symbol}}Amt" [ngModel]="amts[i]"
                 (ngModelChange)="amtChange(i,$event)">
         </div>
         <div class="right">

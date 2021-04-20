@@ -103,14 +103,6 @@ export class PaymentInfoComponent implements OnInit {
         });
     }
 
-    maxAmt() {
-        this.amt = this.boot.balance.coinsBalance[this.left].toFixed(4, 1);
-        this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-            this.minAmt = res.toFixed(4, BigNumber.ROUND_UP);
-        });
-        this.updateApproveStatus();
-    }
-
     approve() {
         if (this.amt) {
             this.loadStatus = LoadStatus.Loading;
@@ -126,39 +118,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     async exchange() {
-        if (this.amt && this.isExchangeEnabled()) {
-            this.loading.emit();
-            this.loadStatus = LoadStatus.Loading;
-            let amtsStr = new Array();
-            for (let i = 0; i < this.boot.coins.length; i++) {
-                amtsStr[i] = '0';
-            }
-            amtsStr[Number(this.left)] = this.amt;
-            amtsStr[Number(this.right)] = String(0 - Number(this.minAmt));
-            let nVirtualPrice = await this.boot.calculateVirtualPrice(amtsStr, null, false);
-            console.log('New Virtual Price: ' + nVirtualPrice.toFixed(18));
-            let diff = nVirtualPrice.div(this.boot.poolInfo.virtualPrice).minus(1).abs();
-            console.log('Diff: ' + diff.toFixed(18));
-            // if (diff.comparedTo(environment.virtualPriceDiff) > 0) {
-            //     this.dialog.open(PriceDiffComponent, { width: '30em' });
-            //     this.loadStatus = LoadStatus.Loaded;
-            //     this.loaded.emit();
-            //     return;
-            // } else {
-            console.log(this.minAmt);
-            console.log(this.slippageNum, 'slippageNum');
-            console.log(String(new BigNumber(this.minAmt).minus(this.slippageNum ? this.slippageNum : 0)));
-            this.boot.exchange(Number(this.left), Number(this.right), this.amt, this.minAmt ? String(new BigNumber(this.minAmt).minus(this.slippageNum ? this.slippageNum : 0)) : '0').then(res => {
-                console.log(res);
-                // this.boot.loadData();
-
-            }).catch(e => {
-                this.loaded.emit();
-                this.loadStatus = LoadStatus.Loaded;
-                this.updateApproveStatus();
-            });
-            // }
-        }
+        console.log(11);
     }
 
     // leftClick(i) {
@@ -242,18 +202,6 @@ export class PaymentInfoComponent implements OnInit {
         this.right = selectedIndex_;
         this.chooseRight(selectedIndex_);
     }
-
-    slippageFn() {
-        setTimeout(() => {
-            this.settingDlg.open();
-        }, 0);
-    }
-
-    onTaskData(e) {
-        console.log(e);
-        this.slippageNum = e;
-    }
-
     otherCurrency() {
         this.isOtherCurrency = !this.isOtherCurrency;
     }

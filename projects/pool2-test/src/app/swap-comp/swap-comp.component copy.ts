@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
 import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
 import { BootService } from '../services/boot.service';
+import {SlippageSettingDlgComponent} from '../slippage-setting-dlg/slippage-setting-dlg.component';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -22,6 +23,7 @@ export class SwapCompComponent implements OnInit {
     hidden = false;
 
     left = 0;
+    slippageNum;
 
     right = 1;
 
@@ -39,6 +41,9 @@ export class SwapCompComponent implements OnInit {
     @Output() loaded: EventEmitter<any> = new EventEmitter();
     @Output('chooseWallet') chooseWlt = new EventEmitter();
     @Output('installWallet') installWlt = new EventEmitter();
+
+    @ViewChild('settingDlg')
+    settingDlg: SlippageSettingDlgComponent;
 
     @ViewChild('coinsDlgLeft')
     coinsDlgLeft: CoinsDlgComponent;
@@ -69,6 +74,7 @@ export class SwapCompComponent implements OnInit {
             this.updateApproveStatus();
         });
     }
+
     chooseLeft(val) {
         this.left = val;
         if (this.left === this.right) {
@@ -82,6 +88,7 @@ export class SwapCompComponent implements OnInit {
             this.minAmt = res.toFixed(4, BigNumber.ROUND_UP);
         });
     }
+
     chooseRight(val) {
         this.right = val;
         if (this.left === this.right) {
@@ -167,9 +174,11 @@ export class SwapCompComponent implements OnInit {
             this.chooseWallet();
         }
     }
+
     chooseWallet() {
         this.chooseWlt.emit();
     }
+
     amtChanged(val) {
         this.amt = val;
         if (!new BigNumber(this.left).isNaN() && !new BigNumber(this.right).isNaN() && !new BigNumber(this.amt).isNaN()) {
@@ -229,5 +238,16 @@ export class SwapCompComponent implements OnInit {
     onRightCoinSelected(selectedIndex_) {
         this.right = selectedIndex_;
         this.chooseRight(selectedIndex_);
+    }
+
+    slippageFn() {
+        setTimeout(() => {
+            this.settingDlg.open();
+        }, 0);
+    }
+
+    onTaskData(e) {
+        console.log(e);
+        this.slippageNum = e;
     }
 }

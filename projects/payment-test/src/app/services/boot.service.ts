@@ -571,30 +571,6 @@ export class BootService {
         this.loadVariable();
     }
 
-    public approveLP(amt: string, address: string): Promise<any> {
-        if (this.proxyContract) {
-            let dialogRef = this.dialog.open(ApproveDlgComponent, {data: {amt: amt, symbol: this.liquiditySymbol}});
-            return dialogRef.afterClosed().toPromise().then(async res => {
-                let amt;
-                if (res && res.continu && res.infinite === true) {
-                    amt = new BigNumber(2).exponentiatedBy(256).minus(1).toFixed(0);
-                } else if (res && res.continu && res.infinite === false) {
-                    amt = res.amt;
-                    amt = ethers.utils.parseEther(String(amt)).toString();
-                } else {
-                    return new Promise((resolve, reject) => {
-                        resolve(true);
-                    });
-                }
-                console.log(amt);
-                return this.poolContract.estimateGas.approve(address, amt, {from: this.accounts[0]}).then(gas => {
-                    let signer = this.web3.getSigner();
-                    return this.poolContract.connect(signer).approve(address, amt, {from: this.accounts[0], gasLimit: gas.toString()});
-                });
-            });
-        }
-    }
-
     public async allowanceLP(address: string): Promise<BigNumber> {
         if (this.chainConfig && this.contracts && this.contracts.length > 0 && this.accounts && this.accounts.length > 0) {
             let decimals = await this.poolContract.decimals({from: this.accounts[0]});
@@ -692,5 +668,43 @@ export class BootService {
             });
         }
 
+    }
+
+    public async getExchangeOutAmt(i: number, j: number, amt: string) {
+        if (this.poolContract && !new BigNumber(amt).isNaN()) {
+            amt = ethers.utils.parseEther(String(amt)).toString();
+            let decimals = await this.contracts[j].decimals({ from: this.accounts[0] });
+            return this.poolContract.get_dy(i, j, amt).then((res) => {
+                return new BigNumber(res.toString()).div(new BigNumber(10).exponentiatedBy(decimals.toString()));
+            });
+        } else {
+            return new Promise((resolve, reject) => {
+                resolve(new BigNumber(0));
+            });
+        }
+    }
+
+    public approve(i: number, amt: string, address: string): Promise<any> {
+        if (this.proxyContract || this.poolContract) {
+            let dialogRef = this.dialog.open(ApproveDlgComponent, { data: { amt: amt, symbol: this.coins[i].symbol } });
+            return dialogRef.afterClosed().toPromise().then(async res => {
+                let amt;
+                if (res && res.continu && res.infinite === true) {
+                    amt = new BigNumber(2).exponentiatedBy(256).minus(1).toFixed(0);
+                } else if (res && res.continu && res.infinite === false) {
+                    amt = res.amt;
+                    amt = ethers.utils.parseEther(String(amt)).toString();
+                } else {
+                    return new Promise((resolve, reject) => {
+                        resolve(true);
+                    });
+                }
+                console.log(amt);
+                return this.contracts[i].estimateGas.approve(address, amt, { from: this.accounts[0] }).then(gas => {
+                    let signer = this.web3.getSigner();
+                    return this.contracts[i].connect(signer).approve(address, amt, { from: this.accounts[0], gasLimit: gas.toString() });
+                });
+            });
+        }
     }
 }

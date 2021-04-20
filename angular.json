@@ -1372,11 +1372,21 @@
                         "tsConfig": "projects/payment-test/tsconfig.app.json",
                         "aot": true,
                         "assets": [
-                            "projects/payment-test/src/favicon.ico",
-                            "projects/payment-test/src/assets"
+                            "projects/payment-test/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
                         ],
                         "styles": [
-                            "projects/payment-test/src/styles.less"
+                            "projects/payment-test/src/styles.less",
+                            "projects/payment-test/src/mat.scss"
                         ],
                         "scripts": []
                     },
@@ -1493,11 +1503,21 @@
                         "tsConfig": "projects/payment-main/tsconfig.app.json",
                         "aot": true,
                         "assets": [
-                            "projects/payment-main/src/favicon.ico",
-                            "projects/payment-main/src/assets"
+                            "projects/payment-main/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
                         ],
                         "styles": [
-                            "projects/payment-main/src/styles.less"
+                            "projects/payment-main/src/styles.less",
+                            "projects/payment-main/src/mat.scss"
                         ],
                         "scripts": []
                     },

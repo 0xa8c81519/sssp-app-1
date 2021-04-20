@@ -25,7 +25,8 @@
             <div class="pand-bottom">
                 <input type="number" style="width: 25%" class="num" name="depositPercent" [ngModel]="depositPercent"
                        (ngModelChange)="depositPercentChange($event)"><span style="font-size:22px;">%</span>
-                <div class="text" *ngIf="needApproveLP&&(loadStatus===0||loadStatus===2)" [ngClass]="{blue:needApproveLP&&(loadStatus===0||loadStatus===2)}"
+                <div class="text" *ngIf="needApproveLP&&(loadStatus===0||loadStatus===2)"
+                     [ngClass]="{blue:needApproveLP&&(loadStatus===0||loadStatus===2)}"
                      (click)="approveLP()">
                     Approve
                 </div>
@@ -38,14 +39,14 @@
     </div>
     <div class="pand">
         <div class="pand-top-box">
-        <div class="pand-top-box-content">
-            <div class="left">
-                {{boot.liquiditySymbol}}
+            <div class="pand-top-box-content">
+                <div class="left">
+                    {{boot.liquiditySymbol}}
+                </div>
+                <div class="right">
+                    Staking: {{boot.balance.stakingLP.toFixed(4, 1)}}
+                </div>
             </div>
-            <div class="right">
-                Staking: {{boot.balance.stakingLP.toFixed(4, 1)}}
-            </div>
-        </div>
             <div class="pand-bottom">
                 <input type="num" class="num" name="withdrawLPPercent" [ngModel]="withdrawLPPercent"
                        (ngModelChange)="withdrawLPPercentChange($event)"><span style="font-size:22px;">%</span>
@@ -59,7 +60,7 @@
             {{boot.balance.pendingToken.toFixed(4, 1)}}
             <span>Pending BST</span>
         </div>
-        <div class="right" *ngIf="boot.accounts.length>0" (click)="getPending()">
+        <div [class]="isDisabled?'right btn-disabled':'right'" *ngIf="boot.accounts.length>0" (click)="getPending()">
             Get Pending {{boot.tokenSymbol}}
         </div>
         <div class="right" *ngIf="boot.accounts.length==0" (click)="connectWallet()">

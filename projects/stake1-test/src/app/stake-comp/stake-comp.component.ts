@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import { BootService } from '../services/boot.service';
+import {BootService} from '../services/boot.service';
+
 export enum ActionStatus {
     None, Transfering, TrasactionEnd
 }
@@ -9,6 +10,7 @@ export enum ActionStatus {
 export enum LoadStatus {
     None, Loading, Loaded
 }
+
 @Component({
     selector: 'app-stake-comp',
     templateUrl: './stake-comp.component.html',
@@ -43,7 +45,7 @@ export class StakeCompComponent implements OnInit {
     @Output('chooseWallet') chooseWlt = new EventEmitter();
     @Output('installWallet') installWlt = new EventEmitter();
 
-
+    isDisabled: boolean = false;
 
     constructor(public boot: BootService, private dialog: MatDialog) {
         this.amts = new Array();
@@ -80,6 +82,7 @@ export class StakeCompComponent implements OnInit {
             this.chooseWallet();
         }
     }
+
     chooseWallet() {
         this.chooseWlt.emit();
     }
@@ -170,10 +173,12 @@ export class StakeCompComponent implements OnInit {
 
     getPending() {
         this.loading.emit();
+        this.isDisabled = true;
         this.loadStatus = LoadStatus.Loading;
-        this.boot.withdrawLP("0").then(() => {
-
+        this.boot.withdrawLP('0').then(() => {
+            this.isDisabled = false;
         }).catch(e => {
+            this.isDisabled = false;
             // this.boot.loadData();
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;

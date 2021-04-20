@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="pand-top-box">
-            <div class="pand-top">
+            <div class="pand-top-box-content">
                 <div class="left">
                     {{boot.liquiditySymbol}}
                 </div>
@@ -23,7 +23,7 @@
                 </div>
             </div>
             <div class="pand-bottom">
-                <input type="num" style="width: 25%" class="num" name="depositPercent" [ngModel]="depositPercent"
+                <input type="number" style="width: 25%" class="num" name="depositPercent" [ngModel]="depositPercent"
                        (ngModelChange)="depositPercentChange($event)"><span style="font-size:22px;">%</span>
                 <div class="text" *ngIf="needApproveLP&&(loadStatus===0||loadStatus===2)" [ngClass]="{blue:needApproveLP&&(loadStatus===0||loadStatus===2)}"
                      (click)="approveLP()">
@@ -38,7 +38,7 @@
     </div>
     <div class="pand">
         <div class="pand-top-box">
-        <div class="pand-top">
+        <div class="pand-top-box-content">
             <div class="left">
                 {{boot.liquiditySymbol}}
             </div>

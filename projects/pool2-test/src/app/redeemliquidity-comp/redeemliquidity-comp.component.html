@@ -7,7 +7,7 @@
         </div>
         <div class="right" style="width: 21%;">
             <input type="number" class="num" name="redeemPercent" [ngModel]="redeemPercent"
-                (ngModelChange)="redeemPercentChange($event)" onInput="if(value>100)value=100">%
+                (ngModelChange)="redeemPercentChange($event)" onInput="if(value>99.9999)value=99.9999">%
         </div>
     </div>
     <div class="box-cont" *ngFor="let coin of boot.coins;let i=index">

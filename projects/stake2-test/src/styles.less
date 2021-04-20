@@ -19,6 +19,15 @@ input:focus {
     color: #fff !important;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 .btn {
     cursor: pointer;
 }
@@ -609,15 +618,29 @@ img {
                             }
                         }
 
-                        .fee {
+                        .feeSpan {
                             font-family: Poppins-Medium, Poppins;
                             color: #9E9EA1;
-                            display: none;
                             text-align: right;
                             margin-top: 10px;
 
                             span {
                                 color: #fff;
+                            }
+                        }
+
+                        .feeSetting {
+                            display: flex !important;
+                            justify-content: space-between;
+
+                            .Slippage {
+                                display: flex;
+                                align-items: center;
+                                cursor: pointer;
+
+                                svg {
+                                    margin-right: 4px;
+                                }
                             }
                         }
 
@@ -1159,7 +1182,6 @@ img {
                             }
 
 
-
                             .fee {
                                 display: block;
                                 font-size: 12px;
@@ -1200,7 +1222,8 @@ img {
 }
 
 /* 中等屏幕（桌面显示器，大于等于 992px） */
-@media (min-width: 992px) {}
+@media (min-width: 992px) {
+}
 
 /* 大屏幕（大桌面显示器，大于等于 1200px） */
 @media (min-width: 1200px) {

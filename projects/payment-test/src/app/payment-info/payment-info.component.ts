@@ -75,39 +75,11 @@ export class PaymentInfoComponent implements OnInit {
         });
     }
 
-    chooseLeft(val) {
-        this.left = val;
-        if (this.left === this.right) {
-            if (this.right !== 2) {
-                this.right = this.right + 1;
-            } else {
-                this.right = 0;
-            }
-        }
-        this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-            this.minAmt = res.toFixed(4, BigNumber.ROUND_UP);
-        });
-    }
-
-    chooseRight(val) {
-        this.right = val;
-        if (this.left === this.right) {
-            if (this.left !== 2) {
-                this.left = this.right + 1;
-            } else {
-                this.left = 0;
-            }
-        }
-        this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-            this.minAmt = res.toFixed(4, BigNumber.ROUND_UP);
-        });
-    }
-
     approve() {
         if (this.amt) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            this.boot.approve(Number(this.left), this.amt, this.boot.poolAddress).then(() => {
+            this.boot.approve(Number(this.left), this.amt, this.boot.paymentContract.address).then(() => {
 
             }).catch(e => {
                 console.log(e);
@@ -142,19 +114,9 @@ export class PaymentInfoComponent implements OnInit {
         this.chooseWlt.emit();
     }
 
-    amtChanged(val) {
-        this.amt = val;
-        if (!new BigNumber(this.left).isNaN() && !new BigNumber(this.right).isNaN() && !new BigNumber(this.amt).isNaN()) {
-            this.boot.getExchangeOutAmt(Number(this.left), Number(this.right), this.amt).then(res => {
-                this.minAmt = res.toFixed(4, BigNumber.ROUND_DOWN);
-            });
-        }
-        this.updateApproveStatus();
-    }
-
     updateApproveStatus() {
         if (!new BigNumber(this.left).isNaN() && !new BigNumber(this.amt).isNaN() && this.boot.accounts && this.boot.accounts.length > 0) {
-            this.boot.allowance(this.left, this.boot.poolAddress).then(amt => {
+            this.boot.allowance(this.left, this.boot.paymentContract.address).then(amt => {
                 if (amt.comparedTo(new BigNumber(this.amt)) >= 0) {
                     this.approveStatus = ApproveStatus.Approved;
                 } else {
@@ -180,10 +142,6 @@ export class PaymentInfoComponent implements OnInit {
         }
     }
 
-    getFee() {
-        return this.boot.poolInfo.fee.multipliedBy(100).toFixed(1, 1);
-    }
-
     openCoinLeftDlg() {
         this.coinsDlgLeft.open(this.left);
     }
@@ -192,16 +150,6 @@ export class PaymentInfoComponent implements OnInit {
         this.coinsDlgRight.open(this.right);
     }
 
-    onLeftCoinSelected(selectedIndex_) {
-        this.left = selectedIndex_;
-        this.chooseLeft(selectedIndex_);
-        this.updateApproveStatus();
-    }
-
-    onRightCoinSelected(selectedIndex_) {
-        this.right = selectedIndex_;
-        this.chooseRight(selectedIndex_);
-    }
     otherCurrency() {
         this.isOtherCurrency = !this.isOtherCurrency;
     }

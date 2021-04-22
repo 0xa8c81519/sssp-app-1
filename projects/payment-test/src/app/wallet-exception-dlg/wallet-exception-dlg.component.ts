@@ -11,8 +11,6 @@ export class WalletExceptionDlgComponent implements OnInit {
 
     content: string;
 
-    liquditySymbol: string = environment.liquiditySymbol;
-
     constructor(@Inject(MAT_DIALOG_DATA) public dlgData: any, private dialogRef: MatDialogRef<WalletExceptionDlgComponent>) {
         this.content = dlgData.content;
     }

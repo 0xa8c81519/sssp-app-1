@@ -14,13 +14,11 @@ import {AppLibModule} from 'app-lib';
 import {AppComponent} from './app.component';
 import {ChooseWalletDlgComponent} from './choose-wallet-dlg/choose-wallet-dlg.component';
 import {InstallWalletDlgComponent} from './intall-wallet-dlg/install-wallet-dlg.component';
-import {PoolInfoComponent} from './pool-info/pool-info.component';
 import {UnsupportedNetworkComponent} from './unsupported-network/unsupported-network.component';
 import {PriceDiffComponent} from './price-diff/price-diff.component';
 import {ApproveDlgComponent} from './approve-dlg/approve-dlg.component';
 import {WalletExceptionDlgComponent} from './wallet-exception-dlg/wallet-exception-dlg.component';
 import {MatIconModule} from '@angular/material/icon';
-import {UserInfoComponent} from './user-info/user-info.component';
 import {WalletItemComponent} from './wallet-item/wallet-item.component';
 import { PaymentInfoComponent } from './payment-info/payment-info.component';
 import {CoinsDlgComponent} from './coins-dlg/coins-dlg.component';
@@ -29,14 +27,12 @@ import {CoinItemComponent} from './coin-item/coin-item.component';
 @NgModule({
     declarations: [
         AppComponent,
-        PoolInfoComponent,
         InstallWalletDlgComponent,
         UnsupportedNetworkComponent,
         ChooseWalletDlgComponent,
         PriceDiffComponent,
         ApproveDlgComponent,
         WalletExceptionDlgComponent,
-        UserInfoComponent,
         WalletItemComponent,
         PaymentInfoComponent,
         CoinsDlgComponent,

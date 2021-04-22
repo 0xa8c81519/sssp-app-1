@@ -4,12 +4,12 @@
         <div class="left">
             <div class="box-top">Payment amount</div>
             <div class="box-top-mobile">Amount</div>
-            <input type="number" class="num" [ngModel]="amt" (ngModelChange)="amtChanged($event)">
+            <input type="number" class="num" [ngModel]="amt" >
         </div>
         <div class="right">
             <div class="balance">
                 <div class="text">
-                    {{"Balance"|translate}}: {{boot.balance.coinsBalance[left].toFormat(4, 1)}}
+                    {{"Balance"|translate}}: }}
                 </div>
                 <div class="balance-bottom">
                     <div class="bottom-box blue" *ngIf="isApproveEnabled()" (click)="approve()">Approve</div>
@@ -20,7 +20,7 @@
             </div>
             <div class="coin" (click)="openCoinLeftDlg()">
                 <div class="img">
-                    <img src="assets/static/img/coins/{{boot.poolId}}-c{{left}}.png" alt="">
+                    <img src="assets/static/img/coins/0-c{{left}}.png" alt="">
                 </div>
                 <div class="name">{{boot.coins[left].symbol}}</div>
             </div>
@@ -71,7 +71,7 @@
             <div class="right">
                 <div class="balance">
                     <div class="text">
-                        {{"Balance"|translate}}: {{boot.balance.coinsBalance[right].toFormat(4, 1)}}
+                        {{"Balance"|translate}}: 
                     </div>
                     <div class="balance-bottom">
                         <!-- <div class="bottom-box">Approve</div> -->
@@ -109,5 +109,5 @@
         {{"Connect to a Wallet"|translate}}
     </div>
 </div>
-<app-coins-dlg #coinsDlgLeft (coinSelected)="onLeftCoinSelected($event)"></app-coins-dlg>
-<app-coins-dlg #coinsDlgRight (coinSelected)="onRightCoinSelected($event)"></app-coins-dlg>
+<app-coins-dlg #coinsDlgLeft ></app-coins-dlg>
+<app-coins-dlg #coinsDlgRight ></app-coins-dlg>

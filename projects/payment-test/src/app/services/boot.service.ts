@@ -66,6 +66,9 @@ export class BootService {
 
 
     constructor(private dialog: MatDialog, private applicationRef: ApplicationRef, private localStorage: LocalStorageService) {
+        environment.coins.forEach(e => {
+            this.balances.push(new BigNumber(0));
+        });
         if (this.isMetaMaskInstalled()) {
             // @ts-ignore
             this.metamaskWeb3 = new ethers.providers.Web3Provider(window.ethereum);
@@ -334,7 +337,7 @@ export class BootService {
         });
         return Promise.all(pArr).then(res => {
             res.forEach((e, i) => {
-                this.balances[i] = new BigNumber(e).div(this.denominator);
+                this.balances[i] = new BigNumber(e.toString()).div(this.denominator);
             });
         });
     }

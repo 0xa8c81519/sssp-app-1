@@ -52,9 +52,6 @@ export class PaymentInfoComponent implements OnInit {
     coinsDlgRight: CoinsDlgComponent;
 
     constructor(public boot: BootService, private dialog: MatDialog) {
-        this.boot.walletReady.subscribe(res => {
-            this.updateApproveStatus();
-        });
         this.boot.initContractsCompleted.subscribe(res => {
             this.boot.approvalStatusChange.subscribe(res => {
                 this.updateApproveStatus();

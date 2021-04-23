@@ -23,7 +23,12 @@ export class PaymentInfoComponent implements OnInit {
     hidden = false;
 
     left = 0;
-    slippageNum;
+    active = 1;
+    slippageNumList: any = [
+        {num: 1},
+        {num: 2},
+        {num: 5}
+    ];
 
     right = 1;
 
@@ -86,8 +91,48 @@ export class PaymentInfoComponent implements OnInit {
         }
     }
 
-    async exchange() {
+    approveRight() {
+        if (this.minAmt) {
+            this.loadStatus = LoadStatus.Loading;
+            this.loading.emit();
+            this.boot.approve(Number(this.right), this.minAmt, this.boot.paymentContract.address).then(() => {
+
+            }).catch(e => {
+                console.log(e);
+                this.loadStatus = LoadStatus.Loaded;
+                this.loaded.emit();
+            });
+        }
+    }
+
+    exchange() {
         console.log(11);
+        if (this.amt && this.address && this.isExchangeEnabled()) {
+            this.loading.emit();
+            this.loadStatus = LoadStatus.Loading;
+            this.boot.pay(Number(this.left), this.address, this.amt).then((res) => {
+                console.log(res);
+            }).catch(e => {
+                this.loaded.emit();
+                this.loadStatus = LoadStatus.Loaded;
+                this.updateApproveStatus();
+            });
+        }
+    }
+
+    exchangeRight() {
+        console.log(12);
+        if (this.minAmt && this.address && this.isExchangeEnabledRight()) {
+            this.loading.emit();
+            this.loadStatus = LoadStatus.Loading;
+            this.boot.payWithSwap(Number(this.right), Number(this.left), this.minAmt, this.amt, this.address).then((res) => {
+                console.log(res);
+            }).catch(e => {
+                this.loaded.emit();
+                this.loadStatus = LoadStatus.Loaded;
+                this.updateApproveStatus();
+            });
+        }
     }
 
     // leftClick(i) {
@@ -111,6 +156,22 @@ export class PaymentInfoComponent implements OnInit {
         this.chooseWlt.emit();
     }
 
+    amtChanged(val) {
+        this.amt = val;
+        this.updateApproveStatus();
+        if (this.amt && this.amt !== '' && this.amt !== '0') {
+            this.calcNum();
+        } else {
+            this.isOtherCurrency = false;
+            this.minAmt = '0';
+        }
+    }
+
+    amtChangedRight(val) {
+        this.minAmt = val;
+        this.updateApproveStatus();
+    }
+
     updateApproveStatus() {
         if (!new BigNumber(this.left).isNaN() && !new BigNumber(this.amt).isNaN() && this.boot.accounts && this.boot.accounts.length > 0) {
             this.boot.allowance(this.left, this.boot.paymentContract.address).then(amt => {
@@ -127,7 +188,15 @@ export class PaymentInfoComponent implements OnInit {
         if (this.amt && Number(this.amt) > 0 && this.approveStatus === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
             return true;
         } else {
-            false;
+            return false;
+        }
+    }
+
+    isApproveEnabledRight() {
+        if (this.minAmt && Number(this.minAmt) > 0 && this.approveStatus === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -136,6 +205,38 @@ export class PaymentInfoComponent implements OnInit {
             return true;
         } else {
             return false;
+        }
+    }
+
+    isExchangeEnabledRight() {
+        if (this.minAmt && Number(this.minAmt) > 0 && this.loadStatus !== LoadStatus.Loading && this.approveStatus === ApproveStatus.Approved) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    onLeftCoinSelected(selectedIndex_) {
+        this.left = selectedIndex_;
+        //this.chooseLeft(selectedIndex_);
+        this.updateApproveStatus();
+    }
+
+    onRightCoinSelected(selectedIndex_) {
+        this.right = selectedIndex_;
+        //this.chooseRight(selectedIndex_);
+        this.updateApproveStatus();
+    }
+
+
+    chooseLeft(val) {
+        this.left = val;
+        if (this.left === this.right) {
+            if (this.right !== 2) {
+                this.right = this.right + 1;
+            } else {
+                this.right = 0;
+            }
         }
     }
 
@@ -148,6 +249,25 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     otherCurrency() {
-        this.isOtherCurrency = !this.isOtherCurrency;
+        if (Number(this.amt) > 0 && !this.isOtherCurrency) {
+            this.calcNum();
+            this.isOtherCurrency = !this.isOtherCurrency;
+        } else {
+            this.isOtherCurrency = false;
+            return;
+        }
+    }
+
+    selectNumFn(index) {
+        this.active = index;
+        this.calcNum();
+    }
+
+    calcNum() {
+        this.minAmt = (Number(this.amt) + this.active).toString();
+    }
+
+    editAddress(v) {
+        this.address = v;
     }
 }

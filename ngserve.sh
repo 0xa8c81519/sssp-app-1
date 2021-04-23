@@ -21,7 +21,7 @@ case "$1" in
        ng serve stake2-test --open --port 8888
    ;;
  'pay')
-       echo "====================OPEN--stake2-test项目=========================="
+       echo "====================OPEN--pay-test项目=========================="
        ng serve payment-test --open --port 8888
    ;;
    *)

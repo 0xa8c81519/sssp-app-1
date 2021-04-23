@@ -183,6 +183,12 @@
       position: absolute;
       right: 0;
     }
+
+    &:hover {
+      .addressInput {
+        border-bottom: 1px solid #FFFFFF;
+      }
+    }
   }
 
   .toBottom {
@@ -239,6 +245,11 @@
         line-height: 12px;
         margin-right: 14px;
       }
+
+      .activeS {
+        color: #FFFFFF;
+        background: #16A16A;
+      }
     }
   }
 
@@ -278,7 +289,7 @@
     flex-direction: column;
 
     .box-cont {
-      height: 50px;
+      height: 70px;
       border-radius: 2px;
       background: #17191E;
 
@@ -457,6 +468,11 @@
           line-height: 30px;
           margin-right: 12px;
         }
+
+        .activeS {
+          color: #FFFFFF;
+          background: #16A16A;
+        }
       }
     }
 
@@ -485,8 +501,10 @@
     }
 
     .to {
-      height: 50px;
+      height: 70px;
       margin: 13px 0;
+      padding: 20px 0;
+      box-sizing: border-box;
 
       input {
         height: 100%;
@@ -501,7 +519,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 50px;
+      height: 70px;
       padding: 0 18px;
       background: #17181D;
       border-radius: 2px;

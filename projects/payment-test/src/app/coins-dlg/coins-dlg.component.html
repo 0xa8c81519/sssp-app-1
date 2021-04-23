@@ -3,9 +3,10 @@
         <div class="title">Select Token</div>
         <ul>
             <app-coin-item *ngFor="let coin of boot.coins;let i=index;" [selected]="indexSelected===i" [index]="i"
-                (coinMouseEnter)="onMouseEnter($event)" (coinMouseLeave)="onMouseLeave($event)"
-                (selectedCoin)="onSelectedCoin($event)" [coinImg]="'assets/static/img/coins/'+boot.poolId+'-c'+i+'.png'"
-                [symbol]="coin.symbol"></app-coin-item>
+                           (coinMouseEnter)="onMouseEnter($event)" (coinMouseLeave)="onMouseLeave($event)"
+                           (selectedCoin)="onSelectedCoin($event)"
+                           [coinImg]="'assets/static/img/coins/'+boot.poolId+'-c'+i+'.png'"
+                           [symbol]="coin.symbol"></app-coin-item>
             <div class="checked" #checkedEle>
 
             </div>

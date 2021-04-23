@@ -2,23 +2,23 @@ import {
     ApplicationRef,
     Injectable
 } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import WalletConnectProvider from '@walletconnect/web3-provider';
-import {LocalStorageService} from 'angular-web-storage';
-import {BigNumber} from 'bignumber.js';
-import {ethers} from 'ethers';
-import {Observable, Subject} from 'rxjs';
+import { LocalStorageService } from 'angular-web-storage';
+import { BigNumber } from 'bignumber.js';
+import { ethers } from 'ethers';
+import { Observable, Subject } from 'rxjs';
 import BStablePool from '../../abi/BStablePool.json';
 import BStableProxyV2 from '../../abi/BStableProxyV2.json';
 import BStableTokenV2 from '../../abi/BStableTokenV2.json';
 import BStablePayment from '../../abi/BStablePayment.json';
 import PaymentToken from '../../abi/PaymentToken.json';
 import BEP20 from '../../abi/BEP20.json';
-import {environment} from '../../environments/environment';
-import {ApproveDlgComponent} from '../approve-dlg/approve-dlg.component';
-import {ConstVal} from '../model/const-val';
-import {UnsupportedNetworkComponent} from '../unsupported-network/unsupported-network.component';
-import {WalletExceptionDlgComponent} from '../wallet-exception-dlg/wallet-exception-dlg.component';
+import { environment } from '../../environments/environment';
+import { ApproveDlgComponent } from '../approve-dlg/approve-dlg.component';
+import { ConstVal } from '../model/const-val';
+import { UnsupportedNetworkComponent } from '../unsupported-network/unsupported-network.component';
+import { WalletExceptionDlgComponent } from '../wallet-exception-dlg/wallet-exception-dlg.component';
 
 @Injectable({
     providedIn: 'root'
@@ -113,7 +113,7 @@ export class BootService {
                     let coinContract = new ethers.Contract(coins[i], BEP20.abi, this.web3);
                     let filter_0 = coinContract.filters.Approval(this.accounts[0], null, null);
                     coinContract.on(filter_0, (owner, spender, amount, event) => {
-                        this.approvalStatusChange.next({index: i, owner: owner, spender: spender, amount: amount});
+                        this.approvalStatusChange.next({ index: i, owner: owner, spender: spender, amount: amount });
                     });
                     let filter_1 = coinContract.filters.Transfer(this.accounts[0], null, null);
                     coinContract.on(filter_1, (from, to, amt) => {
@@ -142,9 +142,9 @@ export class BootService {
                 chainId = network.chainId;
                 this.chainConfig = environment.chains[chainId];
                 if (!this.chainConfig || !this.chainConfig.enabled) {
-                    return {isSupported: false, chainId: chainId, config: this.chainConfig};
+                    return { isSupported: false, chainId: chainId, config: this.chainConfig };
                 } else {
-                    return {isSupported: true, chainId: chainId, config: this.chainConfig};
+                    return { isSupported: true, chainId: chainId, config: this.chainConfig };
                 }
             });
         } else {
@@ -152,9 +152,9 @@ export class BootService {
             return new Promise((resolve, reject) => {
                 this.chainConfig = environment.chains[chainId];
                 if (!this.chainConfig || !this.chainConfig.enabled) {
-                    resolve({isSupported: false, chainId: chainId, config: this.chainConfig});
+                    resolve({ isSupported: false, chainId: chainId, config: this.chainConfig });
                 } else {
-                    resolve({isSupported: true, chainId: chainId, config: this.chainConfig});
+                    resolve({ isSupported: true, chainId: chainId, config: this.chainConfig });
                 }
             });
         }
@@ -194,7 +194,7 @@ export class BootService {
                 });
             } else {
                 if (!provider.isMetaMask) {
-                    this.dialog.open(UnsupportedNetworkComponent, {data: {chainId: chainId}});
+                    this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: chainId } });
                 }
             }
             this.applicationRef.tick();
@@ -215,7 +215,7 @@ export class BootService {
         // Subscribe to session disconnection
         this.disconnected = new Observable((observer) => {
             provider.on('disconnect', (code: number, reason: string) => {
-                observer.next({code: code, reason: reason});
+                observer.next({ code: code, reason: reason });
             });
         });
         this.disconnected.subscribe((res: any) => {
@@ -256,7 +256,7 @@ export class BootService {
                             this.loadData();
                         });
                     } else {
-                        this.dialog.open(UnsupportedNetworkComponent, {data: {chainId: networkInfo.chainId}});
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId } });
                         return;
                     }
                 });
@@ -274,7 +274,7 @@ export class BootService {
     public connentMetaMask() {
         if (this.isMetaMaskInstalled()) {
             //@ts-ignore
-            window.ethereum.request({method: 'eth_requestAccounts', param: []}).then(() => {
+            window.ethereum.request({ method: 'eth_requestAccounts', param: [] }).then(() => {
                 // @ts-ignore
                 this.metamaskWeb3 = new ethers.providers.Web3Provider(window.ethereum);
                 this.web3 = this.metamaskWeb3;
@@ -284,11 +284,11 @@ export class BootService {
                 // @ts-ignore
                 this.getNetworkInfo(window.ethereum).then(networkInfo => {
                     if (!networkInfo.isSupported) {
-                        this.dialog.open(UnsupportedNetworkComponent, {data: {chainId: networkInfo.chainId}});
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId } });
                         return;
                     } else {
                         // @ts-ignore
-                        window.ethereum.request({method: 'eth_accounts', parma: []}).then(accounts => {
+                        window.ethereum.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
                             this.accounts = accounts;
                             this.walletReady.next();
                             this.initContracts().then(() => {
@@ -304,7 +304,7 @@ export class BootService {
     public connectBinance() {
         if (this.isBinanceInstalled()) {
             // @ts-ignore
-            window.BinanceChain.request({method: 'eth_requestAccounts', param: []}).then(() => {
+            window.BinanceChain.request({ method: 'eth_requestAccounts', param: [] }).then(() => {
                 // @ts-ignore
                 this.binanceWeb3 = new ethers.providers.Web3Provider(window.BinanceChain);
                 this.web3 = this.binanceWeb3;
@@ -314,11 +314,11 @@ export class BootService {
                 // @ts-ignore
                 this.getNetworkInfo(window.BinanceChain).then(networkInfo => {
                     if (!networkInfo.isSupported) {
-                        this.dialog.open(UnsupportedNetworkComponent, {data: {chainId: networkInfo.chainId}});
+                        this.dialog.open(UnsupportedNetworkComponent, { data: { chainId: networkInfo.chainId } });
                         return;
                     } else {
                         // @ts-ignore
-                        window.BinanceChain.request({method: 'eth_accounts', parma: []}).then(accounts => {
+                        window.BinanceChain.request({ method: 'eth_accounts', parma: [] }).then(accounts => {
                             this.accounts = accounts;
                             this.walletReady.next();
                             this.initContracts().then(() => {
@@ -345,7 +345,7 @@ export class BootService {
 
     public async allowance(i, address: string): Promise<BigNumber> {
         if (this.chainConfig && this.contracts && this.contracts.length > 0 && this.accounts && this.accounts.length > 0) {
-            let decimals = await this.contracts[i].decimals({from: this.accounts[0]});
+            let decimals = await this.contracts[i].decimals({ from: this.accounts[0] });
             return this.contracts[i].allowance(this.accounts[0], address).then((res) => {
                 return new BigNumber(res.toString()).div(new BigNumber(10).exponentiatedBy(decimals));
             });
@@ -358,7 +358,7 @@ export class BootService {
     }
 
     public approve(i: number, amt: string, spender: string): Promise<any> {
-        let dialogRef = this.dialog.open(ApproveDlgComponent, {data: {amt: amt, symbol: this.coins[i].symbol}});
+        let dialogRef = this.dialog.open(ApproveDlgComponent, { data: { amt: amt, symbol: this.coins[i].symbol } });
         return dialogRef.afterClosed().toPromise().then(async res => {
             let amt;
             if (res && res.continu && res.infinite === true) {
@@ -372,9 +372,9 @@ export class BootService {
                 });
             }
             console.log(amt);
-            return this.contracts[i].estimateGas.approve(spender, amt, {from: this.accounts[0]}).then(gas => {
+            return this.contracts[i].estimateGas.approve(spender, amt, { from: this.accounts[0] }).then(gas => {
                 let signer = this.web3.getSigner();
-                return this.contracts[i].connect(signer).approve(spender, amt, {from: this.accounts[0], gasLimit: gas.toString()});
+                return this.contracts[i].connect(signer).approve(spender, amt, { from: this.accounts[0], gasLimit: gas.toString() });
             });
         });
     }
@@ -382,7 +382,7 @@ export class BootService {
     public async getExchangeOutAmt(i: number, j: number, amt: string) {
         if (this.poolContract && !new BigNumber(amt).isNaN()) {
             amt = ethers.utils.parseEther(String(amt)).toString();
-            let decimals = await this.contracts[j].decimals({from: this.accounts[0]});
+            let decimals = await this.contracts[j].decimals({ from: this.accounts[0] });
             return this.poolContract.get_dy(i, j, amt).then((res) => {
                 return new BigNumber(res.toString()).div(new BigNumber(10).exponentiatedBy(decimals.toString()));
             });
@@ -401,11 +401,13 @@ export class BootService {
      * @returns
      */
     public pay(i: number, receipt: string, amt: string): Promise<any> {
-        return this.paymentContract.estimateGas.pay(this.contracts[i].address, receipt, amt).then(gas => {
+        amt = ethers.utils.parseEther(String(amt)).toString();
+        console.log(this.contracts[i].address);
+        return this.paymentContract.estimateGas.pay(this.contracts[i].address, receipt, amt, { from: this.accounts[0] }).then(gas => {
             let signer = this.web3.getSigner();
-            return this.paymentContract.connect(signer).pay(this.contracts[i].address, receipt, amt, {gasLimit: gas.toString});
+            return this.paymentContract.connect(signer).pay(this.contracts[i].address, receipt, amt, { from: this.accounts[0], gasLimit: gas.toHexString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, {data: {content: 'exchange_exception'}});
+            this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
         });
     }
@@ -420,10 +422,12 @@ export class BootService {
      * @returns
      */
     public payWithSwap(i: number, j: number, payAmt: string, receiptAmt: string, receipt: string): Promise<any> {
-        return this.paymentContract.estimateGas.payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt).then(gas => {
-            return this.paymentContract.payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, {gasLimit: gas});
+        payAmt = ethers.utils.parseEther(String(payAmt)).toString();
+        receiptAmt = ethers.utils.parseEther(String(receiptAmt)).toString();
+        return this.paymentContract.estimateGas.payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0] }).then(gas => {
+            return this.paymentContract.payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0], gasLimit: gas.toHexString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, {data: {content: 'exchange_exception'}});
+            this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
         });
     }

@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { LeftMenuComponent } from './left-menu/left-menu.component';
 
 
 @NgModule({
-    declarations: [AppLibComponent, HeaderComponent, FooterComponent],
+    declarations: [AppLibComponent, HeaderComponent, FooterComponent, LeftMenuComponent],
     imports: [
         CommonModule,
         TranslateModule.forRoot({
@@ -34,6 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
         CommonModule,
         TranslateModule,
         HttpClientModule,
+        LeftMenuComponent,
     ]
 })
 export class AppLibModule { }

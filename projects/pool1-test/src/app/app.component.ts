@@ -136,14 +136,6 @@ export class AppComponent implements OnInit {
         }
     }
 
-    public openMenu() {
-        this.menuOpen = !this.menuOpen;
-    }
-
-    toggleLang() {
-        this.lang.changeLanguage(this.lang.curLanguage === 'zh' ? 'en' : 'zh');
-    }
-
     onLoading() {
         this.header.onLoading();
     }

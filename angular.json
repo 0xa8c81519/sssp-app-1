@@ -827,6 +827,399 @@
                     }
                 }
             }
+        },
+        "pool3-test": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            },
+            "root": "projects/pool3-test",
+            "sourceRoot": "projects/pool3-test/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/pool3-test",
+                        "index": "projects/pool3-test/src/index.html",
+                        "main": "projects/pool3-test/src/main.ts",
+                        "polyfills": "projects/pool3-test/src/polyfills.ts",
+                        "tsConfig": "projects/pool3-test/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/pool3-test/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
+                        ],
+                        "styles": [
+                            "projects/pool3-test/src/styles.less",
+                            "projects/pool3-test/src/mat.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/pool3-test/src/environments/environment.ts",
+                                    "with": "projects/pool3-test/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "pool3-test:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "pool3-test:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "pool3-test:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/pool3-test/src/test.ts",
+                        "polyfills": "projects/pool3-test/src/polyfills.ts",
+                        "tsConfig": "projects/pool3-test/tsconfig.spec.json",
+                        "karmaConfig": "projects/pool3-test/karma.conf.js",
+                        "assets": [
+                            "projects/pool3-test/src/favicon.ico",
+                            "projects/pool3-test/src/assets"
+                        ],
+                        "styles": [
+                            "projects/pool3-test/src/styles.less"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/pool3-test/tsconfig.app.json",
+                            "projects/pool3-test/tsconfig.spec.json",
+                            "projects/pool3-test/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/pool3-test/e2e/protractor.conf.js",
+                        "devServerTarget": "pool3-test:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "pool3-test:serve:production"
+                        }
+                    }
+                }
+            }
+        },
+        "stake3-test": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            },
+            "root": "projects/stake3-test",
+            "sourceRoot": "projects/stake3-test/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/stake3-test",
+                        "index": "projects/stake3-test/src/index.html",
+                        "main": "projects/stake3-test/src/main.ts",
+                        "polyfills": "projects/stake3-test/src/polyfills.ts",
+                        "tsConfig": "projects/stake3-test/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/stake3-test/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
+                        ],
+                        "styles": [
+                            "projects/stake3-test/src/styles.less",
+                            "projects/stake3-test/src/mat.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/stake3-test/src/environments/environment.ts",
+                                    "with": "projects/stake3-test/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "stake3-test:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "stake3-test:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "stake3-test:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/stake3-test/src/test.ts",
+                        "polyfills": "projects/stake3-test/src/polyfills.ts",
+                        "tsConfig": "projects/stake3-test/tsconfig.spec.json",
+                        "karmaConfig": "projects/stake3-test/karma.conf.js",
+                        "assets": [
+                            "projects/stake3-test/src/favicon.ico",
+                            "projects/stake3-test/src/assets"
+                        ],
+                        "styles": [
+                            "projects/stake3-test/src/styles.less"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/stake3-test/tsconfig.app.json",
+                            "projects/stake3-test/tsconfig.spec.json",
+                            "projects/stake3-test/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/stake3-test/e2e/protractor.conf.js",
+                        "devServerTarget": "stake3-test:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "stake3-test:serve:production"
+                        }
+                    }
+                }
+            }
+        },
+        "stake4-test": {
+            "projectType": "application",
+            "schematics": {
+                "@schematics/angular:component": {
+                    "style": "less"
+                }
+            },
+            "root": "projects/stake4-test",
+            "sourceRoot": "projects/stake4-test/src",
+            "prefix": "app",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist/stake4-test",
+                        "index": "projects/stake4-test/src/index.html",
+                        "main": "projects/stake4-test/src/main.ts",
+                        "polyfills": "projects/stake4-test/src/polyfills.ts",
+                        "tsConfig": "projects/stake4-test/tsconfig.app.json",
+                        "aot": true,
+                        "assets": [
+                            "projects/stake4-test/src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "libs/shared-assets/",
+                                "output": "./assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "libs/",
+                                "output": "./"
+                            }
+                        ],
+                        "styles": [
+                            "projects/stake4-test/src/styles.less",
+                            "projects/stake4-test/src/mat.scss"
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "fileReplacements": [
+                                {
+                                    "replace": "projects/stake4-test/src/environments/environment.ts",
+                                    "with": "projects/stake4-test/src/environments/environment.prod.ts"
+                                }
+                            ],
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "budgets": [
+                                {
+                                    "type": "initial",
+                                    "maximumWarning": "2mb",
+                                    "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb",
+                                    "maximumError": "10kb"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "stake4-test:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "stake4-test:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "stake4-test:build"
+                    }
+                },
+                "test": {
+                    "builder": "@angular-devkit/build-angular:karma",
+                    "options": {
+                        "main": "projects/stake4-test/src/test.ts",
+                        "polyfills": "projects/stake4-test/src/polyfills.ts",
+                        "tsConfig": "projects/stake4-test/tsconfig.spec.json",
+                        "karmaConfig": "projects/stake4-test/karma.conf.js",
+                        "assets": [
+                            "projects/stake4-test/src/favicon.ico",
+                            "projects/stake4-test/src/assets"
+                        ],
+                        "styles": [
+                            "projects/stake4-test/src/styles.less"
+                        ],
+                        "scripts": []
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": [
+                            "projects/stake4-test/tsconfig.app.json",
+                            "projects/stake4-test/tsconfig.spec.json",
+                            "projects/stake4-test/e2e/tsconfig.json"
+                        ],
+                        "exclude": [
+                            "**/node_modules/**"
+                        ]
+                    }
+                },
+                "e2e": {
+                    "builder": "@angular-devkit/build-angular:protractor",
+                    "options": {
+                        "protractorConfig": "projects/stake4-test/e2e/protractor.conf.js",
+                        "devServerTarget": "stake4-test:serve"
+                    },
+                    "configurations": {
+                        "production": {
+                            "devServerTarget": "stake4-test:serve:production"
+                        }
+                    }
+                }
+            }
         }
     },
     "defaultProject": "pool1-test",

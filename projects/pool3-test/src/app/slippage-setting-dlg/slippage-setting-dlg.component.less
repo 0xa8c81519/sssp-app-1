@@ -1,0 +1,135 @@
+.dialog-setting {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.39);
+
+  .center {
+    opacity: 1;
+    transition: 0.2s;
+    width: 280px;
+    min-height: 200px;
+    padding: 30px 30px;
+    background: RGBA(25, 25, 26, 0.95);
+    border-radius: 12px;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.06);
+
+    .title {
+      height: 30px;
+      line-height: 30px;
+      margin-bottom: 30px;
+    }
+
+    .center-box {
+      height: 110px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .left-box {
+
+        .left-box-one {
+          height: 52px;
+          border-radius: 14px;
+          border: 1px solid #2D2F39;
+          display: flex;
+          align-items: center;
+
+          span {
+            width: 89px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            color: #BEBEBE;
+          }
+
+          .activeS {
+            background: #16A16A;
+            transition: 0.5s;
+          }
+        }
+      }
+
+      .right-box {
+        .right-box-one {
+          height: 52px;
+          background: #17191E;
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          padding: 0 16px;
+
+          input {
+            width: 115px;
+            font-size: 14px;
+            color: #FFFFFF;
+
+            &:focus {
+              color: #FFFFFF;
+            }
+          }
+        }
+      }
+    }
+
+    .bottom-btn {
+      display: flex;
+      justify-content: space-between;
+      height: 70px;
+      margin: 24px 0;
+
+      > div {
+        width: 185px;
+        height: 70px;
+        background: #16A16A;
+        border-radius: 14px;
+        font-size: 18px;
+        font-weight: 600;
+        color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .yesBtn {
+        background: #16A16A;
+      }
+
+      .noBtn {
+        background: #2D2F39;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  @paddingLeft: 86px;
+
+  .dialog-setting {
+    .center {
+      width: 504px;
+      max-height: 357px;
+      padding: 30px 45px;
+      border-radius: 21px;
+
+      .title {
+        height: 32px;
+        font-size: 20px;
+        line-height: 32px;
+        margin-bottom: 26px;
+      }
+
+    }
+  }
+
+}

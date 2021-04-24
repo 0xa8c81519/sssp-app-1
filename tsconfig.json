@@ -96,6 +96,24 @@
     },
     {
       "path": "./projects/payment-main/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/pool3-test/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/pool3-test/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stake3-test/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/stake3-test/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/stake4-test/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/stake4-test/tsconfig.spec.json"
     }
     ]
 }

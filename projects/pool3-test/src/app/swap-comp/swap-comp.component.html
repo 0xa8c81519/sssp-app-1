@@ -1,0 +1,91 @@
+<!-- swap -->
+<div class="swap-box" [ngStyle]="{display:hidden?'none':'flex'}">
+    <div class="box-cont">
+        <div class="left">
+            <div class="box-top">From</div>
+            <input type="number" class="num" [ngModel]="amt" (ngModelChange)="amtChanged($event)">
+        </div>
+        <div class="right">
+            <div class="balance">
+                <div class="text">
+                    {{"Balance"|translate}}: {{boot.balance.coinsBalance[left].toFormat(4, 1)}}
+                </div>
+                <div class="balance-bottom">
+                    <div class="bottom-box blue" (click)="maxAmt()" *ngIf="!isApproveEnabled()" >MAX</div>
+                    <div class="bottom-box disabled-all" *ngIf="isApproveEnabled()">MAX</div>
+                    &nbsp;
+                    <div class="bottom-box blue" *ngIf="isApproveEnabled()" (click)="approve()">Approve</div>
+                </div>
+            </div>
+            <div class="line">
+                <div class="l"></div>
+            </div>
+            <div class="coin" (click)="openCoinLeftDlg()">
+                <div class="img">
+                    <img src="assets/static/img/coins/{{boot.poolId}}-c{{left}}.png" alt="">
+                </div>
+                <div class="name">{{boot.coins[left].symbol}}</div>
+            </div>
+            <div class="triangle">
+                <img src="assets/static/img/triangle.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="to">
+        <img src="assets/static/img/exchange.png" alt="">
+    </div>
+    <div class="box-cont">
+        <div class="left">
+            <div class="box-top">To</div>
+            <input type="number" class="num" name="minAmt" [(ngModel)]="minAmt">
+        </div>
+        <div class="right">
+            <div class="balance">
+                <div class="text">
+                    {{"Balance"|translate}}: {{boot.balance.coinsBalance[right].toFormat(4, 1)}}
+                </div>
+                <div class="balance-bottom">
+                    <!-- <div class="bottom-box">Approve</div> -->
+                </div>
+            </div>
+            <div class="line">
+                <div class="l"></div>
+            </div>
+            <div class="coin" (click)="openCoinRightDlg()">
+                <div class="img">
+                    <img src="assets/static/img/coins/{{boot.poolId}}-c{{right}}.png" alt="">
+                </div>
+                <div class="name">{{boot.coins[right].symbol}}</div>
+            </div>
+            <div class="triangle">
+                <img src="assets/static/img/triangle.png" alt="">
+            </div>
+        </div>
+    </div>
+    <div [ngClass]="{'btn-disabled':!isExchangeEnabled(),'btn':isExchangeEnabled()}" *ngIf="boot.accounts.length>0"
+         (click)="exchange()">
+        {{"Exchange"|translate}}
+    </div>
+    <div class="btn" *ngIf="boot.accounts.length==0" (click)="connectWallet()">
+        {{"Connect to a Wallet"|translate}}
+    </div>
+    <div class="fee feeSetting">
+        <span class="Slippage" (click)="slippageFn()">
+            <svg t="1618215262537" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                 p-id="3520" width="20" height="20"><path
+                    d="M179.392 855.936v-688a43.008 43.008 0 0 1 86.016 0v688a43.008 43.008 0 0 1-86.016 0zM467.008 855.936v-688a43.008 43.008 0 0 1 86.016 0v688a43.008 43.008 0 0 1-86.016 0z"
+                    fill="#126343" p-id="3521"></path><path
+                    d="M79.936 310.56c0-38.688 31.36-70.016 70.048-70.016h129.664a70.048 70.048 0 0 1 0 140.064H149.984a70.048 70.048 0 0 1-70.048-70.048z"
+                    fill="#16A16A" p-id="3522"></path><path
+                    d="M734.144 855.936v-688a43.008 43.008 0 0 1 86.016 0v688a43.008 43.008 0 0 1-86.016 0z"
+                    fill="#126343" p-id="3523"></path><path
+                    d="M634.688 682.272c0-38.656 31.36-70.016 70.016-70.016h129.664a70.048 70.048 0 0 1 0 140.064h-129.664a70.048 70.048 0 0 1-70.016-70.048z"
+                    fill="#16A16A" p-id="3524"></path></svg>
+            {{"Slippage Setting"|translate}}
+        </span>
+        <span class="feeSpan">{{"Fee"|translate}}: <span>{{getFee()}}%</span></span>
+    </div>
+</div>
+<app-coins-dlg #coinsDlgLeft (coinSelected)="onLeftCoinSelected($event)"></app-coins-dlg>
+<app-coins-dlg #coinsDlgRight (coinSelected)="onRightCoinSelected($event)"></app-coins-dlg>
+<app-slippage-setting-dlg #settingDlg (taskData)="onTaskData($event)"></app-slippage-setting-dlg>

@@ -20,6 +20,8 @@
                 "dist/app-lib/app-lib",
                 "dist/app-lib"
             ]
-        }
+        },
+        "resolveJsonModule": true,
+        "esModuleInterop": true
     }
 }

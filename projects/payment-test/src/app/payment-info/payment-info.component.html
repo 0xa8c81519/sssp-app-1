@@ -70,13 +70,13 @@
             <div class="left">
                 <div class="box-top">Need to pay</div>
                 <div class="box-top-mobile">Amount</div>
-                <input type="number" class="num" name="minAmt" [(ngModel)]="minAmt"
+                <input type="number" class="num" name="minAmt" [(ngModel)]="rightAmt"
                        (ngModelChange)="amtChangedRight($event)">
             </div>
             <div class="right">
                 <div class="balance">
                     <div class="text">
-                        {{"Balance"|translate}}:{{boot.balances[left].toFormat(4, 1)}}
+                        {{"Balance"|translate}}:{{boot.balances[right].toFormat(4, 1)}}
                     </div>
                     <div class="balance-bottom">
                         <div class="bottom-box blue" *ngIf="isApproveEnabledRight()" (click)="approveRight()">Approve

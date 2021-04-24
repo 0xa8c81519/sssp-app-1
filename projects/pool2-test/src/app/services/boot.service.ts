@@ -468,10 +468,10 @@ export class BootService {
             }
             return true;
         });
-        this.poolContract.getFee({ from: this.accounts[0] }).then(feeStr => {
+        this.poolContract.fee({ from: this.accounts[0] }).then(feeStr => {
             this.poolInfo.fee = new BigNumber(feeStr.toString()).div(new BigNumber(10).exponentiatedBy(10));
         });
-        this.poolContract.getAdminFee({ from: this.accounts[0] }).then(feeStr => {
+        this.poolContract.adminFee({ from: this.accounts[0] }).then(feeStr => {
             this.poolInfo.adminFee = new BigNumber(feeStr.toString()).div(new BigNumber(10).exponentiatedBy(10));
         });
     }

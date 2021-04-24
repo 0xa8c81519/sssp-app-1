@@ -7,10 +7,10 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import { BigNumber } from 'bignumber.js';
 import { interval, Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import BStableProxyV2 from '../../abi/BStableProxyV2.json';
-import StableCoin from '../../abi/StableCoin.json';
-import BStableTokenV2 from '../../abi/BStableTokenV2.json';
-import BStablePool from '../../abi/BStablePool.json';
+import BStableProxyV2 from 'libs/abi/BStableProxyV2.json';
+import StableCoin from 'libs/abi/StableCoin.json';
+import BStableTokenV2 from 'libs/abi/BStableTokenV2.json';
+import BStablePool from 'libs/abi/BStablePool.json';
 import { ApproveDlgComponent } from '../approve-dlg/approve-dlg.component';
 import { Balance } from '../model/balance';
 import { PoolInfo } from '../model/pool-info';
@@ -130,18 +130,22 @@ export class BootService {
             if (tokenAddress) {
                 this.tokenContract = new ethers.Contract(tokenAddress, BStableTokenV2.abi, this.web3);
             }
-            return this.proxyContract.getPoolInfo(this.chainConfig.contracts.pid).then((res) => {
-                if (res && res._coins) {
-                    this.contracts.splice(0, this.contracts.length);
-                    res._coins.forEach(e => {
-                        let contract = new ethers.Contract(e, StableCoin.abi, this.web3);
-                        this.contracts.push(contract);
-                        this.contractsAddress.push(e);
-                    });
-                    if (res && res._poolAddress) {
-                        this.poolAddress = res._poolAddress;
-                        this.poolContract = new ethers.Contract(res._poolAddress, BStablePool.abi, this.web3);
+            return this.proxyContract.poolInfo(this.chainConfig.contracts.pid).then((res) => {
+                this.contracts.splice(0, this.contracts.length);
+                if (res && res.lpToken) {
+                    this.poolAddress = res.lpToken;
+                    this.poolContract = new ethers.Contract(this.poolAddress, BStablePool.abi, this.web3);
+                    let pArr = new Array();
+                    for (let i = 0; i < 3; i++) {
+                        pArr.push(this.poolContract.coins(i));
                     }
+                    return Promise.all(pArr).then(res => {
+                        res.forEach(r => {
+                            let contract = new ethers.Contract(r, StableCoin.abi, this.web3);
+                            this.contracts.push(contract);
+                            this.contractsAddress.push(r);
+                        });
+                    });
                 }
             }).then(() => { // contract event listener
                 this.contracts.forEach((contract, index) => {
@@ -187,7 +191,7 @@ export class BootService {
 
     public async getPoolInfo(pid: number): Promise<any> {
         if (this.chainConfig && this.accounts && this.accounts.length > 0) {
-            return this.proxyContract.getPoolInfo(pid).then((res) => {
+            return this.proxyContract.poolInfo(pid).then((res) => {
                 return res;
             });
         } else {
@@ -427,54 +431,54 @@ export class BootService {
 
     private loadConstData() {
         let denominator = new BigNumber(10).exponentiatedBy(18);
-        this.proxyContract.getTotalAllocPoint().then(points => {
+        this.proxyContract.totalAllocPoint().then(points => {
             if (points) {
                 this.poolInfo.totalAllocPoint = new BigNumber(points.toString()).div(denominator);
             }
         }).catch(e => {
             console.log(e);
         });
-        this.proxyContract.getStartBlock().then(startBlock => {
+        this.proxyContract.startBlock().then(startBlock => {
             this.poolInfo.startBlock = new BigNumber(startBlock.toString());
         });
-        this.proxyContract.getTokenPerBlock().then(res => {
+        this.proxyContract.tokenPerBlock().then(res => {
             this.poolInfo.tokenPerBlock = new BigNumber(res.toString()).div(denominator);
         });
-        this.proxyContract.getBonusEndBlock().then(res => {
+        this.proxyContract.bonusEndBlock().then(res => {
             this.poolInfo.bonusEndBlock = new BigNumber(res.toString());
         });
-        this.proxyContract.getPoolInfo(this.chainConfig.contracts.pid).then(res => {
-            if (res && res._allocPoint) {
-                this.poolInfo.allocPoint = new BigNumber(res._allocPoint.toString()).div(denominator);
+        this.proxyContract.poolInfo(this.chainConfig.contracts.pid).then(res => {
+            if (res && res.allocPoint) {
+                this.poolInfo.allocPoint = new BigNumber(res.allocPoint.toString()).div(denominator);
             }
-            if (res && res._accTokenPerShare) {
-                this.poolInfo.accTokenPerShare = new BigNumber(res._accTokenPerShare.toString()).div(denominator);
+            if (res && res.accTokenPerShare) {
+                this.poolInfo.accTokenPerShare = new BigNumber(res.accTokenPerShare.toString()).div(denominator);
             }
-            if (res && res._shareRewardRate) {
-                this.poolInfo.shareRewardRate = new BigNumber(res._shareRewardRate.toString()).div(denominator);
+            if (res && res.shareRewardRate) {
+                this.poolInfo.shareRewardRate = new BigNumber(res.shareRewardRate.toString()).div(denominator);
             }
-            if (res && res._swapRewardRate) {
-                this.poolInfo.swapRewardRate = new BigNumber(res._swapRewardRate.toString()).div(denominator);
+            if (res && res.swapRewardRate) {
+                this.poolInfo.swapRewardRate = new BigNumber(res.swapRewardRate.toString()).div(denominator);
             }
-            if (res && res._totalVolAccPoints) {
-                this.poolInfo.totalVolAccPoints = new BigNumber(res._totalVolAccPoints.toString()).div(denominator);
+            if (res && res.totalVolAccPoints) {
+                this.poolInfo.totalVolAccPoints = new BigNumber(res.totalVolAccPoints.toString()).div(denominator);
             }
-            if (res && res._totalVolReward) {
-                this.poolInfo.totalVolReward = new BigNumber(res._totalVolReward.toString()).div(denominator);
+            if (res && res.totalVolReward) {
+                this.poolInfo.totalVolReward = new BigNumber(res.totalVolReward.toString()).div(denominator);
             }
             return true;
         });
         this.poolContract.fee({ from: this.accounts[0] }).then(feeStr => {
             this.poolInfo.fee = new BigNumber(feeStr.toString()).div(new BigNumber(10).exponentiatedBy(10));
         });
-        this.poolContract.adminFee({ from: this.accounts[0] }).then(feeStr => {
+        this.poolContract.admin_fee({ from: this.accounts[0] }).then(feeStr => {
             this.poolInfo.adminFee = new BigNumber(feeStr.toString()).div(new BigNumber(10).exponentiatedBy(10));
         });
     }
 
     private loadPoolVolume() {
         let denominator = new BigNumber(10).exponentiatedBy(18);
-        this.poolContract.getVolume({ from: this.accounts[0] }).then(volumeStr => {
+        this.poolContract.volume({ from: this.accounts[0] }).then(volumeStr => {
             this.poolInfo.volume = new BigNumber(volumeStr.toString()).div(denominator);
         }).catch(e => {
             console.log(e);
@@ -535,21 +539,12 @@ export class BootService {
         });
 
 
-        this.proxyContract.getUserInfo(this.chainConfig.contracts.pid, this.accounts[0], { from: this.accounts[0] }).then(res => {
-            if (res && res._amount) {
-                this.balance.stakingLP = new BigNumber(res._amount.toString()).div(denominator);
+        this.proxyContract.userInfo(this.chainConfig.contracts.pid, this.accounts[0], { from: this.accounts[0] }).then(res => {
+            if (res && res.amount) {
+                this.balance.stakingLP = new BigNumber(res.amount.toString()).div(denominator);
             }
-            if (res && res._volume) {
-                this.balance.volume = new BigNumber(res._volume.toString()).div(denominator);
-            }
-            if (res && res._rewardDebt) {
-                this.balance.rewardDebt = new BigNumber(res._rewardDebt.toString()).div(denominator);
-            }
-            if (res && res._volReward) {
-                this.balance.volReward = new BigNumber(res._volReward.toString()).div(denominator);
-            }
-            if (res && res._farmingReward) {
-                this.balance.farmingReward = new BigNumber(res._farmingReward.toString()).div(denominator);
+            if (res && res.rewardDebt) {
+                this.balance.rewardDebt = new BigNumber(res.rewardDebt.toString()).div(denominator);
             }
         }).catch(e => {
             console.log(e);

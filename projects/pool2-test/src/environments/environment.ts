@@ -4,7 +4,7 @@ export const environment = {
     liquiditySymbol: "BSLP-02",
     tokenSymbol: "BST",
     virtualPriceDiff: 0.006,
-    coins: [{ symbol: 'aBTC' }, { symbol: 'bBTC' }, { symbol: 'cBTC' }],
+    coins: [{ symbol: 'tQUSD' }, { symbol: 'tBUSD' }, { symbol: 'tUSDT' }],
     rpc: {
         56: "'https://bsc-dataseed.binance.org/'",
         97: 'https://data-seed-prebsc-1-s1.binance.org:8545/'

@@ -1,7 +1,7 @@
 export const environment = {
     production: true,
     poolId: "p2",
-    liquiditySymbol: "BSLP-03",
+    liquiditySymbol: "BSPT",
     tokenSymbol: "BST",
     virtualPriceDiff: 0.006,
     coins: [{ symbol: 'tUSDC' }, { symbol: 'tBUSD' }, { symbol: 'tUSDT' }],

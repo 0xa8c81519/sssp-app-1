@@ -8,7 +8,7 @@
         <div class="left">{{coin.symbol}}:</div>
         <div class="right">
             <div class="num">{{boot.balance.coinsBalance[i].toFormat(4,1)}}</div>
-            <div class="claim" (click)="claim(i)">Claim</div>
+            <div *ngIf="!boot.isProduction" class="claim" (click)="claim(i)">Claim</div>
         </div>
     </div>
     <div class="list">

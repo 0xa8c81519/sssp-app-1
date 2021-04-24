@@ -24,6 +24,7 @@ import { WalletExceptionDlgComponent } from '../wallet-exception-dlg/wallet-exce
     providedIn: 'root'
 })
 export class BootService {
+    isProduction = environment.production;
 
     walletReady: Subject<any> = new Subject();
     initContractsCompleted: Subject<any> = new Subject();

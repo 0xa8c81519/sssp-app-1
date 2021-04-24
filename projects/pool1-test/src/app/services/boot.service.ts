@@ -29,6 +29,8 @@ import { DatePipe } from '@angular/common';
 })
 export class BootService {
 
+    isProduction = environment.production;
+
     walletReady: Subject<any> = new Subject();
     initContractsCompleted: Subject<any> = new Subject();
 

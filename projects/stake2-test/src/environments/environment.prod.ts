@@ -1,5 +1,5 @@
 export const environment = {
-    production: false,
+    production: true,
     poolId: "p1",
     liquiditySymbol: "BSLP-02",
     tokenSymbol: "BST",

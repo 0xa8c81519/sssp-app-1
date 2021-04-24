@@ -38,10 +38,11 @@ export class PaymentInfoComponent implements OnInit {
 
     isOtherCurrency: boolean = false;
 
-    minAmt: string = '0';
+    rightAmt: string = '0';
     address: string = '';
 
     approveStatus: ApproveStatus = ApproveStatus.None;
+    approveStatusRight: ApproveStatus = ApproveStatus.None;
 
     loadStatus: LoadStatus = LoadStatus.None;
 
@@ -60,6 +61,7 @@ export class PaymentInfoComponent implements OnInit {
         this.boot.initContractsCompleted.subscribe(res => {
             this.boot.approvalStatusChange.subscribe(res => {
                 this.updateApproveStatus();
+                this.updateApproveStatusRight();
             });
         });
     }
@@ -68,12 +70,14 @@ export class PaymentInfoComponent implements OnInit {
         this.boot.approvalStatusChange.subscribe(() => {
             this.loaded.emit();
             this.updateApproveStatus();
+            this.updateApproveStatusRight();
             this.loadStatus = LoadStatus.Loaded;
         });
         this.boot.balanceChange.subscribe(() => {
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
             this.updateApproveStatus();
+            this.updateApproveStatusRight();
         });
     }
 
@@ -92,10 +96,10 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     approveRight() {
-        if (this.minAmt) {
+        if (this.rightAmt) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            this.boot.approve(Number(this.right), this.minAmt, this.boot.paymentContract.address).then(() => {
+            this.boot.approve(Number(this.right), this.rightAmt, this.boot.paymentContract.address).then(() => {
 
             }).catch(e => {
                 console.log(e);
@@ -112,25 +116,29 @@ export class PaymentInfoComponent implements OnInit {
             this.loadStatus = LoadStatus.Loading;
             this.boot.pay(Number(this.left), this.address, this.amt).then((res) => {
                 console.log(res);
+                this.isExchangeEnabled();
             }).catch(e => {
                 this.loaded.emit();
                 this.loadStatus = LoadStatus.Loaded;
                 this.updateApproveStatus();
+                this.isExchangeEnabled();
             });
         }
     }
 
     exchangeRight() {
         console.log(12);
-        if (this.minAmt && this.address && this.isExchangeEnabledRight()) {
+        if (this.rightAmt && this.address && this.isExchangeEnabledRight()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
-            this.boot.payWithSwap(Number(this.right), Number(this.left), this.minAmt, this.amt, this.address).then((res) => {
+            this.boot.payWithSwap(Number(this.right), Number(this.left), this.rightAmt, this.amt, this.address).then((res) => {
                 console.log(res);
+                this.isExchangeEnabledRight();
             }).catch(e => {
                 this.loaded.emit();
                 this.loadStatus = LoadStatus.Loaded;
-                this.updateApproveStatus();
+                this.updateApproveStatusRight();
+                this.isExchangeEnabledRight();
             });
         }
     }
@@ -163,13 +171,13 @@ export class PaymentInfoComponent implements OnInit {
             this.calcNum();
         } else {
             this.isOtherCurrency = false;
-            this.minAmt = '0';
+            this.rightAmt = '0';
         }
     }
 
     amtChangedRight(val) {
-        this.minAmt = val;
-        this.updateApproveStatus();
+        this.rightAmt = val;
+        this.updateApproveStatusRight();
     }
 
     updateApproveStatus() {
@@ -184,8 +192,20 @@ export class PaymentInfoComponent implements OnInit {
         }
     }
 
+    updateApproveStatusRight() {
+        if (!new BigNumber(this.right).isNaN() && !new BigNumber(this.rightAmt).isNaN() && this.boot.accounts && this.boot.accounts.length > 0) {
+            this.boot.allowance(this.right, this.boot.paymentContract.address).then(amt => {
+                if (amt.comparedTo(new BigNumber(this.rightAmt)) >= 0) {
+                    this.approveStatusRight = ApproveStatus.Approved;
+                } else {
+                    this.approveStatusRight = ApproveStatus.NoApproved;
+                }
+            });
+        }
+    }
+
     isApproveEnabled() {
-        if (this.amt && Number(this.amt) > 0 && this.approveStatus === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
+        if (this.amt && Number(this.amt) > 0 && this.approveStatus === ApproveStatus.NoApproved) {
             return true;
         } else {
             return false;
@@ -193,7 +213,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isApproveEnabledRight() {
-        if (this.minAmt && Number(this.minAmt) > 0 && this.approveStatus === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
+        if (this.rightAmt && Number(this.rightAmt) > 0 && this.approveStatusRight === ApproveStatus.NoApproved) {
             return true;
         } else {
             return false;
@@ -209,7 +229,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isExchangeEnabledRight() {
-        if (this.minAmt && Number(this.minAmt) > 0 && this.loadStatus !== LoadStatus.Loading && this.approveStatus === ApproveStatus.Approved) {
+        if (this.rightAmt && Number(this.rightAmt) > 0 && this.loadStatus !== LoadStatus.Loading && this.approveStatusRight === ApproveStatus.Approved) {
             return true;
         } else {
             return false;
@@ -256,6 +276,7 @@ export class PaymentInfoComponent implements OnInit {
             this.isOtherCurrency = false;
             return;
         }
+        this.updateApproveStatusRight();
     }
 
     selectNumFn(index) {
@@ -264,7 +285,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     calcNum() {
-        this.minAmt = (Number(this.amt) + this.active).toString();
+        this.rightAmt = (Number(this.amt) + this.active).toString();
     }
 
     editAddress(v) {

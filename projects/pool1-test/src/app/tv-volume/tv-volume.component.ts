@@ -71,7 +71,7 @@ export class TvVolumeComponent implements OnInit {
                     }
                 }
 
-                chart.subscribeCrosshairMove((param) => {
+                chart.subscribeCrosshairMove((param:any) => {
                     if (param === undefined || param.time === undefined || param.point.x < 0 || param.point.x > width || param.point.y < 0 || param.point.y > height) {
                         setLastBarText();
                     } else {

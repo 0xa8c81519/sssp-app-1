@@ -29,7 +29,7 @@ export class TvVolumeComponent implements OnInit {
                         visible: false,
                     },
                     rightPriceScale: {
-                        visible: false,
+                        visible: true,
                     },
                     crosshair: {
                         vertLine: {
@@ -53,8 +53,10 @@ export class TvVolumeComponent implements OnInit {
                         lineWidth: 2,
                     }
                 );
+                let dataList = [];
                 this.boot.getSubgraph().then(data => {
                     lineSeries.setData(data.liquidity);
+                    dataList = data.liquidity;
                     this.list = data.liquidity;
                 });
                 const toolTip = this.tooltip.nativeElement;
@@ -63,22 +65,20 @@ export class TvVolumeComponent implements OnInit {
                 let dateStr;
 
                 function setLastBarText() {
-                    let _this = this;
-                    if (_this.list) {
-                        dateStr = _this.list[_this.list.length - 1].time.year + ' - ' + _this.list[_this.list.length - 1].time.month + ' - ' + _this.list[_this.list.length - 1].time.day;
-                        toolTip.innerHTML = '<div style="font-size: 13px; margin: 4px 0px; color: #20262E"> AEROSPACE</div>' + '<div style="font-size: 12px; margin: 4px 0px; color: #20262E">' + _this.list[_this.list.length - 1].value + '</div>' +
+                    if (dataList) {
+                        dateStr = dataList[dataList.length - 1].time.year + ' - ' + dataList[dataList.length - 1].time.month + ' - ' + dataList[dataList.length - 1].time.day;
+                        toolTip.innerHTML = '<div style="font-size: 12px; margin: 4px 0px; color: #FFFFFF">' + '$' + dataList[dataList.length - 1].value + '</div>' +
                             '<div>' + dateStr + '</div>';
                     }
                 }
 
-                chart.subscribeCrosshairMove((param:any) => {
+                chart.subscribeCrosshairMove((param: any) => {
                     if (param === undefined || param.time === undefined || param.point.x < 0 || param.point.x > width || param.point.y < 0 || param.point.y > height) {
                         setLastBarText();
                     } else {
-                        console.log(param);
                         const value: any = param.seriesPrices.get(lineSeries);
                         dateStr = param?.time?.year + ' - ' + param?.time?.month + ' - ' + param?.time?.day;
-                        toolTip.innerHTML = '<div style="font-size: 13px; margin: 4px 0px; color: #20262E"> AEROSPACE</div>' + '<div style="font-size: 12px; margin: 4px 0px; color: #20262E">' + (Math.round(value * 100) / 100).toFixed(2) + '</div>' + '<div>' + dateStr + '</div>';
+                        toolTip.innerHTML = '<div style="font-size: 12px; margin: 4px 0px; color: #FFFFFF">' + '$' + (Math.round(value * 100) / 100).toFixed(2) + '</div>' + '<div>' + dateStr + '</div>';
                     }
                 });
 

@@ -9,7 +9,7 @@
         </div>
         <div class="right">
             <div class="approve">
-                <div class="text" [ngClass]="{blue:isApproveEnabled(i)&&loadStatus!==1}" (click)="approve(i)">
+                <div class="text" [ngClass]="{blue:isApproveEnabled(i)&&loadStatus!==1}" *ngIf="isApproveEnabled(i)&&loadStatus!==1" (click)="approve(i)">
                     Approve
                 </div>
             </div>

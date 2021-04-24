@@ -15,7 +15,7 @@ export const environment = {
             name: 'Testnet',
             contracts: {
                 proxy: {
-                    address: "0xAcDe76E0175779088b8557a21b00F16D56651d25"
+                    address: "0xaD6A40942dA9d4D4E8bE7A6aB6fa560b5B4AdE65"
                 },
                 pid: 3
             }

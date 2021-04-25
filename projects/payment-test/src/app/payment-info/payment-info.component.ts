@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import {CoinsDlgComponent} from '../coins-dlg/coins-dlg.component';
-import {BootService} from '../services/boot.service';
-import {ethers} from 'ethers';
+import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
+import { BootService } from '../services/boot.service';
+import { ethers } from 'ethers';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -25,9 +25,9 @@ export class PaymentInfoComponent implements OnInit {
     left = 0;
     active = 1;
     slippageNumList: any = [
-        {num: 1},
-        {num: 2},
-        {num: 5}
+        { num: 1 },
+        { num: 2 },
+        { num: 5 }
     ];
 
     right = 1;
@@ -285,7 +285,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     calcNum() {
-        this.rightAmt = (Number(this.amt) + this.active).toString();
+        this.rightAmt = new BigNumber(this.amt).multipliedBy(new BigNumber(1).plus(new BigNumber(this.active).div(100))).toFixed(4, BigNumber.ROUND_DOWN);
     }
 
     editAddress(v) {

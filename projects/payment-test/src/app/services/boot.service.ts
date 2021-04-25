@@ -426,7 +426,8 @@ export class BootService {
         payAmt = ethers.utils.parseEther(String(payAmt)).toString();
         receiptAmt = ethers.utils.parseEther(String(receiptAmt)).toString();
         return this.paymentContract.estimateGas.payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0] }).then(gas => {
-            return this.paymentContract.payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0], gasLimit: gas.toHexString() });
+            let signer = this.web3.getSigner();
+            return this.paymentContract.connect(signer).payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0], gasLimit: gas.toHexString() });
         }).catch(e => {
             this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);

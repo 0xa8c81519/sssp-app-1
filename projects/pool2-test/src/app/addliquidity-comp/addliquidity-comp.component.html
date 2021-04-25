@@ -25,7 +25,7 @@
         </div>
     </div>
     <div [ngClass]="{btn:isAddLiquidityBtnEnabled()&&loadStatus!==1,'btn-disabled':!isAddLiquidityBtnEnabled()||loadStatus===1}" *ngIf="boot.accounts.length>0" (click)="addLiquidity()">
-        {{'Addd Liquidity'|translate}}
+        {{'Add Liquidity'|translate}}
     </div>
     <div class="btn" *ngIf="boot.accounts.length==0" (click)="connectWallet()">
         {{'Connect to a Wallet'|translate}}

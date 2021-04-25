@@ -50,7 +50,7 @@
             <div class="pand-bottom">
                 <input type="num" class="num" name="withdrawLPPercent" [ngModel]="withdrawLPPercent"
                        (ngModelChange)="withdrawLPPercentChange($event)"><span style="font-size:22px;">%</span>
-                <div class="text" [ngClass]="{blue:loadStatus===0||loadStatus===2}" (click)="withdrawLP()">Withdraw LP
+                <div class="text" [ngClass]="{blue:loadStatus===0||loadStatus===2}" (click)="withdrawLP()">{{"Withdraw" |translate}} LP
                 </div>
             </div>
         </div>
@@ -58,10 +58,10 @@
     <div class="stake-btn">
         <div class="left">
             {{boot.balance.pendingToken.toFixed(4, 1)}}
-            <span>Pending BST</span>
+            <span>{{"Pending" | translate}} BST</span>
         </div>
         <div [class]="isDisabled?'right btn-disabled':'right'" *ngIf="boot.accounts.length>0" (click)="getPending()">
-            Get Pending {{boot.tokenSymbol}}
+            {{"Get Pending" | translate}} {{boot.tokenSymbol}}
         </div>
         <div class="right" *ngIf="boot.accounts.length==0" (click)="connectWallet()">
             {{"Connect to a Wallet"|translate}}

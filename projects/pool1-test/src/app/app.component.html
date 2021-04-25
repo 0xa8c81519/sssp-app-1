@@ -42,11 +42,11 @@
                     <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
                 <li class="add" [ngClass]="{active:curTab===1}" (click)="changeTab(1)">
-                    <div class="tab-name">Add Liquidity</div>
+                    <div class="tab-name">{{"Add Liquidity" | translate}}</div>
                     <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
                 <li class="manage " [ngClass]="{active:curTab===2}" (click)="changeTab(2)">
-                    <div class="tab-name">Manage Liquidity</div>
+                    <div class="tab-name">{{"Manage Liquidity" | translate}}</div>
                     <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
                 <div class="tabs-bg" [ngStyle]="{display:!isMobile?'':'none'}" #tabsBg></div>

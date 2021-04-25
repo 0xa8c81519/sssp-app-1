@@ -2,8 +2,8 @@
 <div class="swap-box" [ngStyle]="{display:hidden?'none':'flex'}">
     <div class="box-cont">
         <div class="left">
-            <div class="box-top">Payment amount</div>
-            <div class="box-top-mobile">Amount</div>
+            <div class="box-top">{{"Payment amount" | translate}}</div>
+            <div class="box-top-mobile">{{"Amount" | translate}}</div>
             <input type="number" class="num" [ngModel]="amt" (ngModelChange)="amtChanged($event)">
         </div>
         <div class="right">
@@ -33,7 +33,7 @@
     </div>
     <div class="to">
         <input type="text" class="addressInput" [ngModel]="address" (ngModelChange)="editAddress($event)"
-               [placeholder]="'Please enter the collection address' | translate">
+               [placeholder]="'Please enter the receiver address' | translate">
         <svg t="1618828949866" class="icon scan" viewBox="0 0 1024 1024" version="1.1"
              xmlns="http://www.w3.org/2000/svg"
              p-id="2176" width="200" height="200">
@@ -45,14 +45,14 @@
     </div>
     <div class="toBottom" (click)="otherCurrency()">
         <span>
-            Payment in other currencies
-           <svg t="1618829219616" class="icon gantan" viewBox="0 0 1024 1024" version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                p-id="2302" width="200" height="200"><path
-                   d="M512 63.104c-243.872 0-441.6 197.728-441.6 441.6s197.728 441.6 441.6 441.6 441.6-197.728 441.6-441.6-197.728-441.6-441.6-441.6z m0 808.32c-202.464 0-366.72-164.256-366.72-366.72 0-202.464 164.256-366.72 366.72-366.72 202.464 0 366.72 164.256 366.72 366.72 0 202.464-164.256 366.72-366.72 366.72z"
-                   fill="#FFFFFF" p-id="2303"></path><path
-                   d="M464.672 678.208a47.328 47.328 0 1 0 94.656 0 47.328 47.328 0 0 0-94.656 0zM488.32 567.808h47.36c4.32 0 7.872-3.552 7.872-7.904V291.776a7.904 7.904 0 0 0-7.904-7.872h-47.296a7.904 7.904 0 0 0-7.904 7.872v268.16c0 4.32 3.552 7.872 7.904 7.872z"
-                   fill="#FFFFFF" p-id="2304"></path></svg>
+            {{"Payment in other currencies" | translate}}
+            <svg t="1618829219616" class="icon gantan" viewBox="0 0 1024 1024" version="1.1"
+                 xmlns="http://www.w3.org/2000/svg"
+                 p-id="2302" width="200" height="200"><path
+                    d="M512 63.104c-243.872 0-441.6 197.728-441.6 441.6s197.728 441.6 441.6 441.6 441.6-197.728 441.6-441.6-197.728-441.6-441.6-441.6z m0 808.32c-202.464 0-366.72-164.256-366.72-366.72 0-202.464 164.256-366.72 366.72-366.72 202.464 0 366.72 164.256 366.72 366.72 0 202.464-164.256 366.72-366.72 366.72z"
+                    fill="#FFFFFF" p-id="2303"></path><path
+                    d="M464.672 678.208a47.328 47.328 0 1 0 94.656 0 47.328 47.328 0 0 0-94.656 0zM488.32 567.808h47.36c4.32 0 7.872-3.552 7.872-7.904V291.776a7.904 7.904 0 0 0-7.904-7.872h-47.296a7.904 7.904 0 0 0-7.904 7.872v268.16c0 4.32 3.552 7.872 7.904 7.872z"
+                    fill="#FFFFFF" p-id="2304"></path></svg>
         </span>
         <span *ngIf="isOtherCurrency"><svg t="1618828897481" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                            xmlns="http://www.w3.org/2000/svg" p-id="2050" width="200" height="200"><path
@@ -68,8 +68,8 @@
     <ng-container *ngIf="isOtherCurrency">
         <div class="box-cont">
             <div class="left">
-                <div class="box-top">Need to pay</div>
-                <div class="box-top-mobile">Amount</div>
+                <div class="box-top">{{"Need to pay" | translate}}</div>
+                <div class="box-top-mobile">{{"Amount" | translate}}</div>
                 <input type="number" class="num" name="minAmt" [(ngModel)]="rightAmt"
                        (ngModelChange)="amtChangedRight($event)">
             </div>
@@ -98,7 +98,7 @@
             </div>
         </div>
         <div class="slidingpPoint">
-            <p>Slippage</p>
+            <p>{{"Slippage Setting" | translate}}</p>
             <div class="SlidingNum">
                 <div *ngFor="let item of slippageNumList;let i=index;"
                      [ngClass]="{'activeS':active === item.num}"
@@ -110,12 +110,12 @@
 
     <div [ngClass]="{'btn-disabled':!isExchangeEnabled(),'btn':isExchangeEnabled()}"
          *ngIf="boot.accounts.length>0 && !isOtherCurrency"
-         (click)="exchange()">
+         (click)="pay()">
         {{"Pay"|translate}}
     </div>
     <div [ngClass]="{'btn-disabled':!isExchangeEnabledRight(),'btn':isExchangeEnabledRight()}"
          *ngIf="boot.accounts.length>0 && isOtherCurrency"
-         (click)="exchangeRight()">
+         (click)="payRight()">
         {{"Pay"|translate}}
     </div>
     <!--    <div class="btn" *ngIf="boot.accounts.length==0" (click)="connectWallet()">-->

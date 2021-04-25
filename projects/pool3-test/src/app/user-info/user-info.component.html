@@ -1,14 +1,14 @@
 <div class="other-box">
     <div class="title">
         <div class="box"></div>
-        <div class="text">User's Info</div>
+        <div class="text">{{"User's Info" | translate}}</div>
 
     </div>
     <div class="list" *ngFor="let coin of boot.coins;let i=index">
         <div class="left">{{coin.symbol}}:</div>
         <div class="right">
             <div class="num">{{boot.balance.coinsBalance[i].toFormat(4,1)}}</div>
-            <div *ngIf="!boot.isProduction" class="claim" (click)="claim(i)">Claim</div>
+            <div *ngIf="!boot.isProduction" class="claim" (click)="claim(i)">{{"Claim" | translate}}</div>
         </div>
     </div>
     <div class="list">
@@ -24,7 +24,7 @@
         </div>
     </div> -->
     <div class="list">
-        <div class="left">Staking {{boot.liquiditySymbol}}:</div>
+        <div class="left">{{"Staking" | translate}} {{boot.liquiditySymbol}}:</div>
         <div class="right">
             <div class="num">{{boot.balance.stakingLP.toFormat(4,1)}}</div>
         </div>

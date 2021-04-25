@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
-import { BootService } from '../services/boot.service';
-import { ethers } from 'ethers';
+import {CoinsDlgComponent} from '../coins-dlg/coins-dlg.component';
+import {BootService} from '../services/boot.service';
+import {ethers} from 'ethers';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -25,9 +25,9 @@ export class PaymentInfoComponent implements OnInit {
     left = 0;
     active = 1;
     slippageNumList: any = [
-        { num: 1 },
-        { num: 2 },
-        { num: 5 }
+        {num: 1},
+        {num: 2},
+        {num: 5}
     ];
 
     right = 1;
@@ -109,36 +109,41 @@ export class PaymentInfoComponent implements OnInit {
         }
     }
 
-    exchange() {
-        console.log(11);
+    pay() {
         if (this.amt && this.address && this.isExchangeEnabled()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
             this.boot.pay(Number(this.left), this.address, this.amt).then((res) => {
                 console.log(res);
+                if (!res) {
+                    this.loaded.emit();
+                    this.loadStatus = LoadStatus.Loaded;
+                    this.updateApproveStatus();
+                }
                 this.isExchangeEnabled();
             }).catch(e => {
                 this.loaded.emit();
                 this.loadStatus = LoadStatus.Loaded;
                 this.updateApproveStatus();
-                this.isExchangeEnabled();
             });
         }
     }
 
-    exchangeRight() {
-        console.log(12);
+    payRight() {
         if (this.rightAmt && this.address && this.isExchangeEnabledRight()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
             this.boot.payWithSwap(Number(this.right), Number(this.left), this.rightAmt, this.amt, this.address).then((res) => {
-                console.log(res);
+                if (!res) {
+                    this.loaded.emit();
+                    this.loadStatus = LoadStatus.Loaded;
+                    this.updateApproveStatusRight();
+                }
                 this.isExchangeEnabledRight();
             }).catch(e => {
                 this.loaded.emit();
                 this.loadStatus = LoadStatus.Loaded;
                 this.updateApproveStatusRight();
-                this.isExchangeEnabledRight();
             });
         }
     }
@@ -205,7 +210,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isApproveEnabled() {
-        if (this.amt && Number(this.amt) > 0 && this.approveStatus === ApproveStatus.NoApproved) {
+        if (this.amt && Number(this.amt) > 0 && this.approveStatus === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
             return true;
         } else {
             return false;
@@ -213,7 +218,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isApproveEnabledRight() {
-        if (this.rightAmt && Number(this.rightAmt) > 0 && this.approveStatusRight === ApproveStatus.NoApproved) {
+        if (this.rightAmt && Number(this.rightAmt) > 0 && this.approveStatusRight === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
             return true;
         } else {
             return false;
@@ -246,18 +251,6 @@ export class PaymentInfoComponent implements OnInit {
         this.right = selectedIndex_;
         //this.chooseRight(selectedIndex_);
         this.updateApproveStatus();
-    }
-
-
-    chooseLeft(val) {
-        this.left = val;
-        if (this.left === this.right) {
-            if (this.right !== 2) {
-                this.right = this.right + 1;
-            } else {
-                this.right = 0;
-            }
-        }
     }
 
     openCoinLeftDlg() {

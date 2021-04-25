@@ -38,7 +38,7 @@
         <div class="tabs">
             <ul #tabsUl>
                 <li class="swap" [ngClass]="{active:curTab===0}" (click)="changeTab(0)">
-                    <div class="tab-name">Payment</div>
+                    <div class="tab-name">{{"Payment" | translate}}</div>
                     <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
                 <div class="tabs-bg" [ngStyle]="{display:!isMobile?'':'none'}" #tabsBg></div>
@@ -48,7 +48,7 @@
             <div class="main">
                 <div class="boxs">
                     <div class="box">
-                        <app-payment-info></app-payment-info>
+                        <app-payment-info (loaded)="onLoaded()" (loading)="onLoading()"></app-payment-info>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import {CoinsDlgComponent} from '../coins-dlg/coins-dlg.component';
-import {BootService} from '../services/boot.service';
-import {SlippageSettingDlgComponent} from '../slippage-setting-dlg/slippage-setting-dlg.component';
+import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
+import { BootService } from '../services/boot.service';
+import { SlippageSettingDlgComponent } from '../slippage-setting-dlg/slippage-setting-dlg.component';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -145,10 +145,8 @@ export class SwapCompComponent implements OnInit {
             //     this.loaded.emit();
             //     return;
             // } else {
-            console.log(this.minAmt);
-            console.log(this.slippageNum, 'slippageNum');
-            console.log(String(new BigNumber(this.minAmt).minus(this.slippageNum ? this.slippageNum : 0)));
-            this.boot.exchange(Number(this.left), Number(this.right), this.amt, this.minAmt ? String(new BigNumber(this.minAmt).minus(this.slippageNum ? this.slippageNum : 0)) : '0').then(res => {
+            let minAmt = new BigNumber(this.minAmt).multipliedBy(new BigNumber(100).minus(this.slippageNum).div(100));
+            this.boot.exchange(Number(this.left), Number(this.right), this.amt, minAmt.toFixed(18, BigNumber.ROUND_DOWN)).then(res => {
                 console.log(res);
                 // this.boot.loadData();
 

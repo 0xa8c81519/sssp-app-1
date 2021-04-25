@@ -23,13 +23,17 @@ export class TvVolumeComponent implements OnInit {
                 const chart = createChart(this.tvChart.nativeElement, {
                     layout: {
                         textColor: '#d1d4dc',
-                        backgroundColor: '#161921',
+                        backgroundColor: 'rgba(29, 30, 37, 0.57)',
                     },
                     leftPriceScale: {
                         visible: false,
                     },
                     rightPriceScale: {
-                        visible: false,
+                        scaleMargins: {
+                            top: 0.4,
+                            bottom: 0.2,
+                        },
+                        visible: true,
                     },
                     crosshair: {
                         vertLine: {
@@ -53,39 +57,33 @@ export class TvVolumeComponent implements OnInit {
                         lineWidth: 2,
                     }
                 );
+                let dataList = [];
                 this.boot.getSubgraph().then(data => {
                     lineSeries.setData(data.liquidity);
+                    dataList = data.liquidity;
                     this.list = data.liquidity;
                 });
-                const toolTipWidth = 100;
-                const toolTipHeight = 80;
-                const toolTipMargin = 15;
                 const toolTip = this.tooltip.nativeElement;
                 const width = 600;
                 const height = 300;
+                let dateStr;
 
-                chart.subscribeCrosshairMove((param) => {
-                    if (!param.time || param.point.x < 0 || param.point.x > width || param.point.y < 0 || param.point.y > height) {
-                        toolTip.style.display = 'none';
-                        return;
+                function setLastBarText() {
+                    if (dataList) {
+                        dateStr = dataList[dataList.length - 1].time.year + ' - ' + dataList[dataList.length - 1].time.month + ' - ' + dataList[dataList.length - 1].time.day;
+                        toolTip.innerHTML = '<div style="font-size: 12px; margin: 4px 0px; color: #FFFFFF">' + '$' + dataList[dataList.length - 1].value + '</div>' +
+                            '<div>' + dateStr + '</div>';
                     }
-                    const value = param.seriesPrices.get(lineSeries);
-                    toolTip.style.display = 'block';
-                    toolTip.innerHTML = '<div style="font-size: 13px; margin: 4px 0px">' + value + '</div>';
-                    const y = param.point.y;
+                }
 
-                    let left = param.point.x + toolTipMargin;
-                    if (left > width - toolTipWidth) {
-                        left = param.point.x - toolTipMargin - toolTipWidth;
+                chart.subscribeCrosshairMove((param: any) => {
+                    if (param === undefined || param.time === undefined || param.point.x < 0 || param.point.x > width || param.point.y < 0 || param.point.y > height) {
+                        setLastBarText();
+                    } else {
+                        const value: any = param.seriesPrices.get(lineSeries);
+                        dateStr = param?.time?.year + ' - ' + param?.time?.month + ' - ' + param?.time?.day;
+                        toolTip.innerHTML = '<div style="font-size: 12px; margin: 4px 0px; color: #FFFFFF">' + '$' + (Math.round(value * 100) / 100).toFixed(2) + '</div>' + '<div>' + dateStr + '</div>';
                     }
-
-                    let top = y + toolTipMargin;
-                    if (top > height - toolTipHeight) {
-                        top = y - toolTipHeight - toolTipMargin;
-                    }
-
-                    toolTip.style.left = (left + 20) + 'px';
-                    toolTip.style.top = top + 'px';
                 });
 
             }, 0);

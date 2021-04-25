@@ -29,6 +29,10 @@ export class TvVolumeComponent implements OnInit {
                         visible: false,
                     },
                     rightPriceScale: {
+                        scaleMargins: {
+                            top: 0.4,
+                            bottom: 0.2,
+                        },
                         visible: true,
                     },
                     crosshair: {

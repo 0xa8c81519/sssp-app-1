@@ -37,7 +37,7 @@
         <div class="tabs">
             <ul #tabsUl>
                 <li class="swap" [ngClass]="{active:curTab===0}" (click)="changeTab(0)">
-                    <div class="tab-name">Swap</div>
+                    <div class="tab-name">{{"Swap" | translate}}</div>
                     <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
                 <li class="add" [ngClass]="{active:curTab===1}" (click)="changeTab(1)">

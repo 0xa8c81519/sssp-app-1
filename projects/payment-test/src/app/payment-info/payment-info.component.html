@@ -12,7 +12,9 @@
                     {{"Balance"|translate}}:{{boot.balances[left].toFormat(4, 1)}}
                 </div>
                 <div class="balance-bottom">
-                    <div class="bottom-box blue" *ngIf="isApproveEnabled() && !isOtherCurrency" (click)="approve()">
+                    <div class="bottom-box blue"
+                         *ngIf="(boot.balances[left].toFormat(4, 1)>0)&&isApproveEnabled() && !isOtherCurrency"
+                         (click)="approve()">
                         Approve
                     </div>
                 </div>
@@ -52,7 +54,8 @@
                     d="M512 63.104c-243.872 0-441.6 197.728-441.6 441.6s197.728 441.6 441.6 441.6 441.6-197.728 441.6-441.6-197.728-441.6-441.6-441.6z m0 808.32c-202.464 0-366.72-164.256-366.72-366.72 0-202.464 164.256-366.72 366.72-366.72 202.464 0 366.72 164.256 366.72 366.72 0 202.464-164.256 366.72-366.72 366.72z"
                     fill="#FFFFFF" p-id="2303"></path><path
                     d="M464.672 678.208a47.328 47.328 0 1 0 94.656 0 47.328 47.328 0 0 0-94.656 0zM488.32 567.808h47.36c4.32 0 7.872-3.552 7.872-7.904V291.776a7.904 7.904 0 0 0-7.904-7.872h-47.296a7.904 7.904 0 0 0-7.904 7.872v268.16c0 4.32 3.552 7.872 7.904 7.872z"
-                    fill="#FFFFFF" p-id="2304"></path></svg>
+                    fill="#FFFFFF" p-id="2304"></path>
+            <title>{{"To select another currency for payment is to convert other currencies into the currency to be paid" |translate}}</title></svg>
         </span>
         <span *ngIf="isOtherCurrency"><svg t="1618828897481" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                            xmlns="http://www.w3.org/2000/svg" p-id="2050" width="200" height="200"><path
@@ -71,7 +74,7 @@
                 <div class="box-top">{{"Need to pay" | translate}}</div>
                 <div class="box-top-mobile">{{"Amount" | translate}}</div>
                 <input type="number" class="num" name="minAmt" [(ngModel)]="rightAmt"
-                       (ngModelChange)="amtChangedRight($event)">
+                       (ngModelChange)="amtChangedRight($event)" [readOnly]="isOtherCurrency">
             </div>
             <div class="right">
                 <div class="balance">
@@ -79,7 +82,9 @@
                         {{"Balance"|translate}}:{{boot.balances[right].toFormat(4, 1)}}
                     </div>
                     <div class="balance-bottom">
-                        <div class="bottom-box blue" *ngIf="isApproveEnabledRight()" (click)="approveRight()">Approve
+                        <div class="bottom-box blue"
+                             *ngIf="(boot.balances[right].toFormat(4, 1)>0)&&isApproveEnabledRight()"
+                             (click)="approveRight()">Approve
                         </div>
                     </div>
                 </div>

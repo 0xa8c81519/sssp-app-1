@@ -78,5 +78,7 @@
   "Bonus End Block": "奖励结束区块",
   "Token Per Block": "每个区块奖励数量",
   "Pending": "待领取",
-  "Get Pending": "领取"
+  "Get Pending": "领取",
+  "Withdrawd Liquidity": "提取流动资金",
+  "To select another currency for payment is to convert other currencies into the currency to be paid":"选择其他币种进行支付是将其他币种兑换成要支付的币种完成支付"
 }

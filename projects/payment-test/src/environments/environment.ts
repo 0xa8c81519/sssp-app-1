@@ -15,10 +15,10 @@ export const environment = {
             name: 'Testnet',
             contracts: {
                 proxy: {
-                    address: '0xaD6A40942dA9d4D4E8bE7A6aB6fa560b5B4AdE65'
+                    address: '0x3A10b311a090776ad4988D847B2Eae042ad77872'
                 },
                 payment: {
-                    address: '0x2a248616553c2e727D143C6820c2238cc282E583'
+                    address: '0xaEF71d18D72f86DFa23A8aFC0Ec78c9C641B7ba2'
                 }
             }
         },

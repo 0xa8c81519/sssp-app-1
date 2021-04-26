@@ -83,7 +83,7 @@
                     </div>
                     <div class="balance-bottom">
                         <div class="bottom-box blue"
-                             *ngIf="(boot.balances[right].toFormat(4, 1)>0)&&isApproveEnabledRight()"
+                             *ngIf="(boot.balances[right].comparedTo(0)>0)&&isApproveEnabledRight()"
                              (click)="approveRight()">Approve
                         </div>
                     </div>

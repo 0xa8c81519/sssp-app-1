@@ -1,3 +1,4 @@
+aws s3 cp ../../s3/index.html s3://testnet.bstable.finance/
 ./sync-home-test.sh
 ./sync-pool1-test.sh
 ./sync-pool2-test.sh

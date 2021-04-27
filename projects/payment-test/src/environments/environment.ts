@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
     poolId: 'pay',
-    paymentTokenSymbol: 'BSLP-01',
+    paymentTokenSymbol: 'BSPT',
     tokenSymbol: 'BST',
     virtualPriceDiff: 0.006,
     coins: [{symbol: 'tUSDC'}, {symbol: 'tBUSD'}, {symbol: 'tUSDT'}],

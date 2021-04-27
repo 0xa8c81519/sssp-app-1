@@ -12,6 +12,10 @@ case "$1" in
        echo "====================OPEN--pool2-test项目=========================="
        ng serve pool2-test --open --port 8888
    ;;
+   'p3')
+       echo "====================OPEN--pool3-test项目=========================="
+       ng serve pool3-test --open --port 8888
+   ;;
    's1')
        echo "====================OPEN--stake1-test项目=========================="
        ng serve stake1-test --open --port 8888
@@ -20,7 +24,11 @@ case "$1" in
        echo "====================OPEN--stake2-test项目=========================="
        ng serve stake2-test --open --port 8888
    ;;
- 'pay')
+   's3')
+       echo "====================OPEN--stake3-test项目=========================="
+       ng serve stake3-test --open --port 8888
+   ;;
+   'pay')
        echo "====================OPEN--pay-test项目=========================="
        ng serve payment-test --open --port 8888
    ;;

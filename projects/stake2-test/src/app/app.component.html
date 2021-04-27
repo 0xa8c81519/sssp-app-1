@@ -47,7 +47,7 @@
                 <div class="boxs">
                     <div class="box">
                         <app-stake-comp *ngIf="curTab===3" [hidden]="curTab===3?false:true"
-                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()" (chooseWallet)="cwDlg.open()" (loaded)="onLoaded()"></app-stake-comp>
+                            (installWallet)="installWltDlg.open()" (chooseWallet)="cwDlg.open()" (chooseWallet)="cwDlg.open()" (loaded)="onLoaded()" (loading)="onLoading()"></app-stake-comp>
                         <!-- 其他盒子 -->
                         <!-- <app-user-info></app-user-info> -->
                         <app-reward-info></app-reward-info>

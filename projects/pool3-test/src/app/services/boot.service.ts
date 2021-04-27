@@ -981,7 +981,6 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.proxyContract.connect(signer).deposit(this.chainConfig.contracts.pid, amt, { from: this.accounts[0], gasLimit: gas.toString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" } });
             console.log(e);
             throw e;
         });
@@ -993,7 +992,6 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.proxyContract.connect(signer).withdraw(this.chainConfig.contracts.pid, amt, { from: this.accounts[0], gasLimit: gas.toString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" } });
             console.log(e);
             throw e;
         });
@@ -1004,7 +1002,6 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.proxyContract.connect(signer).emergencyWithdraw(this.chainConfig.contracts.pid, { from: this.accounts[0], gasLimit: gas.toString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: "exchange_exception" } });
             console.log(e);
             throw e;
         });

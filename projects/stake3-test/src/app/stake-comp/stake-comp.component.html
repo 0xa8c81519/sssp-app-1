@@ -1,9 +1,9 @@
 <!-- stake -->
 <div class="stake-box" [ngStyle]="{display:hidden?'none':'flex'}">
-    <div class="title">
-        <div class="box"></div>
-        <div class="text">Stake {{boot.liquiditySymbol}}</div>
-    </div>
+<!--    <div class="title">-->
+<!--        <div class="box"></div>-->
+<!--        <div class="text">Stake {{boot.liquiditySymbol}}</div>-->
+<!--    </div>-->
     <div class="pand">
         <div class="pand-top">
             <div class="left">
@@ -28,7 +28,7 @@
                 <div class="text" *ngIf="needApproveLP&&(loadStatus===0||loadStatus===2)"
                      [ngClass]="{blue:needApproveLP&&(loadStatus===0||loadStatus===2)}"
                      (click)="approveLP()">
-                    Approve
+                    {{"Approve" | translate}}
                 </div>
                 <div class="text" [ngClass]="{blue:!needApproveLP&&(loadStatus===0||loadStatus===2)}"
                      (click)="depositLP()">

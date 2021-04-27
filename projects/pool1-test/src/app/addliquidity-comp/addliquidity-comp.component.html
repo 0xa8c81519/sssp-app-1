@@ -12,7 +12,7 @@
                 <div class="text" [ngClass]="{blue:isApproveEnabled(i)&&loadStatus!==1}"
                      *ngIf="(boot.balance.coinsBalance[i].comparedTo(0)>0)&&isApproveEnabled(i)&&loadStatus!==1"
                      (click)="approve(i)">
-                    Approve
+                    {{"Approve" | translate}}
                 </div>
             </div>
             <div class="line">

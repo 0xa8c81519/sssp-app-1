@@ -7,9 +7,11 @@
   "Balance": "余额",
   "Enter an amount": "输入数量",
   "Min Amount": "最小数量",
-  "Approve": "同意划转",
+  "Approve": "划转",
   "Exchange": "兑换",
   "Pay": "支付",
+  "PAY": "支付",
+  "DOCS": "文档",
   "Your pool share": "流动性余额",
   "Withdraw Liquidity": "赎回流动性",
   "Liquidity": "流动性",
@@ -80,5 +82,9 @@
   "Pending": "待领取",
   "Get Pending": "领取",
   "Withdrawd Liquidity": "提取流动资金",
-  "To select another currency for payment is to convert other currencies into the currency to be paid":"选择其他币种进行支付是将其他币种兑换成要支付的币种完成支付"
+  "To select another currency for payment is to convert other currencies into the currency to be paid": "选择其他币种进行支付是将其他币种兑换成要支付的币种完成支付",
+  "Stake": "锁仓",
+  "Payment Reward": "支付奖励",
+  "To (Estimated)": "到",
+  "From": "从"
 }

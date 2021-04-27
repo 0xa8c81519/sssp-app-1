@@ -15,7 +15,7 @@
                     <div class="bottom-box blue"
                          *ngIf="(boot.balances[left].comparedTo(0)>0)&&isApproveEnabled() && !isOtherCurrency"
                          (click)="approve()">
-                        Approve
+                        {{"Approve" | translate}}
                     </div>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                     <div class="balance-bottom">
                         <div class="bottom-box blue"
                              *ngIf="(boot.balances[right].comparedTo(0)>0)&&isApproveEnabledRight()"
-                             (click)="approveRight()">Approve
+                             (click)="approveRight()">{{"Approve" | translate}}
                         </div>
                     </div>
                 </div>

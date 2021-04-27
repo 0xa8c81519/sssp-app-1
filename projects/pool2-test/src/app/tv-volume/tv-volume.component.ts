@@ -62,6 +62,7 @@ export class TvVolumeComponent implements OnInit {
                     lineSeries.setData(data.liquidity);
                     dataList = data.liquidity;
                     this.list = data.liquidity;
+                    setLastBarText();
                 });
                 const toolTip = this.tooltip.nativeElement;
                 const width = 600;

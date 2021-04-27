@@ -10,7 +10,7 @@
         <div class="right">
             <div class="approve">
                 <div class="text" [ngClass]="{blue:isApproveEnabled(i)&&loadStatus!==1}"
-                     *ngIf="(boot.balance.coinsBalance[i].toFormat(4,1)>0)&&isApproveEnabled(i)&&loadStatus!==1"
+                     *ngIf="(boot.balance.coinsBalance[i].comparedTo(0)>0)&&isApproveEnabled(i)&&loadStatus!==1"
                      (click)="approve(i)">
                     Approve
                 </div>

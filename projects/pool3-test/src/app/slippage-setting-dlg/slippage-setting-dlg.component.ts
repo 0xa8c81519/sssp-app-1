@@ -30,6 +30,7 @@ export class SlippageSettingDlgComponent implements OnInit {
     close() {
         setTimeout(() => {
             this.hidden = true;
+            this.active = 1;
         }, 200);
     }
 

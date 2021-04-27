@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import { environment } from '../../environments/environment';
-import { ChooseWalletDlgComponent } from '../choose-wallet-dlg/choose-wallet-dlg.component';
-import { PriceDiffComponent } from '../price-diff/price-diff.component';
-import { BootService } from '../services/boot.service';
+import {environment} from '../../environments/environment';
+import {ChooseWalletDlgComponent} from '../choose-wallet-dlg/choose-wallet-dlg.component';
+import {PriceDiffComponent} from '../price-diff/price-diff.component';
+import {BootService} from '../services/boot.service';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -63,7 +63,7 @@ export class AddliquidityCompComponent implements OnInit {
             this.updateApproveStatus();
             this.loadStatus = LoadStatus.Loaded;
             this.loaded.emit();
-        })
+        });
     }
 
     // approve() {
@@ -91,12 +91,16 @@ export class AddliquidityCompComponent implements OnInit {
             }
         }
     }
+
     approve(i: number) {
         if (this.isApproveEnabled(i) && this.loadStatus !== 1) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            this.boot.approve(i, String(this.amts[i] ? this.amts[i] : 0), this.boot.poolAddress).then(r => {
-
+            this.boot.approve(i, String(this.amts[i] ? this.amts[i] : 0), this.boot.poolAddress).then(res => {
+                if (!res) {
+                    this.loadStatus = LoadStatus.Loaded;
+                    this.loaded.emit();
+                }
             }).catch(e => {
                 this.loadStatus = LoadStatus.Loaded;
                 this.loaded.emit();
@@ -106,7 +110,7 @@ export class AddliquidityCompComponent implements OnInit {
 
     async addLiquidity() {
         if (!this.isAddLiquidityBtnEnabled() || this.loadStatus === 1) {
-            return
+            return;
         }
         // await this.boot.loadData();
         this.loadStatus = LoadStatus.Loading;
@@ -116,7 +120,7 @@ export class AddliquidityCompComponent implements OnInit {
         this.amts.forEach((e, i) => {
             if (e > 0 && !this.isApproveEnabled(i)) {
                 amtsStr.push(String(e));
-            } else { // 
+            } else { //
                 amtsStr.push('0');
             }
             totalAmt = totalAmt.plus(e);
@@ -128,9 +132,9 @@ export class AddliquidityCompComponent implements OnInit {
             lp = await this.boot.calcTokenAmount(amtsStr, true);
         }
         let nVirtualPrice = await this.boot.calculateVirtualPrice(amtsStr, lp, true);
-        console.log("New Virtual Price: " + nVirtualPrice.toFixed(18));
+        console.log('New Virtual Price: ' + nVirtualPrice.toFixed(18));
         let diff = nVirtualPrice.div(this.boot.poolInfo.virtualPrice).minus(1).abs();
-        console.log("Diff: " + diff.toFixed(18));
+        console.log('Diff: ' + diff.toFixed(18));
 
         let totalBalance = new BigNumber(0);
         this.boot.poolInfo.coinsRealBalance.forEach(e => {
@@ -195,6 +199,7 @@ export class AddliquidityCompComponent implements OnInit {
         //     }
         // }
     }
+
     amtChange(i: number, val: any) {
         this.amts[i] = val;
         this.updateApproveStatus();

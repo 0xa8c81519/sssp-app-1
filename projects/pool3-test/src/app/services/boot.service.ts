@@ -617,7 +617,7 @@ export class BootService {
                     amt = ethers.utils.parseEther(String(amt)).toString();
                 } else {
                     return new Promise((resolve, reject) => {
-                        resolve(true);
+                        resolve(false);
                     });
                 }
                 console.log(amt);
@@ -641,7 +641,7 @@ export class BootService {
                     amt = ethers.utils.parseEther(String(amt)).toString();
                 } else {
                     return new Promise((resolve, reject) => {
-                        resolve(true);
+                        resolve(false);
                     });
                 }
                 console.log(amt);

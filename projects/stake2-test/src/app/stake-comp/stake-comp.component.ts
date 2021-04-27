@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import {BootService} from '../services/boot.service';
+import { BootService } from '../services/boot.service';
 
 export enum ActionStatus {
     None, Transfering, TrasactionEnd
@@ -112,8 +112,11 @@ export class StakeCompComponent implements OnInit {
         }
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
-        this.boot.approveLP(this.depositLPAmt.toFixed(9, BigNumber.ROUND_DOWN), this.boot.chainConfig.contracts.proxy.address).then(() => {
-
+        this.boot.approveLP(this.depositLPAmt.toFixed(9, BigNumber.ROUND_DOWN), this.boot.chainConfig.contracts.proxy.address).then((res) => {
+            if (!res) {
+                this.loaded.emit();
+                this.loadStatus = LoadStatus.Loaded;
+            }
         }).catch(e => {
             // this.boot.loadData();
             this.loaded.emit();

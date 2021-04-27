@@ -152,7 +152,11 @@ export class SwapCompComponent implements OnInit {
             this.boot.exchange(Number(this.left), Number(this.right), this.amt, minAmt.toFixed(18, BigNumber.ROUND_DOWN)).then(res => {
                 console.log(res);
                 // this.boot.loadData();
-
+                if (!res) {
+                    this.loaded.emit();
+                    this.loadStatus = LoadStatus.Loaded;
+                    this.updateApproveStatus();
+                }
             }).catch(e => {
                 this.loaded.emit();
                 this.loadStatus = LoadStatus.Loaded;

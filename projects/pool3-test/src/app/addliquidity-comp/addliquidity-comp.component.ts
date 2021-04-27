@@ -95,8 +95,11 @@ export class AddliquidityCompComponent implements OnInit {
         if (this.isApproveEnabled(i) && this.loadStatus !== 1) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            this.boot.approve(i, String(this.amts[i] ? this.amts[i] : 0), this.boot.poolAddress).then(r => {
-
+            this.boot.approve(i, String(this.amts[i] ? this.amts[i] : 0), this.boot.poolAddress).then(res => {
+                if (!res) {
+                    this.loadStatus = LoadStatus.Loaded;
+                    this.loaded.emit();
+                }
             }).catch(e => {
                 this.loadStatus = LoadStatus.Loaded;
                 this.loaded.emit();

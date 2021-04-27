@@ -674,6 +674,8 @@ export class BootService {
                 return dialogRef.afterClosed().toPromise().then(async res => {
                     if (res === true) {
                         return this._exchange(i, j, amt, minAmt);
+                    }else{
+                        return false;
                     }
                 });
             } else {

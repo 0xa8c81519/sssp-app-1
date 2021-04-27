@@ -201,10 +201,12 @@ export class RedeemliquidityCompComponent implements OnInit {
     approveLP() {
         this.loading.emit();
         this.loadStatus = LoadStatus.Loading;
-        this.boot.approveLP(this.depositLPAmt.toFixed(9, BigNumber.ROUND_DOWN), this.boot.chainConfig.contracts.proxy.address).then(() => {
+        this.boot.approveLP(this.depositLPAmt.toFixed(9, BigNumber.ROUND_DOWN), this.boot.chainConfig.contracts.proxy.address).then((res) => {
             // this.boot.loadData();
-            this.loaded.emit();
-            this.loadStatus = LoadStatus.Loaded;
+            if (!res) {
+                this.loaded.emit();
+                this.loadStatus = LoadStatus.Loaded;
+            }
         });
     }
 

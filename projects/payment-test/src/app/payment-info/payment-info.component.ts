@@ -85,8 +85,11 @@ export class PaymentInfoComponent implements OnInit {
         if (this.amt) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            this.boot.approve(Number(this.left), this.amt, this.boot.paymentContract.address).then(() => {
-
+            this.boot.approve(Number(this.left), this.amt, this.boot.paymentContract.address).then((res) => {
+                if (!res) {
+                    this.loadStatus = LoadStatus.Loaded;
+                    this.loaded.emit();
+                }
             }).catch(e => {
                 console.log(e);
                 this.loadStatus = LoadStatus.Loaded;
@@ -99,8 +102,11 @@ export class PaymentInfoComponent implements OnInit {
         if (this.rightAmt) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            this.boot.approve(Number(this.right), this.rightAmt, this.boot.paymentContract.address).then(() => {
-
+            this.boot.approve(Number(this.right), this.rightAmt, this.boot.paymentContract.address).then((res) => {
+                if (!res) {
+                    this.loadStatus = LoadStatus.Loaded;
+                    this.loaded.emit();
+                }
             }).catch(e => {
                 console.log(e);
                 this.loadStatus = LoadStatus.Loaded;

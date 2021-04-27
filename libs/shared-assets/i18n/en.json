@@ -12,7 +12,7 @@
     "vpWarning": "Price of share over {{vpDiff}}%. High risk to add liquidity！",
     "approve_label": "Approve {{symbol}} Amount",
     "infinite_approval": "Infinite Approval",
-    "exchange_exception": "Your balance may be too low or you may not have approved the exchange amount. The minimum amount may also be too big.",
+    "exchange_exception": "The contract is abnormal and the transaction cannot be completed.",
     "redeem_ImBalance_exception": "You may not have enough liquidity({{symbol}}) or redeem the desired amount.",
     "redeem_allcoin_exception": "You may not have enough liquidity({{symbol}}) or redeem the desired amount.",
     "redeem_onecoin_exception": "You may not have enough liquidity({{symbol}}) or redeem the desired amount.",

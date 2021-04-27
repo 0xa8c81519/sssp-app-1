@@ -50,7 +50,7 @@
   "Confirm": "请确认",
   "approve_label": "同意划转 {{symbol}} 的数量",
   "infinite_approval": "同意无限划转",
-  "exchange_exception": "您的账户余额不足，或者您未授权转账的数量。也有可能您期望最小兑换数量偏大。",
+  "exchange_exception": "合约出现异常，无法完成交易。",
   "redeem_ImBalance_exception": "您的流动性（{{symbol}}）余额不足以赎回期望的数量。",
   "redeem_allcoin_exception": "您的流动性（{{symbol}}）余额不足以赎回期望的数量。",
   "redeem_onecoin_exception": "您的流动性（{{symbol}}）余额不足以赎回期望的数量。",

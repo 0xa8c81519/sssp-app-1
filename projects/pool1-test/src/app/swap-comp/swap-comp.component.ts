@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import {CoinsDlgComponent} from '../coins-dlg/coins-dlg.component';
-import {BootService} from '../services/boot.service';
-import {SlippageSettingDlgComponent} from '../slippage-setting-dlg/slippage-setting-dlg.component';
+import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
+import { BootService } from '../services/boot.service';
+import { SlippageSettingDlgComponent } from '../slippage-setting-dlg/slippage-setting-dlg.component';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -23,7 +23,7 @@ export class SwapCompComponent implements OnInit {
     hidden = false;
 
     left = 0;
-    slippageNum;
+    slippageNum = 1;
 
     right = 1;
 

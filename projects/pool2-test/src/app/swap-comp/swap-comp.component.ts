@@ -23,7 +23,7 @@ export class SwapCompComponent implements OnInit {
     hidden = false;
 
     left = 0;
-    slippageNum;
+    slippageNum = 1;
 
     right = 1;
 

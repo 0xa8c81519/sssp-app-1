@@ -143,4 +143,8 @@ export class AppComponent implements OnInit {
         this.header.onLoaded();
     }
 
+    addressLinkFn(v) {
+        const str: any = v.slice(0, 6) + '...' + v.substring(v.length - 4);
+        return str;
+    }
 }

@@ -22,6 +22,10 @@ export class PaymentInfoComponent implements OnInit {
     @Input('hidden')
     hidden = false;
 
+    tipsShow = false;
+    showDialog = true;
+    titleError = '';
+
     left = 0;
     active = 1;
     slippageNumList: any = [
@@ -116,6 +120,11 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     pay() {
+        if (!this.address || this.address === '') {
+            this.showDialog = false;
+            this.titleError = 'Please enter the receiver address';
+            return;
+        }
         if (this.amt && this.address && this.isExchangeEnabled()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
@@ -136,6 +145,16 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     payRight() {
+        if (!this.address || this.address === '') {
+            this.showDialog = false;
+            this.titleError = 'Please enter the receiver address';
+            return;
+        }
+        if (this.left === this.right) {
+            this.showDialog = false;
+            this.titleError = 'Select Token repeat';
+            return;
+        }
         if (this.rightAmt && this.address && this.isExchangeEnabledRight()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
@@ -257,6 +276,11 @@ export class PaymentInfoComponent implements OnInit {
         this.right = selectedIndex_;
         //this.chooseRight(selectedIndex_);
         this.updateApproveStatus();
+    }
+
+    hiddenDialog(e) {
+        console.log(e);
+        this.showDialog = e;
     }
 
     openCoinLeftDlg() {

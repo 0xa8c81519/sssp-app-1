@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { BootService } from './services/boot.service';
-import { HeaderComponent, LanguageService } from 'app-lib';
-import { MatDialog } from '@angular/material/dialog';
-import { ChooseWalletDlgComponent } from './choose-wallet-dlg/choose-wallet-dlg.component';
-import { LocalStorageService } from 'angular-web-storage';
-import { ConstVal } from './model/const-val';
-import { InstallWalletDlgComponent } from './intall-wallet-dlg/install-wallet-dlg.component';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {BootService} from './services/boot.service';
+import {HeaderComponent, LanguageService} from 'app-lib';
+import {MatDialog} from '@angular/material/dialog';
+import {ChooseWalletDlgComponent} from './choose-wallet-dlg/choose-wallet-dlg.component';
+import {LocalStorageService} from 'angular-web-storage';
+import {ConstVal} from './model/const-val';
+import {InstallWalletDlgComponent} from './intall-wallet-dlg/install-wallet-dlg.component';
 
 @Component({
     selector: 'app-root',
@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
     constructor(public boot: BootService, public lang: LanguageService, private localStorage: LocalStorageService, private renderer: Renderer2) {
 
     }
+
     ngOnInit(): void {
         let clientWidth = document.body.clientWidth;
         this.biggerThanMax = clientWidth > AppComponent.MAX_CLIENT_WIDTH ? true : false;
@@ -69,7 +70,6 @@ export class AppComponent implements OnInit {
             this.menuOpen = true;
         }
     }
-
 
 
     changeTab(tab) {
@@ -152,4 +152,8 @@ export class AppComponent implements OnInit {
         this.header.onLoaded();
     }
 
+    addressLinkFn(v) {
+        const str: any = v.slice(0, 6) + '...' + v.substring(v.length - 4);
+        return str;
+    }
 }

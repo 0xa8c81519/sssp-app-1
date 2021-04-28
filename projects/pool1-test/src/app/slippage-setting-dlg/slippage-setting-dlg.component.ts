@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, Input, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'app-slippage-setting-dlg',
@@ -8,7 +8,9 @@ import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 export class SlippageSettingDlgComponent implements OnInit {
 
     @Output() taskData: EventEmitter<any> = new EventEmitter();
-    slippageNum = null;
+    @Input('slippageNum')
+    slippageNum;
+
     active = 1;
     hidden = true;
     numList: any = [
@@ -30,7 +32,7 @@ export class SlippageSettingDlgComponent implements OnInit {
     close() {
         setTimeout(() => {
             this.hidden = true;
-            this.active = 1;
+            this.active = this.slippageNum;
         }, 200);
     }
 
@@ -44,6 +46,8 @@ export class SlippageSettingDlgComponent implements OnInit {
 
     confirmSlippage() {
         this.taskData.emit(this.active);
-        this.close();
+        setTimeout(() => {
+            this.hidden = true;
+        }, 200);
     }
 }

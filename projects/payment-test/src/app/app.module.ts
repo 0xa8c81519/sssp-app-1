@@ -23,6 +23,7 @@ import {WalletItemComponent} from './wallet-item/wallet-item.component';
 import { PaymentInfoComponent } from './payment-info/payment-info.component';
 import {CoinsDlgComponent} from './coins-dlg/coins-dlg.component';
 import {CoinItemComponent} from './coin-item/coin-item.component';
+import { DialogTipComponent } from './dialog-tip/dialog-tip.component';
 
 @NgModule({
     declarations: [
@@ -37,6 +38,7 @@ import {CoinItemComponent} from './coin-item/coin-item.component';
         PaymentInfoComponent,
         CoinsDlgComponent,
         CoinItemComponent,
+        DialogTipComponent,
     ],
     imports: [
         BrowserModule,

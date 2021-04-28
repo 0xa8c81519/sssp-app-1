@@ -86,5 +86,7 @@
   "Stake": "锁仓",
   "Payment Reward": "支付奖励",
   "To (Estimated)": "到",
-  "From": "从"
+  "From": "从",
+  "Select Token": "选择代币",
+  "Select Token repeat": "代币选择重复"
 }

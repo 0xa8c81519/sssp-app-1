@@ -286,7 +286,7 @@
                         </div>
                     </div>
                     <div class="lang" (click)="toggleLang()">
-                        <svg *ngIf="this.lang.curLanguage === 'zh'" t="1615649377164" class="icon"
+                        <svg *ngIf="this.lang.curLanguage !== 'zh'" t="1615649377164" class="icon"
                              viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1412"
                              width="200" height="200">
                             <path
@@ -299,7 +299,7 @@
                                     d="M569.344 646.4l30.72-151.552 61.856 151.552h56.512l58.56-291.648h-67.968l-30.304 152-62.272-152h-56.512l-58.56 291.648z"
                                     fill="#6B7595" p-id="1415"></path>
                         </svg>
-                        <svg *ngIf="this.lang.curLanguage !== 'zh'" t="1618388208324" class="icon"
+                        <svg *ngIf="this.lang.curLanguage === 'zh'" t="1618388208324" class="icon"
                              viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2311"
                              width="200" height="200">
                             <path
@@ -381,6 +381,9 @@
                         </a>
                     </div>
                 </div>
+            </div>
+            <div class="menu-bottom-img">
+                <img src="assets/static/img/anchain_ai_logo.png" alt="">
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import { BootService } from '../services/boot.service';
+import {BootService} from '../services/boot.service';
 
 export enum ActionStatus {
     None, Transfering, TrasactionEnd
@@ -194,5 +194,17 @@ export class StakeCompComponent implements OnInit {
             this.loaded.emit();
             this.loadStatus = LoadStatus.Loaded;
         });
+    }
+
+    keypressFn(e) {
+        const invalidChars = ['-', '+', 'e', 'E'];
+        if (invalidChars.indexOf(e.key) !== -1) {
+            e.preventDefault();
+        } else {
+            const reg = /^\d*(?:[.,]\d{1,3})?$/;
+            if (!reg.test(e.target.value)) {
+                e.preventDefault();
+            }
+        }
     }
 }

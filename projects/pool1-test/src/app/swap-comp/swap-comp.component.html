@@ -89,4 +89,4 @@
 </div>
 <app-coins-dlg #coinsDlgLeft (coinSelected)="onLeftCoinSelected($event)"></app-coins-dlg>
 <app-coins-dlg #coinsDlgRight (coinSelected)="onRightCoinSelected($event)"></app-coins-dlg>
-<app-slippage-setting-dlg #settingDlg (taskData)="onTaskData($event)"></app-slippage-setting-dlg>
+<app-slippage-setting-dlg #settingDlg [slippageNum]="slippageNum" (taskData)="onTaskData($event)"></app-slippage-setting-dlg>

@@ -209,6 +209,46 @@
       display: flex;
       align-items: center;
 
+      .tips-box {
+        position: relative;
+
+        .tips {
+          transition: 1s;
+          position: absolute;
+          left: -170px;
+          bottom: 23px;
+          width: 250px;
+          height: 87px;
+          background: rgba(16, 20, 19, 0.92);
+          border: 1px solid #2A2A2A;
+          color: #FFFFFF;
+          font-weight: 400;
+          font-size: 12px;
+          padding: 22px 13px;
+          box-sizing: border-box;
+
+          &:before,
+          &:after {
+            position: absolute;
+            content: '';
+            border: 10px solid;
+          }
+
+          &:before {
+            bottom: -19px;
+            left: 68%;
+            border-color: rgba(16, 20, 19, 0.92) transparent transparent transparent;
+          }
+
+          &:after {
+            border-color: rgba(16, 20, 19, 0.92) transparent transparent transparent;
+            bottom: -19px;
+            left: 68%;
+          }
+        }
+      }
+
+
       .gantan {
         margin-left: 2px;
       }
@@ -222,6 +262,21 @@
     &:hover {
       transition: 1s;
       border: 1px solid #06442B;
+
+      span {
+        transition: 1s;
+        color: #FFFFFF;
+      }
+    }
+  }
+
+  .toBottomActive {
+    transition: 1s;
+    border: 1px solid #06442B;
+
+    span {
+      transition: 1s;
+      color: #FFFFFF;
     }
   }
 
@@ -250,6 +305,7 @@
         text-align: center;
         line-height: 19px;
         margin-right: 14px;
+        cursor: pointer;
       }
 
       .activeS {
@@ -538,6 +594,44 @@
         height: 100%;
         display: flex;
         align-items: center;
+
+        .tips-box {
+          .tips {
+            transition: 1s;
+            position: absolute;
+            left: -156px;
+            bottom: 51px;
+            width: 325px;
+            height: 87px;
+            background: rgba(16, 20, 19, 0.92);
+            border: 1px solid #2A2A2A;
+            color: #FFFFFF;
+            font-weight: 400;
+            font-size: 12px;
+            padding: 22px 13px;
+            box-sizing: border-box;
+            border-radius: 20px;
+
+            &:before,
+            &:after {
+              position: absolute;
+              content: '';
+              border: 10px solid;
+            }
+
+            &:before {
+              bottom: -19px;
+              left: 50%;
+              border-color: rgba(16, 20, 19, 0.92) transparent transparent transparent;
+            }
+
+            &:after {
+              border-color: rgba(16, 20, 19, 0.92) transparent transparent transparent;
+              bottom: -19px;
+              left: 50%;
+            }
+          }
+        }
 
         .gantan {
           margin-left: 10px;

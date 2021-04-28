@@ -195,4 +195,16 @@ export class StakeCompComponent implements OnInit {
             this.loadStatus = LoadStatus.Loaded;
         });
     }
+
+    keypressFn(e) {
+        const invalidChars = ['-', '+', 'e', 'E'];
+        if (invalidChars.indexOf(e.key) !== -1) {
+            e.preventDefault();
+        } else {
+            const reg = /^\d*(?:[.,]\d{1,3})?$/;
+            if (!reg.test(e.target.value)) {
+                e.preventDefault();
+            }
+        }
+    }
 }

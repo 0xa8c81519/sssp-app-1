@@ -4,7 +4,7 @@
     <div class="tip" mat-dialog-content>
         <mat-form-field class="example-full-width">
             <mat-label>{{ "approve_label"|translate:{symbol:symbol} }}</mat-label>
-            <input matInput placeholder="{{symbol}} Amount" [(ngModel)]="amt">
+            <input matInput placeholder="{{symbol}} Amount" [(ngModel)]="amt" readonly>
         </mat-form-field>
         <mat-slide-toggle [color]="'accent'" (change)="infiniteChange($event)" [checked]="false">{{"infinite_approval"|translate}} {{symbol}}
         </mat-slide-toggle>

@@ -45,17 +45,22 @@
                   fill="#16A16A" p-id="2178"></path>
         </svg>
     </div>
-    <div class="toBottom" (click)="otherCurrency()">
+    <div class="toBottom" [ngClass]="{toBottomActive:isOtherCurrency}" (click)="otherCurrency()">
         <span>
             {{"Payment in other currencies" | translate}}
-            <svg t="1618829219616" class="icon gantan" viewBox="0 0 1024 1024" version="1.1"
-                 xmlns="http://www.w3.org/2000/svg"
-                 p-id="2302" width="200" height="200"><path
-                    d="M512 63.104c-243.872 0-441.6 197.728-441.6 441.6s197.728 441.6 441.6 441.6 441.6-197.728 441.6-441.6-197.728-441.6-441.6-441.6z m0 808.32c-202.464 0-366.72-164.256-366.72-366.72 0-202.464 164.256-366.72 366.72-366.72 202.464 0 366.72 164.256 366.72 366.72 0 202.464-164.256 366.72-366.72 366.72z"
-                    fill="#FFFFFF" p-id="2303"></path><path
-                    d="M464.672 678.208a47.328 47.328 0 1 0 94.656 0 47.328 47.328 0 0 0-94.656 0zM488.32 567.808h47.36c4.32 0 7.872-3.552 7.872-7.904V291.776a7.904 7.904 0 0 0-7.904-7.872h-47.296a7.904 7.904 0 0 0-7.904 7.872v268.16c0 4.32 3.552 7.872 7.904 7.872z"
-                    fill="#FFFFFF" p-id="2304"></path>
-            <title>{{"To select another currency for payment is to convert other currencies into the currency to be paid" |translate}}</title></svg>
+            <span class="tips-box">
+                <svg (mouseover)="tipsShow = true" (mouseout)="tipsShow = false" t="1618829219616" class="icon gantan"
+                     viewBox="0 0 1024 1024" version="1.1"
+                     xmlns="http://www.w3.org/2000/svg"
+                     p-id="2302" width="200" height="200"><path
+                        d="M512 63.104c-243.872 0-441.6 197.728-441.6 441.6s197.728 441.6 441.6 441.6 441.6-197.728 441.6-441.6-197.728-441.6-441.6-441.6z m0 808.32c-202.464 0-366.72-164.256-366.72-366.72 0-202.464 164.256-366.72 366.72-366.72 202.464 0 366.72 164.256 366.72 366.72 0 202.464-164.256 366.72-366.72 366.72z"
+                        fill="#FFFFFF" p-id="2303"></path><path
+                        d="M464.672 678.208a47.328 47.328 0 1 0 94.656 0 47.328 47.328 0 0 0-94.656 0zM488.32 567.808h47.36c4.32 0 7.872-3.552 7.872-7.904V291.776a7.904 7.904 0 0 0-7.904-7.872h-47.296a7.904 7.904 0 0 0-7.904 7.872v268.16c0 4.32 3.552 7.872 7.904 7.872z"
+                        fill="#FFFFFF" p-id="2304"></path>
+            </svg>
+            <span *ngIf="tipsShow"
+                  class="tips">{{"To select another currency for payment is to convert other currencies into the currency to be paid" |translate}}</span>
+            </span>
         </span>
         <span *ngIf="isOtherCurrency"><svg t="1618828897481" class="icon" viewBox="0 0 1024 1024" version="1.1"
                                            xmlns="http://www.w3.org/2000/svg" p-id="2050" width="200" height="200"><path
@@ -129,3 +134,4 @@
 </div>
 <app-coins-dlg #coinsDlgLeft (coinSelected)="onLeftCoinSelected($event)"></app-coins-dlg>
 <app-coins-dlg #coinsDlgRight (coinSelected)="onRightCoinSelected($event)"></app-coins-dlg>
+<app-dialog-tip (hiddenDialog)="hiddenDialog($event)" *ngIf="!showDialog" [titleError]="titleError"></app-dialog-tip>

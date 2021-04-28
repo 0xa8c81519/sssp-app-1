@@ -27,7 +27,7 @@
                     <div class="line">
                         <div class="line-cont"></div>
                     </div>
-                    <div class="text" style="overflow: hidden;text-overflow: ellipsis; width:70px;color: #16A16A;">{{boot.accounts[0]}}</div>
+                    <div class="text" style="width:70px;color: #16A16A;">{{addressLinkFn(boot.accounts[0])}}</div>
                 </div>
             </div>
         </ng-template>
@@ -36,7 +36,7 @@
         <div class="tabs">
             <ul #tabsUl>
                 <li class="stake " [ngClass]="{active:curTab===3}" (click)="changeTab(3)">
-                    <div class="tab-name">Stake {{boot.liquiditySymbol}}</div>
+                    <div class="tab-name">{{"Stake" | translate}} {{boot.liquiditySymbol}}</div>
                     <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
                 <div class="tabs-bg" [ngStyle]="{display:!isMobile?'':'none'}" #tabsBg></div>

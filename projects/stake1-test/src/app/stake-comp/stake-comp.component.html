@@ -49,7 +49,7 @@
             </div>
             <div class="pand-bottom">
                 <input type="num" class="num" name="withdrawLPPercent" [ngModel]="withdrawLPPercent"
-                       (ngModelChange)="withdrawLPPercentChange($event)" onInput="if(value>100)value=100"><span style="font-size:22px;">%</span>
+                       (ngModelChange)="withdrawLPPercentChange($event)" onInput="if(value>100)value=100" (keypress)="keypressFn($event)"><span style="font-size:22px;">%</span>
                 <div class="text" [ngClass]="{blue:loadStatus===0||loadStatus===2}" (click)="withdrawLP()">{{"Withdraw" |translate}} LP
                 </div>
             </div>

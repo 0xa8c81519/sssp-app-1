@@ -55,12 +55,12 @@ export class StakeCompComponent implements OnInit {
             this.amts.push(0);
         });
         this.boot.walletReady.subscribe(() => {
-            this.updateLPApproveStatus();
         });
         this.boot.lpApprovalStatusChange.subscribe(() => {
             this.updateLPApproveStatus();
         });
         this.boot.initContractsCompleted.subscribe(r => {
+            this.updateLPApproveStatus();
             this.boot.isFarmingStart().then(isStart => {
                 this.isFarmingStart = isStart;
                 this.isDisabled = !isStart;

@@ -10,7 +10,7 @@ import { environment } from '../../environments/environment';
 import BStableProxyV2 from 'libs/abi/BStableProxyV2.json';
 import StableCoin from 'libs/abi/StableCoin.json';
 import BStableTokenV2 from 'libs/abi/BStableTokenV2.json';
-import BStablePool from 'libs/abi/BStablePool.json';
+import PaymentToken from 'libs/abi/PaymentToken.json';
 import { ApproveDlgComponent } from '../approve-dlg/approve-dlg.component';
 import { Balance } from '../model/balance';
 import { PoolInfo } from '../model/pool-info';
@@ -57,9 +57,6 @@ export class BootService {
     proxyContract: ethers.Contract;
 
     tokenContract: ethers.Contract;
-
-    contracts: Array<ethers.Contract> = new Array();
-    contractsAddress: Array<string> = new Array();
 
     chainConfig: any;
     unSupportedNetworkSubject: Subject<any> = new Subject();
@@ -132,39 +129,11 @@ export class BootService {
                 this.tokenContract = new ethers.Contract(tokenAddress, BStableTokenV2.abi, this.web3);
             }
             return this.proxyContract.poolInfo(this.chainConfig.contracts.pid).then((res) => {
-                this.contracts.splice(0, this.contracts.length);
                 if (res && res.lpToken) {
                     this.poolAddress = res.lpToken;
-                    this.poolContract = new ethers.Contract(this.poolAddress, BStablePool.abi, this.web3);
-                    let pArr = new Array();
-                    for (let i = 0; i < 3; i++) {
-                        pArr.push(this.poolContract.coins(i));
-                    }
-                    return Promise.all(pArr).then(res => {
-                        res.forEach(r => {
-                            let contract = new ethers.Contract(r, StableCoin.abi, this.web3);
-                            this.contracts.push(contract);
-                            this.contractsAddress.push(r);
-                        });
-                    });
+                    this.poolContract = new ethers.Contract(this.poolAddress, PaymentToken.abi, this.web3);
                 }
             }).then(() => { // contract event listener
-                this.contracts.forEach((contract, index) => {
-                    let filter_0 = contract.filters.Approval(this.accounts[0], null, null);
-                    contract.on(filter_0, (owner, spender, amount, event) => {
-                        this.approvalStatusChange.next({ index: index, owner: owner, spender: spender, amount: amount });
-                    });
-                    let filter_1 = contract.filters.Transfer(this.accounts[0], null, null);
-                    contract.on(filter_1, (from, to, amt) => {
-                        this.loadVariable();
-                        this.balanceChange.next();
-                    });
-                    let filter_2 = contract.filters.Transfer(null, this.accounts[0], null);
-                    contract.on(filter_2, (from, to, amt) => {
-                        this.loadVariable();
-                        this.balanceChange.next();
-                    });
-                });
                 let filter_0 = this.poolContract.filters.Approval(this.accounts[0], null, null);
                 this.poolContract.on(filter_0, (owner, spender, amount, event) => {
                     this.lpApprovalStatusChange.next({ owner: owner, spender: spender, amount: amount });
@@ -413,19 +382,11 @@ export class BootService {
 
     private loadPoolTotalSupplyVirtualPrice() {
         this.loadPoolTotalSupply().then(totalSupply => {
-            if (totalSupply.comparedTo(0) > 0) {
-                this.getVirtualPrice().then(virtualPrice => {
-                    this.poolInfo.virtualPrice = new BigNumber(virtualPrice.toString());
-                }).catch(e => {
-                    console.log(e);
-                });
-            }
         });
     }
 
     private loadVariable() {
         this.loadPoolTotalSupplyVirtualPrice();
-        this.loadPoolVolume();
         this.loadPendingReward();
         this.loadBalance();
     }
@@ -469,21 +430,6 @@ export class BootService {
             }
             return true;
         });
-        this.poolContract.fee({ from: this.accounts[0] }).then(feeStr => {
-            this.poolInfo.fee = new BigNumber(feeStr.toString()).div(new BigNumber(10).exponentiatedBy(10));
-        });
-        this.poolContract.admin_fee({ from: this.accounts[0] }).then(feeStr => {
-            this.poolInfo.adminFee = new BigNumber(feeStr.toString()).div(new BigNumber(10).exponentiatedBy(10));
-        });
-    }
-
-    private loadPoolVolume() {
-        let denominator = new BigNumber(10).exponentiatedBy(18);
-        this.poolContract.volume({ from: this.accounts[0] }).then(volumeStr => {
-            this.poolInfo.volume = new BigNumber(volumeStr.toString()).div(denominator);
-        }).catch(e => {
-            console.log(e);
-        });
     }
 
     private loadPendingReward() {
@@ -499,18 +445,6 @@ export class BootService {
 
     private loadBalance() {
         let denominator = new BigNumber(10).exponentiatedBy(18);
-        this.contracts.forEach((e, index) => {
-            e.balanceOf(this.poolAddress, { from: this.accounts[0] }).then(pBalanceStr => {
-                this.poolInfo.coinsBalance[index] = new BigNumber(pBalanceStr.toString()).div(new BigNumber(10).exponentiatedBy(18));
-                this.poolContract.admin_balances(index, { from: this.accounts[0] }).then(adminBalanceStr => {
-                    this.poolInfo.coinsRealBalance[index] = this.poolInfo.coinsBalance[index].minus(new BigNumber(adminBalanceStr.toString()).div(new BigNumber(10).exponentiatedBy(18)));
-                }).catch(e => {
-                    console.log(e);
-                });
-            }).catch(e => {
-                console.log(e);
-            });
-        });
         this.tokenContract.balanceOf(this.accounts[0]).then(balance => {
             if (balance) {
                 this.balance.tokenBalance = new BigNumber(balance.toString()).div(denominator);
@@ -550,14 +484,6 @@ export class BootService {
         }).catch(e => {
             console.log(e);
         });
-
-        this.contracts.forEach((e, index) => {
-            e.balanceOf(this.accounts[0], { from: this.accounts[0] }).then(balanceStr => {
-                this.balance.coinsBalance[index] = new BigNumber(balanceStr.toString()).div(new BigNumber(10).exponentiatedBy(18));
-            }).catch(e => {
-                console.log(e);
-            });
-        });
     }
     public loadData() {
         this.loadConstData();
@@ -589,7 +515,7 @@ export class BootService {
     }
 
     public async allowanceLP(address: string): Promise<BigNumber> {
-        if (this.chainConfig && this.contracts && this.contracts.length > 0 && this.accounts && this.accounts.length > 0) {
+        if (this.chainConfig  && this.accounts && this.accounts.length > 0) {
             let decimals = await this.poolContract.decimals({ from: this.accounts[0] });
             return this.poolContract.allowance(this.accounts[0], address).then((res) => {
                 return new BigNumber(res.toString()).div(new BigNumber(10).exponentiatedBy(decimals));
@@ -600,23 +526,6 @@ export class BootService {
             });
         }
 
-    }
-
-    public async getVirtualPrice(): Promise<BigNumber> {
-        if (this.chainConfig && this.contracts && this.contracts.length > 0 && this.accounts && this.accounts.length > 0) {
-            return this.poolContract.get_virtual_price().then((res) => {
-                let r = new BigNumber(res).div(new BigNumber(10).exponentiatedBy(18));
-                if (r.comparedTo(999999) >= 0) {
-                    return new BigNumber(0);
-                } else {
-                    return r;
-                }
-            });
-        } else {
-            return new Promise((resolve, reject) => {
-                resolve(new BigNumber(0));
-            });
-        }
     }
 
     public depositLP(amt: string): Promise<any> {
@@ -648,15 +557,6 @@ export class BootService {
         }).catch(e => {
             console.log(e);
             throw e;
-        });
-    }
-
-    public claimTestCoin(i: number): Promise<any> {
-        return this.contracts[i].estimateGas.claimCoins({ from: this.accounts[0] }).then(gas => {
-            let signer = this.web3.getSigner();
-            return this.contracts[i].connect(signer).claimCoins({ from: this.accounts[0], gasLimit: gas.toString() });
-        }).catch(e => {
-            console.log(e);
         });
     }
 

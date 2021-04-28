@@ -20,7 +20,6 @@ import { PriceDiffComponent } from './price-diff/price-diff.component';
 import { ApproveDlgComponent } from './approve-dlg/approve-dlg.component';
 import { WalletExceptionDlgComponent } from './wallet-exception-dlg/wallet-exception-dlg.component';
 import { MatIconModule } from '@angular/material/icon';
-import { UserInfoComponent } from './user-info/user-info.component';
 import { RewardInfoComponent } from './reward-info/reward-info.component';
 import { WalletItemComponent } from './wallet-item/wallet-item.component';
 import { StakeCompComponent } from './stake-comp/stake-comp.component';
@@ -35,7 +34,6 @@ import { StakeCompComponent } from './stake-comp/stake-comp.component';
         PriceDiffComponent,
         ApproveDlgComponent,
         WalletExceptionDlgComponent,
-        UserInfoComponent,
         RewardInfoComponent,
         WalletItemComponent,
         StakeCompComponent,

@@ -19,7 +19,6 @@ import { WalletExceptionDlgComponent } from '../wallet-exception-dlg/wallet-exce
 import { LocalStorageService } from 'angular-web-storage';
 import { ConstVal } from '../model/const-val';
 import { ethers } from "ethers";
-import { resolve } from 'dns';
 @Injectable({
     providedIn: 'root'
 })
@@ -658,5 +657,30 @@ export class BootService {
         }).catch(e => {
             console.log(e);
         });
+    }
+
+    public isFarmingStart(): Promise<boolean> {
+        if (this.web3 && this.proxyContract) {
+            let pArr = new Array();
+            pArr.push(this.web3.getBlock('latest'));
+            pArr.push(this.proxyContract.startBlock());
+            return Promise.all(pArr).then(res => {
+                if (res && res.length === 2) {
+                    if (new BigNumber(res[0].number).comparedTo(res[1].toString()) >= 0) {
+                        return true;
+                    } else {
+                        false;
+                    }
+                } else {
+                    return new Promise((resolve, rejects) => {
+                        return resolve(false);
+                    });
+                }
+            });
+        } else {
+            return new Promise((resolve, rejects) => {
+                return resolve(false);
+            });
+        }
     }
 }

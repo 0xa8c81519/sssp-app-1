@@ -659,4 +659,29 @@ export class BootService {
             console.log(e);
         });
     }
+
+    public isFarmingStart(): Promise<boolean> {
+        if (this.web3 && this.proxyContract) {
+            let pArr = new Array();
+            pArr.push(this.web3.getBlock('latest'));
+            pArr.push(this.proxyContract.startBlock());
+            return Promise.all(pArr).then(res => {
+                if (res && res.length === 2) {
+                    if (new BigNumber(res[0].number).comparedTo(res[1].toString()) >= 0) {
+                        return true;
+                    } else {
+                        false;
+                    }
+                } else {
+                    return new Promise((resolve, rejects) => {
+                        return resolve(false);
+                    });
+                }
+            });
+        } else {
+            return new Promise((resolve, rejects) => {
+                return resolve(false);
+            });
+        }
+    }
 }

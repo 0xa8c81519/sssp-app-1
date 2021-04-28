@@ -47,6 +47,8 @@ export class StakeCompComponent implements OnInit {
 
     isDisabled: boolean = false;
 
+    isFarmingStart = false;
+
     constructor(public boot: BootService, private dialog: MatDialog) {
         this.amts = new Array();
         this.boot.coins.forEach((e, i, arr) => {
@@ -57,6 +59,12 @@ export class StakeCompComponent implements OnInit {
         });
         this.boot.lpApprovalStatusChange.subscribe(() => {
             this.updateLPApproveStatus();
+        });
+        this.boot.initContractsCompleted.subscribe(r => {
+            this.boot.isFarmingStart().then(isStart => {
+                this.isFarmingStart = isStart;
+                this.isDisabled = !isStart;
+            });
         });
     }
 

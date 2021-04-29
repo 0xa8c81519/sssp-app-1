@@ -200,10 +200,12 @@ export class StakeCompComponent implements OnInit {
         const invalidChars = ['-', '+', 'e', 'E'];
         if (invalidChars.indexOf(e.key) !== -1) {
             e.preventDefault();
+            return;
         } else {
             const reg = /^\d*(?:[.,]\d{1,3})?$/;
             if (!reg.test(e.target.value)) {
                 e.preventDefault();
+                return;
             }
         }
     }

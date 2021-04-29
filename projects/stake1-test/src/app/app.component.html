@@ -36,7 +36,7 @@
         <div class="tabs">
             <ul #tabsUl>
                 <li class="stake " [ngClass]="{active:curTab===3}" (click)="changeTab(3)">
-                    <div class="tab-name">{{"Stake" | translate}} {{boot.liquiditySymbol}}</div>
+                    <div class="tab-name">{{"Stake" | translate}} {{boot.liquiditySymbol}} <span style="color: #9E9EA1;font-size: 12px;margin-left: 8px;margin-top: 4px;">{{"To Earn" | translate}} BST</span></div>
                     <div class="bg" [ngStyle]="{display:isMobile?'':'none'}"></div>
                 </li>
                 <div class="tabs-bg" [ngStyle]="{display:!isMobile?'':'none'}" #tabsBg></div>

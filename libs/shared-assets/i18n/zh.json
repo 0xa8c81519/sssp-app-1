@@ -1,4 +1,5 @@
 {
+  "Reward": "奖励",
   "Swap": "兑换",
   "Connect to a Wallet": "链接钱包",
   "Add Liquidity": "增加流动性",
@@ -67,7 +68,7 @@
   "Need to pay": "需支付",
   "User's Info": "用户信息",
   "Virtual Price": "虚拟价格",
-  "Claim": "索取测试币",
+  "Claim": "领取",
   "Staking": "质押",
   "Deposit": "存入",
   "Withdraw": "赎回",
@@ -88,5 +89,6 @@
   "To (Estimated)": "到",
   "From": "从",
   "Select Token": "选择代币",
-  "Select Token repeat": "代币选择重复"
+  "Select Token repeat": "代币选择重复",
+  "To Earn": "奖励"
 }

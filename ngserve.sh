@@ -28,6 +28,10 @@ case "$1" in
        echo "====================OPEN--stake3-test项目=========================="
        ng serve stake3-test --open --port 8888
    ;;
+  's4')
+       echo "====================OPEN--stake4-test项目=========================="
+       ng serve stake4-test --open --port 8888
+   ;;
    'pay')
        echo "====================OPEN--pay-test项目=========================="
        ng serve payment-test --open --port 8888

@@ -4,7 +4,7 @@ export const environment = {
     liquiditySymbol: "BSLP-03",
     tokenSymbol: "BST",
     virtualPriceDiff: 0.006,
-    coins: [{ symbol: 'tUSDC' }, { symbol: 'tBUSD' }, { symbol: 'tUSDT' }],
+    coins: [{ symbol: 'USDC' }, { symbol: 'BUSD' }, { symbol: 'USDT' }],
     rpc: {
         56: "'https://bsc-dataseed.binance.org/'",
         97: 'https://data-seed-prebsc-1-s1.binance.org:8545/'

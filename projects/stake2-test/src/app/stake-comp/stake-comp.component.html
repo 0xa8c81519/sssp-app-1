@@ -62,9 +62,9 @@
         </div>
     </div>
     <div class="stake-btn">
-        <div class="left">
+        <div class="left" style="font-size: 12px;">
             {{boot.balance.pendingToken.toFixed(4, 1)}}
-            <span>BST {{"Reward" | translate}}</span>
+            <span>BST {{"Reward" | translate}}({{"Estimated" | translate}})</span>
         </div>
         <div [class]="isDisabled?'right btn-disabled':'right'" *ngIf="boot.accounts.length>0" (click)="getPending()">
             {{"Claim" | translate}}

@@ -1,1 +1,1 @@
-ng b --project=stake3-t1 --base-href=/stake3/ 
+ng b --project=stake3-test --base-href=/stake3/ 

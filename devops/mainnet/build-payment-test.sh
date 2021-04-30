@@ -1,1 +1,1 @@
-ng b --project=home-test --base-href=/home/ --outputPath=dist/home-prod --aot --prod
+ng b --project=payment-test --base-href=/payment/ --outputPath=dist/payment-prod --aot --prod 

@@ -1,1 +1,1 @@
-ng b --project=payment-t1 --base-href=/payment/ 
+ng b --project=payment-test --base-href=/payment/ 

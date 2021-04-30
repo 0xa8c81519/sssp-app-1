@@ -1,1 +1,1 @@
-ng b --project=pool2-t1 --base-href=/pool2/ 
+ng b --project=pool2-test --base-href=/pool2/ 

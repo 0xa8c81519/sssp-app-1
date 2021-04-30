@@ -1,1 +1,1 @@
-ng b --project=home-t1 --base-href=/home/ 
+ng b --project=home-test --base-href=/home/ 

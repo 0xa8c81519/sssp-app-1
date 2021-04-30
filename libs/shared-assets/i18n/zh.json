@@ -90,5 +90,8 @@
   "From": "从",
   "Select Token": "选择代币",
   "Select Token repeat": "代币选择重复",
-  "To Earn": "奖励"
+  "To Earn": "奖励",
+  "Estimated": "估算",
+  "Base APY": "基本年化收益",
+  "Reward APY": "奖励年化收益"
 }

@@ -1,0 +1,1 @@
+ng b --project=pool1-t1 --base-href=/pool1/ 

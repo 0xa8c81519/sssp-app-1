@@ -1,0 +1,1 @@
+ng b --project=stake4-t1 --base-href=/stake4/ 

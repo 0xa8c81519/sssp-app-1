@@ -1,3 +1,4 @@
+import { common } from 'libs/common/com.evn';
 export const environment = {
     production: false,
     poolId: "p3",
@@ -15,7 +16,7 @@ export const environment = {
             name: 'Testnet',
             contracts: {
                 proxy: {
-                    address: "0x3A10b311a090776ad4988D847B2Eae042ad77872"
+                    address: common.proxy.address
                 },
                 pid: 2
             }

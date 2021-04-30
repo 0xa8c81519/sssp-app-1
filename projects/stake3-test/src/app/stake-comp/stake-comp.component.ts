@@ -66,6 +66,9 @@ export class StakeCompComponent implements OnInit {
                 this.isDisabled = !isStart;
             });
         });
+        this.boot.balanceChange.subscribe(res => {
+            this.isDisabled = false;
+        });
     }
 
     ngOnInit(): void {
@@ -187,7 +190,6 @@ export class StakeCompComponent implements OnInit {
         this.isDisabled = true;
         this.loadStatus = LoadStatus.Loading;
         this.boot.withdrawLP('0').then(() => {
-            this.isDisabled = false;
         }).catch(e => {
             this.isDisabled = false;
             // this.boot.loadData();

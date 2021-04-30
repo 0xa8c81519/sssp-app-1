@@ -1,7 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import {BootService} from '../services/boot.service';
+import { BootService } from '../services/boot.service';
 
 export enum ActionStatus {
     None, Transfering, TrasactionEnd
@@ -65,6 +65,9 @@ export class StakeCompComponent implements OnInit {
                 this.isFarmingStart = isStart;
                 this.isDisabled = !isStart;
             });
+        });
+        this.boot.balanceChange.subscribe(res => {
+            this.isDisabled = false;
         });
     }
 
@@ -187,7 +190,6 @@ export class StakeCompComponent implements OnInit {
         this.isDisabled = true;
         this.loadStatus = LoadStatus.Loading;
         this.boot.withdrawLP('0').then(() => {
-            this.isDisabled = false;
         }).catch(e => {
             this.isDisabled = false;
             // this.boot.loadData();

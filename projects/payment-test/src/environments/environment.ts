@@ -1,10 +1,11 @@
+import { common } from 'libs/common/com.evn';
 export const environment = {
     production: false,
     poolId: 'pay',
     paymentTokenSymbol: 'BSPT',
     tokenSymbol: 'BST',
     virtualPriceDiff: 0.006,
-    coins: [{symbol: 'tUSDC'}, {symbol: 'tBUSD'}, {symbol: 'tUSDT'}],
+    coins: [{ symbol: 'tUSDC' }, { symbol: 'tBUSD' }, { symbol: 'tUSDT' }],
     rpc: {
         56: '\'https://bsc-dataseed.binance.org/\'',
         97: 'https://data-seed-prebsc-1-s1.binance.org:8545/'
@@ -15,10 +16,10 @@ export const environment = {
             name: 'Testnet',
             contracts: {
                 proxy: {
-                    address: '0x3A10b311a090776ad4988D847B2Eae042ad77872'
+                    address: common.proxy.address
                 },
                 payment: {
-                    address: '0xaEF71d18D72f86DFa23A8aFC0Ec78c9C641B7ba2'
+                    address: common.payment.address
                 }
             }
         },

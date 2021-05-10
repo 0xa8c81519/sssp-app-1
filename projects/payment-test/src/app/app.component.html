@@ -45,7 +45,8 @@
         <div class="cont">
             <div class="main">
                 <div class="boxs">
-                    <div class="box">
+                    <div class="box" style="height: auto">
+                        <app-get-paid-to-pay (loaded)="onLoaded()" (loading)="onLoading()"></app-get-paid-to-pay>
                         <app-payment-info (loaded)="onLoaded()" (loading)="onLoading()"></app-payment-info>
                     </div>
                 </div>

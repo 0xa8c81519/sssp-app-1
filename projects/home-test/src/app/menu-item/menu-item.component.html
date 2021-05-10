@@ -1,6 +1,6 @@
 <li>
     <div *ngIf="!empty" class="title" [ngClass]="{hover:mouseOn}" (mouseenter)="onMouseEnter()"
-        (mouseleave)="onMouseLeave()">
+        (mouseleave)="onMouseLeave()" (click)="langChangeFn(itemText)">
         <a href='{{safeUrl()}}' target="{{target}}">{{itemText}}</a>
     </div>
     <div *ngIf="!empty" class="shadow" [ngClass]="{hover:mouseOn}" (mouseenter)="onMouseEnter()"

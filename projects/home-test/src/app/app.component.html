@@ -23,16 +23,17 @@
         <ul>
             <app-menu-item *ngFor="let item of menu" [itemText]="item.text" [targetUrl]="item.url"
                            [target]="item.target" [empty]="false"></app-menu-item>
-            <!-- <app-menu-item></app-menu-item> -->
+            <app-menu-item [itemText]="lang.curLanguage === 'zh' ? 'English' : '中文简体'" [empty]="false"
+                           (changeLanguageFn)="changeLanguageFn($event)"></app-menu-item>
         </ul>
     </div>
 </div>
 <div class="nav-top">
     <div class="nav-top-font-top">
-        <p><span>All-in-one</span> decentralized finance</p>
+        <p><span>{{"All-in-one" | translate}}</span>{{"decentralized finance" | translate}}</p>
     </div>
     <div class="nav-top-font-bottom">
-        <p>Payment mining / efficient stablecoin swaps / liquidity mining</p>
+        <p>{{"Payment mining / efficient stablecoin swaps / liquidity mining" | translate}}</p>
     </div>
 
 </div>
@@ -50,8 +51,8 @@
                 <path d="M345.184 524.544l95.04-13.856 42.624-85.76c7.2-14.4 16.448-22.112 25.696-22.112V256.416c-192.64 0-348.8 156.16-348.8 348.8 0 192.64 156.16 348.768 348.8 348.768V721.28l-85.312 44.704c-28.256 14.912-47.232 2.048-41.6-30.304l16.448-94.528-68.832-66.752c-23.104-23.136-16.448-44.704 15.904-49.856z"
                       fill="#FBD548" p-id="2784"></path>
             </svg>
-            <span>Total Value Locked</span>
-            <span>5,401,787,699.50 USDT</span>
+            <span>{{"Total Value Locked" | translate}}</span>
+            <div><span>{{numberToCurrency(amount)}}</span> USDT</div>
         </div>
         <div class="Minted-box">
             <div class="Minted">
@@ -68,9 +69,9 @@
                         <path d="M345.184 524.544l95.04-13.856 42.624-85.76c7.2-14.4 16.448-22.112 25.696-22.112V256.416c-192.64 0-348.8 156.16-348.8 348.8 0 192.64 156.16 348.768 348.8 348.768V721.28l-85.312 44.704c-28.256 14.912-47.232 2.048-41.6-30.304l16.448-94.528-68.832-66.752c-23.104-23.136-16.448-44.704 15.904-49.856z"
                               fill="#FBD548" p-id="2784"></path>
                     </svg>
-                    <span>BST Minted</span>
+                    <span>BST {{"Minted" | translate}}</span>
                 </div>
-                <span>10,538,428</span>
+                <span>{{numberToCurrency(amount2)}}</span>
             </div>
             <div class="Minted">
                 <div>
@@ -86,9 +87,9 @@
                         <path d="M345.184 524.544l95.04-13.856 42.624-85.76c7.2-14.4 16.448-22.112 25.696-22.112V256.416c-192.64 0-348.8 156.16-348.8 348.8 0 192.64 156.16 348.768 348.8 348.768V721.28l-85.312 44.704c-28.256 14.912-47.232 2.048-41.6-30.304l16.448-94.528-68.832-66.752c-23.104-23.136-16.448-44.704 15.904-49.856z"
                               fill="#FBD548" p-id="2784"></path>
                     </svg>
-                    <span>BST rewarded per block</span>
+                    <span>BST {{"rewarded per block" | translate}}</span>
                 </div>
-                <span>10,538,428</span>
+                <span>{{numberToCurrency(amount3)}}</span>
             </div>
         </div>
     </div>
@@ -99,10 +100,10 @@
             <div class="one-box"><img [src]="'assets/static/img/'+ item.imgUrl + '.png'" alt=""></div>
             <div>
                 <div class="henggang"></div>
-                <span>{{item.name}}</span>
+                <span>{{item.name | translate}}</span>
             </div>
             <div>
-                {{item.tip}}
+                {{item.tip | translate}}
             </div>
         </div>
     </div>
@@ -112,7 +113,7 @@
     <div class="Audited-box">
         <ng-container>
             <div class="Audited-title">
-                <span>Audited by</span>
+                <span>{{"Audited by" | translate}}</span>
             </div>
             <div class="logoList">
                 <div *ngFor="let item of Audited" class="item-box-0">
@@ -122,7 +123,7 @@
         </ng-container>
         <ng-container>
             <div class="Audited-title">
-                <span>Strategic Investors</span>
+                <span>{{"Strategic Investors" | translate}}</span>
             </div>
             <div class="logoList">
                 <div *ngFor="let item of Strategic" class="item-box-1">
@@ -132,7 +133,7 @@
         </ng-container>
         <ng-container>
             <div class="Audited-title">
-                <span>Partners</span>
+                <span>{{"Partners" | translate}}</span>
             </div>
             <div class="logoList">
                 <div *ngFor="let item of Partners" class="item-box-2">
@@ -218,26 +219,26 @@
         </div>
         <div class="footer-content-box-right">
             <dl>
-                <dt>Docs</dt>
-                <dd>Introduction</dd>
-                <dd>FAQ</dd>
-                <dd>Protocol Overview</dd>
+                <dt>{{"Docs" | translate}}</dt>
+                <dd>{{"Introduction" | translate}}</dd>
+                <dd>{{"FAQ" | translate}}</dd>
+                <dd>{{"Protocol Overview" | translate}}</dd>
                 <dd>BST</dd>
-                <dd>The bStable DAO</dd>
+                <dd>{{"The bStable DAO" | translate}}</dd>
             </dl>
             <dl>
-                <dt>How to</dt>
-                <dd>Swap</dd>
-                <dd>Manage Liquidity</dd>
-                <dd>Pay</dd>
-                <dd>Stake and earn</dd>
-                <dd>Mine BST</dd>
+                <dt>{{"How to" | translate}}</dt>
+                <dd>{{"Swap" | translate}}</dd>
+                <dd>{{"Manage Liquidity" | translate}}</dd>
+                <dd>{{"Pay" | translate}}</dd>
+                <dd>{{"Stake and earn" | translate}}</dd>
+                <dd>{{"Mine" | translate}} BST</dd>
             </dl>
             <dl>
-                <dt>About</dt>
-                <dd>Announcements</dd>
-                <dd>BST reward allocations</dd>
-                <dd>Contact:contact@bstable.finance</dd>
+                <dt>{{"About" | translate}}</dt>
+                <dd>{{"Announcements" | translate}}</dd>
+                <dd>BST {{"reward allocations" | translate}}</dd>
+                <dd>{{"Contact" | translate}}:contact@bstable.finance</dd>
             </dl>
         </div>
     </div>

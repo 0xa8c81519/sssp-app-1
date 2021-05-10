@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, SecurityContext } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import {Component, EventEmitter, Input, OnInit, Output, SecurityContext} from '@angular/core';
+import {DomSanitizer} from '@angular/platform-browser';
+import {LanguageService} from '../services/language.service';
 
 @Component({
     selector: 'app-menu-item',
@@ -11,18 +12,21 @@ export class MenuItemComponent implements OnInit {
     @Input('empty')
     empty = true;
 
-    @Input("itemText")
+    @Input('itemText')
     itemText;
 
     mouseOn = false;
 
-    @Input("targetUrl")
-    url = "#";
+    @Input('targetUrl')
+    url = '#';
 
     @Input('target')
-    target = '_self'
+    target = '_self';
 
-    constructor(private sanitizer: DomSanitizer) { }
+    @Output() changeLanguageFn: EventEmitter<any> = new EventEmitter();
+
+    constructor(private sanitizer: DomSanitizer, private lang: LanguageService) {
+    }
 
     ngOnInit(): void {
     }
@@ -37,6 +41,16 @@ export class MenuItemComponent implements OnInit {
 
     safeUrl() {
         return this.sanitizer.sanitize(SecurityContext.URL, this.url);
+    }
+
+    langChangeFn(k) {
+        if (k === '中文简体') {
+            this.lang.changeLanguage('zh');
+            this.changeLanguageFn.emit('中文简体');
+        } else {
+            this.lang.changeLanguage('en');
+            this.changeLanguageFn.emit('English');
+        }
     }
 
 }

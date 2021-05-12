@@ -7,10 +7,11 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import { BigNumber } from 'bignumber.js';
 import { interval, Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import BStableProxyV2 from 'libs/abi/BStableProxyV2.json';
-import StableCoin from 'libs/abi/StableCoin.json';
-import BStableTokenV2 from 'libs/abi/BStableTokenV2.json';
+import LiquidityFarmingProxy from 'libs/abi/LiquidityFarmingProxy.json';
+import BEP20 from 'libs/abi/BEP20.json';
+import BSTToken from 'libs/abi/BSTToken.json';
 import BStablePool from 'libs/abi/BStablePool.json';
+import BSTMinter from 'libs/abi/BSTMinter.json';
 import { ApproveDlgComponent } from '../approve-dlg/approve-dlg.component';
 import { Balance } from '../model/balance';
 import { PoolInfo } from '../model/pool-info';
@@ -56,6 +57,8 @@ export class BootService {
     proxyContract: ethers.Contract;
 
     tokenContract: ethers.Contract;
+
+    minterContract: ethers.Contract;
 
     contracts: Array<ethers.Contract> = new Array();
     contractsAddress: Array<string> = new Array();
@@ -125,10 +128,13 @@ export class BootService {
 
 
     private initContracts(): Promise<any> {
-        this.proxyContract = new ethers.Contract(this.chainConfig.contracts.proxy.address, BStableProxyV2.abi, this.web3);
+        this.proxyContract = new ethers.Contract(this.chainConfig.contracts.proxy.address, LiquidityFarmingProxy.abi, this.web3);
         return this.proxyContract.getTokenAddress().then(tokenAddress => {
             if (tokenAddress) {
-                this.tokenContract = new ethers.Contract(tokenAddress, BStableTokenV2.abi, this.web3);
+                this.tokenContract = new ethers.Contract(tokenAddress, BSTToken.abi, this.web3);
+                this.tokenContract.minter().then(minterAddress => {
+                    this.minterContract = new ethers.Contract(minterAddress, BSTMinter.abi, this.web3);
+                });
             }
             return this.proxyContract.poolInfo(this.chainConfig.contracts.pid).then((res) => {
                 this.contracts.splice(0, this.contracts.length);
@@ -141,7 +147,7 @@ export class BootService {
                     }
                     return Promise.all(pArr).then(res => {
                         res.forEach(r => {
-                            let contract = new ethers.Contract(r, StableCoin.abi, this.web3);
+                            let contract = new ethers.Contract(r, BEP20.abi, this.web3);
                             this.contracts.push(contract);
                             this.contractsAddress.push(r);
                         });
@@ -438,14 +444,11 @@ export class BootService {
         }).catch(e => {
             console.log(e);
         });
-        this.proxyContract.startBlock().then(startBlock => {
+        this.minterContract.startBlock().then(startBlock => {
             this.poolInfo.startBlock = new BigNumber(startBlock.toString());
         });
-        this.proxyContract.tokenPerBlock().then(res => {
+        this.minterContract.tokenPerBlock().then(res => {
             this.poolInfo.tokenPerBlock = new BigNumber(res.toString()).div(denominator);
-        });
-        this.proxyContract.bonusEndBlock().then(res => {
-            this.poolInfo.bonusEndBlock = new BigNumber(res.toString());
         });
         this.proxyContract.poolInfo(this.chainConfig.contracts.pid).then(res => {
             if (res && res.allocPoint) {
@@ -663,7 +666,7 @@ export class BootService {
         if (this.web3 && this.proxyContract) {
             let pArr = new Array();
             pArr.push(this.web3.getBlock('latest'));
-            pArr.push(this.proxyContract.startBlock());
+            pArr.push(this.minterContract.startBlock());
             return Promise.all(pArr).then(res => {
                 if (res && res.length === 2) {
                     if (new BigNumber(res[0].number).comparedTo(res[1].toString()) >= 0) {

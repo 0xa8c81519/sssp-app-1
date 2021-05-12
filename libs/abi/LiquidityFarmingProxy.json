@@ -1,33 +1,8 @@
 {
-  "contractName": "BStableProxyV2",
+  "contractName": "LiquidityFarmingProxy",
   "abi": [
     {
       "inputs": [
-        {
-          "internalType": "address",
-          "name": "_devaddr",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_tokenPerBlock",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_startBlock",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_bonusEndBlock",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address[]",
-          "name": "investors",
-          "type": "address[]"
-        },
         {
           "internalType": "address",
           "name": "ownerAddress",
@@ -133,48 +108,6 @@
     },
     {
       "inputs": [],
-      "name": "BONUS_MULTIPLIER",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "bonusEndBlock",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "devaddr",
-      "outputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
       "name": "owner",
       "outputs": [
         {
@@ -231,40 +164,12 @@
     },
     {
       "inputs": [],
-      "name": "startBlock",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
       "name": "token",
       "outputs": [
         {
-          "internalType": "contract BStableTokenV2",
+          "internalType": "contract IBSTToken",
           "name": "",
           "type": "address"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
-    },
-    {
-      "inputs": [],
-      "name": "tokenPerBlock",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
         }
       ],
       "stateMutability": "view",
@@ -329,6 +234,19 @@
       "constant": true
     },
     {
+      "inputs": [
+        {
+          "internalType": "contract IBSTMinter",
+          "name": "_minter",
+          "type": "address"
+        }
+      ],
+      "name": "setMinter",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "poolLength",
       "outputs": [
@@ -387,31 +305,6 @@
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_from",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "_to",
-          "type": "uint256"
-        }
-      ],
-      "name": "getMultiplier",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true
     },
     {
       "inputs": [
@@ -510,12 +403,12 @@
     {
       "inputs": [
         {
-          "internalType": "address",
-          "name": "_devaddr",
+          "internalType": "contract IBSTToken",
+          "name": "_token",
           "type": "address"
         }
       ],
-      "name": "dev",
+      "name": "setToken",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

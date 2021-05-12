@@ -6,5 +6,4 @@ aws s3 cp ../../s3/index.html s3://bstable.finance/
 ./sync-stake1-test.sh
 ./sync-stake2-test.sh
 ./sync-stake3-test.sh
-./sync-stake4-test.sh
 ./sync-payment-test.sh

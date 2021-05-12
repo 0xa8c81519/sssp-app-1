@@ -6,5 +6,4 @@
 ./build-stake1-test.sh
 ./build-stake2-test.sh
 ./build-stake3-test.sh
-./build-stake4-test.sh
 ./build-payment-test.sh

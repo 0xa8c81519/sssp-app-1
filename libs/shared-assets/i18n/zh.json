@@ -97,7 +97,7 @@
   "Audited by": "审计机构",
   "Payment mining / efficient stablecoin swaps / liquidity mining": "⽀付挖矿 / 稳定币兑换 / 流动性挖矿",
   "All-in-one": "⼀站式",
-  "decentralized finance": "去中心化⾦融",
+  "Decentralized Finance": "去中心化⾦融",
   "Total Value Locked": "总流动性质押",
   "Minted": "当前挖矿产出",
   "rewarded per block": "待奖励数量",
@@ -121,5 +121,6 @@
   "reward allocations": "奖励分配",
   "Contact": "联系方式",
   "Get paid to pay": "⽀付即挖矿",
-  "Earn BST on every payment": "⽀付就送BST"
+  "Earn BST on every payment": "⽀付就送BST",
+  "All Rights Reserved": "版权所有"
 }

@@ -7,9 +7,9 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import { BigNumber } from 'bignumber.js';
 import { interval, Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import BStableProxyV2 from 'libs/abi/BStableProxyV2.json';
-import StableCoin from 'libs/abi/StableCoin.json';
-import BStableTokenV2 from 'libs/abi/BStableTokenV2.json';
+import LiquidityFarmingProxy from 'libs/abi/LiquidityFarmingProxy.json';
+import BEP20 from 'libs/abi/BEP20.json';
+import BSTToken from 'libs/abi/BSTToken.json';
 import BStablePool from 'libs/abi/BStablePool.json';
 import { AddlpSlippageConfirmComponent } from '../addlp-slippage-confirm/addlp-slippage-confirm.component';
 import { ApproveDlgComponent } from '../approve-dlg/approve-dlg.component';
@@ -28,6 +28,7 @@ import { DatePipe } from '@angular/common';
     providedIn: 'root'
 })
 export class BootService {
+
     isProduction = environment.production;
 
     walletReady: Subject<any> = new Subject();
@@ -130,10 +131,10 @@ export class BootService {
 
 
     private initContracts(): Promise<any> {
-        this.proxyContract = new ethers.Contract(this.chainConfig.contracts.proxy.address, BStableProxyV2.abi, this.web3);
+        this.proxyContract = new ethers.Contract(this.chainConfig.contracts.proxy.address, LiquidityFarmingProxy.abi, this.web3);
         return this.proxyContract.getTokenAddress().then(tokenAddress => {
             if (tokenAddress) {
-                this.tokenContract = new ethers.Contract(tokenAddress, BStableTokenV2.abi, this.web3);
+                this.tokenContract = new ethers.Contract(tokenAddress, BSTToken.abi, this.web3);
             }
             return this.proxyContract.poolInfo(this.chainConfig.contracts.pid).then((res) => {
                 this.contracts.splice(0, this.contracts.length);
@@ -146,7 +147,7 @@ export class BootService {
                     }
                     return Promise.all(pArr).then(res => {
                         res.forEach(r => {
-                            let contract = new ethers.Contract(r, StableCoin.abi, this.web3);
+                            let contract = new ethers.Contract(r, BEP20.abi, this.web3);
                             this.contracts.push(contract);
                             this.contractsAddress.push(r);
                         });
@@ -674,7 +675,7 @@ export class BootService {
                 return dialogRef.afterClosed().toPromise().then(async res => {
                     if (res === true) {
                         return this._exchange(i, j, amt, minAmt);
-                    }else{
+                    } else {
                         return false;
                     }
                 });

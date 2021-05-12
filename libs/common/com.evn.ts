@@ -9,9 +9,9 @@ export const common = {
     // },
     // testnet.bstable.finance
     proxy: {
-        address: '0xB5cC28a19f31c2Cac3AcC00c13B423ec5D50cC3f',
+        address: '0x889B9ffB6DFF107cC1823B923CC81C9637751B79',
     },
     payment: {
-        address: '0x7C54694EB98500Ab03ca1442E0916365191d1fC4',
+        address: '0x9E03e9086bbB5Ed0956f2700e9BCA8772A3F303a',
     }
 };

@@ -105,34 +105,34 @@ export class BootService {
 
     private initContracts(): Promise<any> {
         this.paymentContract = new ethers.Contract(this.chainConfig.contracts.payment.address, PaymentFarmingProxy.abi, this.web3);
-        this.paymentContract.token(add => {
+        return this.paymentContract.token().then(add => {
             this.bstContract = new ethers.Contract(add, BEP20.abi, this.web3);
-        });
-        return this.paymentContract.pool().then(poolAddress => {
-            this.poolContract = new ethers.Contract(poolAddress, BStablePool.abi, this.web3);
-            let pArr_0 = new Array();
-            for (let i = 0; i < environment.coins.length; i++) {
-                pArr_0.push(this.poolContract.coins(i));
-            }
-            return Promise.all(pArr_0).then(coins => {
-                for (let i = 0; i < coins.length; i++) {
-                    let coinContract = new ethers.Contract(coins[i], BEP20.abi, this.web3);
-                    let filter_0 = coinContract.filters.Approval(this.accounts[0], null, null);
-                    coinContract.on(filter_0, (owner, spender, amount, event) => {
-                        this.approvalStatusChange.next({ index: i, owner: owner, spender: spender, amount: amount });
-                    });
-                    let filter_1 = coinContract.filters.Transfer(this.accounts[0], null, null);
-                    coinContract.on(filter_1, (from, to, amt) => {
-                        this.loadData();
-                        this.balanceChange.next();
-                    });
-                    let filter_2 = coinContract.filters.Transfer(null, this.accounts[0], null);
-                    coinContract.on(filter_2, (from, to, amt) => {
-                        this.loadData();
-                        this.balanceChange.next();
-                    });
-                    this.contracts.push(coinContract);
+            return this.paymentContract.pool().then(poolAddress => {
+                this.poolContract = new ethers.Contract(poolAddress, BStablePool.abi, this.web3);
+                let pArr_0 = new Array();
+                for (let i = 0; i < environment.coins.length; i++) {
+                    pArr_0.push(this.poolContract.coins(i));
                 }
+                return Promise.all(pArr_0).then(coins => {
+                    for (let i = 0; i < coins.length; i++) {
+                        let coinContract = new ethers.Contract(coins[i], BEP20.abi, this.web3);
+                        let filter_0 = coinContract.filters.Approval(this.accounts[0], null, null);
+                        coinContract.on(filter_0, (owner, spender, amount, event) => {
+                            this.approvalStatusChange.next({ index: i, owner: owner, spender: spender, amount: amount });
+                        });
+                        let filter_1 = coinContract.filters.Transfer(this.accounts[0], null, null);
+                        coinContract.on(filter_1, (from, to, amt) => {
+                            this.loadData();
+                            this.balanceChange.next();
+                        });
+                        let filter_2 = coinContract.filters.Transfer(null, this.accounts[0], null);
+                        coinContract.on(filter_2, (from, to, amt) => {
+                            this.loadData();
+                            this.balanceChange.next();
+                        });
+                        this.contracts.push(coinContract);
+                    }
+                });
             });
         });
     }
@@ -339,7 +339,7 @@ export class BootService {
             pArr.push(coin.balanceOf(this.accounts[0]));
         });
         pArr.push(this.bstContract.balanceOf(this.accounts[0]));
-        pArr.push(this.paymentContract.getReward());
+        pArr.push(this.paymentContract.getUserReward());
         return Promise.all(pArr).then(res => {
             res.forEach((e, i) => {
                 if (i < this.contracts.length) {

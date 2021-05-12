@@ -7,13 +7,10 @@ import WalletConnectProvider from '@walletconnect/web3-provider';
 import { LocalStorageService } from 'angular-web-storage';
 import { BigNumber } from 'bignumber.js';
 import { ethers } from 'ethers';
-import { Observable, Subject } from 'rxjs';
-import BStablePool from 'libs/abi/BStablePool.json';
-import BStableProxyV2 from 'libs/abi/BStableProxyV2.json';
-import BStableTokenV2 from 'libs/abi/BStableTokenV2.json';
-import BStablePayment from 'libs/abi/BStablePayment.json';
-import PaymentToken from 'libs/abi/PaymentToken.json';
 import BEP20 from 'libs/abi/BEP20.json';
+import BStablePool from 'libs/abi/BStablePool.json';
+import PaymentFarmingProxy from 'libs/abi/PaymentFarmingProxy.json';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ApproveDlgComponent } from '../approve-dlg/approve-dlg.component';
 import { ConstVal } from '../model/const-val';
@@ -40,7 +37,8 @@ export class BootService {
     poolContract: ethers.Contract;
 
     paymentContract: ethers.Contract;
-    paymentTokenContract: ethers.Contract;
+
+    bstContract: ethers.Contract;
 
     contracts: Array<ethers.Contract> = new Array();
 
@@ -63,6 +61,10 @@ export class BootService {
 
     // three coins' balance
     balances: BigNumber[] = [];
+
+    bstBalance: BigNumber = new BigNumber(0);
+
+    bstPending: BigNumber = new BigNumber(0);
 
     public denominator = new BigNumber(10).exponentiatedBy(18);
 
@@ -102,7 +104,10 @@ export class BootService {
 
 
     private initContracts(): Promise<any> {
-        this.paymentContract = new ethers.Contract(this.chainConfig.contracts.payment.address, BStablePayment.abi, this.web3);
+        this.paymentContract = new ethers.Contract(this.chainConfig.contracts.payment.address, PaymentFarmingProxy.abi, this.web3);
+        this.paymentContract.token(add => {
+            this.bstContract = new ethers.Contract(add, BEP20.abi, this.web3);
+        });
         return this.paymentContract.pool().then(poolAddress => {
             this.poolContract = new ethers.Contract(poolAddress, BStablePool.abi, this.web3);
             let pArr_0 = new Array();
@@ -128,10 +133,6 @@ export class BootService {
                     });
                     this.contracts.push(coinContract);
                 }
-            });
-        }).then(() => {
-            return this.paymentContract.paymentToken().then(paymentTokenAddress => {
-                this.paymentTokenContract = new ethers.Contract(paymentTokenAddress, PaymentToken.abi, this.web3);
             });
         });
     }
@@ -337,9 +338,17 @@ export class BootService {
         this.contracts.forEach((coin, i) => {
             pArr.push(coin.balanceOf(this.accounts[0]));
         });
+        pArr.push(this.bstContract.balanceOf(this.accounts[0]));
+        pArr.push(this.paymentContract.getReward());
         return Promise.all(pArr).then(res => {
             res.forEach((e, i) => {
-                this.balances[i] = new BigNumber(e.toString()).div(this.denominator);
+                if (i < this.contracts.length) {
+                    this.balances[i] = new BigNumber(e.toString()).div(this.denominator);
+                } else if (i === this.contracts.length) {
+                    this.bstBalance = new BigNumber(e.toString()).div(this.denominator);
+                } else if (i === this.contracts.length + 1) {
+                    this.bstPending = new BigNumber(e.toString()).div(this.denominator);
+                }
             });
         });
     }

@@ -9,39 +9,8 @@
   padding-top: 107px;
   text-align: center;
   position: relative;
-
-  .bg-j {
-    position: absolute;
-    width: 280px;
-    height: 140px;
-    background-size: 100% 100%;
-    top: 128px;
-    left: -8px;
-    background-image: url('../assets/static/img/bg-j.png');
-    z-index: 2;
-  }
-
-  .bg-j-2 {
-    position: absolute;
-    width: 280px;
-    height: 140px;
-    background-size: 100% 100%;
-    top: 317px;
-    left: -150px;
-    background-image: url('../assets/static/img/bg-j.png');
-    z-index: 2;
-  }
-
-  .bg-j-3 {
-    position: absolute;
-    width: 280px;
-    height: 140px;
-    background-size: 100% 100%;
-    top: 48px;
-    right: -55px;
-    background-image: url('../assets/static/img/bg-j-2.png');
-    z-index: 2;
-  }
+  background-image: url('../assets/static/img/bg-j.png');
+  background-size: 100% 100%;
 
   .nav-top-font-top {
     font-size: 60px;
@@ -466,71 +435,11 @@
   }
 }
 
-@media (max-width: 1360px) {
-  .nav-top {
-    height: 350px;
-    padding-top: 100px;
-
-    .bg-j {
-      width: 200px;
-      height: 70px;
-      top: 124px;
-      left: -4px;
-    }
-
-    .bg-j-2 {
-      width: 200px;
-      height: 70px;
-      top: 230px;
-      left: -124px;
-    }
-
-    .bg-j-3 {
-      width: 200px;
-      height: 100px;
-      top: 99px;
-      right: -84px;
-    }
-
-    .nav-top-font-top {
-      font-size: 35px;
-      line-height: 40px;
-      margin-bottom: 20px;
-    }
-
-    .nav-top-font-bottom {
-      font-size: 17px;
-      line-height: 25px;
-    }
-  }
-}
-
 //手机
 @media (max-width: 768px) {
   .nav-top {
     height: 350px;
     padding-top: 70px;
-
-    .bg-j {
-      width: 105px;
-      height: 58px;
-      top: 154px;
-      left: -4px;
-    }
-
-    .bg-j-2 {
-      width: 105px;
-      height: 58px;
-      top: 245px;
-      left: -44px;
-    }
-
-    .bg-j-3 {
-      width: 270px;
-      height: 58px;
-      top: 199px;
-      right: -204px;
-    }
 
     .nav-top-font-top {
       font-size: 35px;

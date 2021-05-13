@@ -14,9 +14,14 @@ export class AppComponent implements OnInit {
     menu = environment.menu;
 
     itemListBoxOne: any[] = [
-        {imgUrl: '1', name: 'Payment Mining', tip: 'Pay in your choice of currency. Get paid to pay with  Payment Mining'},
-        {imgUrl: '2', name: 'Stablecoin swaps', tip: 'Low fees / Minimum slippage / Low risk'},
-        {imgUrl: '3', name: 'Liquidity mining', tip: 'Earn BST+Earn great APY on stablecoins.'}
+        {imgUrl: '1', name: 'Payment Mining', tip: 'Pay in your choice of currency', tip1: 'Get paid to pay with Payment Mining'},
+        {imgUrl: '2', name: 'Stablecoin Swaps', tip: 'Low Fees', tip1: 'Minimum Slippage', tip2: 'Low Risk'},
+        {
+            imgUrl: '3',
+            name: 'Liquidity Mining',
+            tip: 'Earn BST',
+            tip1: 'Earn great APY on stablecoins'
+        }
     ];
 
     Audited: any[] = [
@@ -52,12 +57,29 @@ export class AppComponent implements OnInit {
     amount2 = 1053428;
     amount3 = 24538428;
     showNumber = 0;
+    ffInfo: any;
 
     constructor(public lang: LanguageService) {
 
     }
 
     ngOnInit(): void {
+        // 获取用户端信息
+        const ua = navigator.userAgent.toLowerCase();
+        const info = {
+            // 匹配IE浏览器
+            ie: /msie/.test(ua) && !/opera/.test(ua),
+            // 匹配Opera浏览器
+            op: /opera/.test(ua),
+            // 匹配Safari浏览器
+            sa: /version.*safari/.test(ua),
+            // 匹配Chrome浏览器
+            ch: /chrome/.test(ua),
+            // 匹配Firefox浏览器
+            ff: /gecko/.test(ua) && !/webkit/.test(ua)
+        };
+        this.ffInfo = info;
+        console.log(info);
         this.numberChange1(80, 10, 0, this.amount);
         this.numberChange2(80, 10, 0, this.amount2);
         this.numberChange3(80, 10, 0, this.amount3);

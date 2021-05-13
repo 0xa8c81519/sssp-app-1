@@ -6,46 +6,52 @@ export const environment = {
     production: false,
     menu: [
         {
-            text: "Pool 1",
+            text: 'Pay',
             active: false,
-            url: "/pool1",
-            target: "_self"
+            url: '/pay',
+            target: '_self'
         },
         {
-            text: "Pool 2",
+            text: 'Pool 1',
             active: false,
-            url: "/pool2",
-            target: "_self"
+            url: '/pool1',
+            target: '_self'
         },
         {
-            text: "Pool 3",
+            text: 'Pool 2',
             active: false,
-            url: "/pool3",
-            target: "_self"
+            url: '/pool2',
+            target: '_self'
         },
         {
-            text: "Stake BSLP-01",
+            text: 'Pool 3',
             active: false,
-            url: "/stake1",
-            target: "_self"
+            url: '/pool3',
+            target: '_self'
         },
         {
-            text: "Stake BSLP-02",
+            text: 'Stake BSLP-01',
             active: false,
-            url: "/stake2",
-            target: "_self"
+            url: '/stake1',
+            target: '_self'
         },
         {
-            text: "Stake BSLP-03",
+            text: 'Stake BSLP-02',
             active: false,
-            url: "/stake3",
-            target: "_self"
+            url: '/stake2',
+            target: '_self'
         },
         {
-            text: "Docs",
+            text: 'Stake BSLP-03',
             active: false,
-            url: "https://www.notion.so/bStable-Docs-5614b5e416bc409baf24a0e2e6ca9035",
-            target: "_blank"
+            url: '/stake3',
+            target: '_self'
+        },
+        {
+            text: 'Docs',
+            active: false,
+            url: 'https://docs.bstable.finance',
+            target: '_blank'
         }
     ]
 };

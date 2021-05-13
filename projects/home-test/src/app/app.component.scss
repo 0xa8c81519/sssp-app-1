@@ -1,3 +1,7 @@
+.ffClass {
+  background: #1E212D !important;
+}
+
 .nav-top {
   height: 435px;
   background: #1E212D;
@@ -434,6 +438,7 @@
 
       .TotalValueLocked {
         justify-content: space-around;
+
         svg {
           width: 30px;
           height: 30px;
@@ -560,6 +565,11 @@
             color: #8293AE;
             line-height: 27px;
             padding: 10px 23px;
+
+            p {
+              margin: 0;
+              padding: 0;
+            }
           }
         }
       }

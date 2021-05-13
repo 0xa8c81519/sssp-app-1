@@ -1,4 +1,4 @@
-<div class="top" [ngClass]="{'backdrop-filter':true,open:topOpen}">
+<div class="top" [ngClass]="{'backdrop-filter':true,open:topOpen,ffClass:ffInfo.ff}">
     <div class="nav">
         <div class="img">
             <img src="assets/static/img/BSTLOGO.png" alt="bstable.logo">
@@ -33,7 +33,7 @@
         <p><span>{{"All-in-one" | translate}}</span> {{"Decentralized Finance" | translate}}</p>
     </div>
     <div class="nav-top-font-bottom">
-        <p>{{"Payment mining / efficient stablecoin swaps / liquidity mining" | translate}}</p>
+        <p>{{"Payment Mining  Efficient Stablecoin Swaps  Liquidity Mining" | translate}}</p>
     </div>
 
 </div>
@@ -74,7 +74,7 @@
                         <path d="M345.184 524.544l95.04-13.856 42.624-85.76c7.2-14.4 16.448-22.112 25.696-22.112V256.416c-192.64 0-348.8 156.16-348.8 348.8 0 192.64 156.16 348.768 348.8 348.768V721.28l-85.312 44.704c-28.256 14.912-47.232 2.048-41.6-30.304l16.448-94.528-68.832-66.752c-23.104-23.136-16.448-44.704 15.904-49.856z"
                               fill="#FBD548" p-id="2784"></path>
                     </svg>
-                    <span>BST {{"rewarded per block" | translate}}</span>
+                    <span>{{"Unclaimed BST Rewards" | translate}}</span>
                 </div>
                 <span>{{numberToCurrency(amount3)}}</span>
             </div>
@@ -83,14 +83,16 @@
 </div>
 <div class="tree-box">
     <div class="tree-content-box">
-        <div class="big-box" *ngFor="let item of itemListBoxOne">
+        <div class="big-box" *ngFor="let item of itemListBoxOne;let i=index;">
             <div class="one-box"><img [src]="'assets/static/img/'+ item.imgUrl + '.png'" alt=""></div>
             <div>
                 <div class="henggang"></div>
                 <span>{{item.name | translate}}</span>
             </div>
             <div>
-                {{item.tip | translate}}
+                <p>{{item.tip | translate}}</p>
+                <p>{{item.tip1 | translate}}</p>
+                <p>{{item.tip2 | translate}}</p>
             </div>
         </div>
     </div>

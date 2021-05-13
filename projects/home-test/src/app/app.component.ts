@@ -87,12 +87,12 @@ export class AppComponent implements OnInit {
         arr.push(this.boot.getBSTMinted());
         arr.push(this.boot.getUnclaimedBST());
         Promise.all(arr).then(res => {
-            this.amount = res[0].toFixed(2, BigNumber.ROUND_DOWN);
-            this.amount2 = res[1].toFixed(2, BigNumber.ROUND_DOWN);
-            this.amount3 = res[2].toFixed(2, BigNumber.ROUND_DOWN);
-            this.numberChange1(80, 10, 0, this.amount);
-            this.numberChange2(80, 10, 0, this.amount2);
-            this.numberChange3(80, 10, 0, this.amount3);
+            let amount = res[0].toFixed(2, BigNumber.ROUND_DOWN);
+            let amount2 = res[1].toFixed(2, BigNumber.ROUND_DOWN);
+            let amount3 = res[2].toFixed(2, BigNumber.ROUND_DOWN);
+            this.numberChange1(80, 10, 0, amount);
+            this.numberChange2(80, 10, 0, amount2);
+            this.numberChange3(80, 10, 0, amount3);
         });
         const isMobile = (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i));
         const u = navigator.userAgent;

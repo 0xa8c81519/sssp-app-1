@@ -444,15 +444,6 @@ export class BootService {
         }).catch(e => {
             console.log(e);
         });
-        this.proxyContract.startBlock().then(startBlock => {
-            this.poolInfo.startBlock = new BigNumber(startBlock.toString());
-        });
-        this.proxyContract.tokenPerBlock().then(res => {
-            this.poolInfo.tokenPerBlock = new BigNumber(res.toString()).div(denominator);
-        });
-        this.proxyContract.bonusEndBlock().then(res => {
-            this.poolInfo.bonusEndBlock = new BigNumber(res.toString());
-        });
         this.proxyContract.poolInfo(this.chainConfig.contracts.pid).then(res => {
             if (res && res.allocPoint) {
                 this.poolInfo.allocPoint = new BigNumber(res.allocPoint.toString()).div(denominator);

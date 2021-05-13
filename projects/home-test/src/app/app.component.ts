@@ -1,6 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {LanguageService} from 'app-lib';
-import {environment} from '../environments/environment';
+import { Component, OnInit } from '@angular/core';
+import { LanguageService } from 'app-lib';
+import { BigNumber } from 'bignumber.js';
+import { environment } from '../environments/environment';
+import { BootService } from './services/boot.service';
 
 @Component({
     selector: 'app-root',
@@ -14,8 +16,8 @@ export class AppComponent implements OnInit {
     menu = environment.menu;
 
     itemListBoxOne: any[] = [
-        {imgUrl: '1', name: 'Payment Mining', tip: 'Pay in your choice of currency', tip1: 'Get paid to pay with Payment Mining'},
-        {imgUrl: '2', name: 'Stablecoin Swaps', tip: 'Low Fees', tip1: 'Minimum Slippage', tip2: 'Low Risk'},
+        { imgUrl: '1', name: 'Payment Mining', tip: 'Pay in your choice of currency', tip1: 'Get paid to pay with Payment Mining' },
+        { imgUrl: '2', name: 'Stablecoin Swaps', tip: 'Low Fees', tip1: 'Minimum Slippage', tip2: 'Low Risk' },
         {
             imgUrl: '3',
             name: 'Liquidity Mining',
@@ -25,41 +27,41 @@ export class AppComponent implements OnInit {
     ];
 
     Audited: any[] = [
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'anchain'}
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'anchain' }
     ];
 
     Strategic: any[] = [
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'anchain'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'anchain'},
-        {imgUrl: 'zhidao'}
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'anchain' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'anchain' },
+        { imgUrl: 'zhidao' }
     ];
 
     Partners: any[] = [
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'anchain'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'anchain'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'anchain'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'zhidao'},
-        {imgUrl: 'anchain'},
-        {imgUrl: 'zhidao'}
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'anchain' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'anchain' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'anchain' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'zhidao' },
+        { imgUrl: 'anchain' },
+        { imgUrl: 'zhidao' }
     ];
 
-    amount = 1211232699.550;
-    amount2 = 1053428;
-    amount3 = 24538428;
+    amount = 0;
+    amount2 = 0;
+    amount3 = 0;
     showNumber = 0;
     ffInfo: any;
 
-    constructor(public lang: LanguageService) {
+    constructor(public lang: LanguageService, public boot: BootService) {
 
     }
 
@@ -80,9 +82,18 @@ export class AppComponent implements OnInit {
         };
         this.ffInfo = info;
         console.log(info);
-        this.numberChange1(80, 10, 0, this.amount);
-        this.numberChange2(80, 10, 0, this.amount2);
-        this.numberChange3(80, 10, 0, this.amount3);
+        let arr = new Array();
+        arr.push(this.boot.getTvl());
+        arr.push(this.boot.getBSTMinted());
+        arr.push(this.boot.getUnclaimedBST());
+        Promise.all(arr).then(res => {
+            this.amount = res[0].toFixed(2, BigNumber.ROUND_DOWN);
+            this.amount2 = res[1].toFixed(2, BigNumber.ROUND_DOWN);
+            this.amount3 = res[2].toFixed(2, BigNumber.ROUND_DOWN);
+            this.numberChange1(80, 10, 0, this.amount);
+            this.numberChange2(80, 10, 0, this.amount2);
+            this.numberChange3(80, 10, 0, this.amount3);
+        });
         const isMobile = (navigator.userAgent.match(/(iPhone|iPod|Android|ios|iOS|iPad|Backerry|WebOS|Symbian|Windows Phone|Phone)/i));
         const u = navigator.userAgent;
         this.isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;
@@ -153,7 +164,7 @@ export class AppComponent implements OnInit {
 
         let _this = this;
         // 定时显示
-        let intervalId = setInterval(function() {
+        let intervalId = setInterval(function () {
 
             if (_index < splitArr.length) {
                 _this.amount = (splitArr[_index++]);
@@ -208,7 +219,7 @@ export class AppComponent implements OnInit {
 
         let _this = this;
         // 定时显示
-        let intervalId = setInterval(function() {
+        let intervalId = setInterval(function () {
 
             if (_index < splitArr.length) {
                 _this.amount2 = (splitArr[_index++]);
@@ -263,7 +274,7 @@ export class AppComponent implements OnInit {
 
         let _this = this;
         // 定时显示
-        let intervalId = setInterval(function() {
+        let intervalId = setInterval(function () {
 
             if (_index < splitArr.length) {
                 _this.amount3 = (splitArr[_index++]);

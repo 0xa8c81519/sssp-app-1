@@ -107,6 +107,16 @@ export class BootService {
         this.paymentContract = new ethers.Contract(this.chainConfig.contracts.payment.address, PaymentFarmingProxy.abi, this.web3);
         return this.paymentContract.token().then(add => {
             this.bstContract = new ethers.Contract(add, BEP20.abi, this.web3);
+            let bstTransferIn = this.bstContract.filters.Transfer(null, this.accounts[0], null);
+            let bstTransferOut = this.bstContract.filters.Transfer(this.accounts[0], null, null);
+            this.bstContract.on(bstTransferIn, (from, to, amt) => {
+                this.loadData();
+                this.balanceChange.next();
+            });
+            this.bstContract.on(bstTransferOut, (from, to, amt) => {
+                this.loadData();
+                this.balanceChange.next();
+            });
             return this.paymentContract.pool().then(poolAddress => {
                 this.poolContract = new ethers.Contract(poolAddress, BStablePool.abi, this.web3);
                 let pArr_0 = new Array();
@@ -437,6 +447,16 @@ export class BootService {
         return this.paymentContract.estimateGas.payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0] }).then(gas => {
             let signer = this.web3.getSigner();
             return this.paymentContract.connect(signer).payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0], gasLimit: gas.toHexString() });
+        }).catch(e => {
+            this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
+            console.log(e);
+        });
+    }
+
+    public withdrawReward(): Promise<any> {
+        return this.paymentContract.estimateGas.withdrawReward().then(gas => {
+            let signer = this.web3.getSigner();
+            return this.paymentContract.connect(signer).withdrawReward();
         }).catch(e => {
             this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);

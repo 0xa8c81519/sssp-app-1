@@ -15,4 +15,13 @@ export class GetPaidToPayComponent implements OnInit {
     ngOnInit(): void {
     }
 
+    claim() {
+        this.loading.emit();
+        this.boot.withdrawReward().then(res => {
+            this.loaded.emit();
+        });
+    }
+
+
+
 }

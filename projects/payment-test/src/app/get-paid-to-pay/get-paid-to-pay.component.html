@@ -15,9 +15,9 @@
                 <span class="balance-top-box">{{"Balance" | translate}}: {{boot.bstBalance.toFormat(4,1)}} BST</span>
             </div>
         </div>
-        <div class="bottom-text2">
-            <div>
-               {{"Claim" | translate}}
+        <div class="bottom-text2" style="cursor: pointer;" (click)="claim()">
+            <div >
+                {{"Claim" | translate}}
             </div>
         </div>
     </div>

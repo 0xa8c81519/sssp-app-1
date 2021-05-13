@@ -8,7 +8,7 @@ export const environment = {
         {
             text: 'Pay',
             active: false,
-            url: '/pay',
+            url: '/payment',
             target: '_self'
         },
         {

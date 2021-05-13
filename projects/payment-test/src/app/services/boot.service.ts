@@ -339,7 +339,7 @@ export class BootService {
             pArr.push(coin.balanceOf(this.accounts[0]));
         });
         pArr.push(this.bstContract.balanceOf(this.accounts[0]));
-        pArr.push(this.paymentContract.getUserReward());
+        pArr.push(this.paymentContract.getUserReward(this.accounts[0]));
         return Promise.all(pArr).then(res => {
             res.forEach((e, i) => {
                 if (i < this.contracts.length) {

@@ -10,7 +10,9 @@ export class GetPaidToPayComponent implements OnInit {
 
     @Output() loading: EventEmitter<any> = new EventEmitter();
     @Output() loaded: EventEmitter<any> = new EventEmitter();
-    constructor(public boot: BootService) { }
+    constructor(public boot: BootService) {
+        this.boot.balanceChange.subscribe(() => this.loaded.emit());
+    }
 
     ngOnInit(): void {
     }
@@ -18,7 +20,6 @@ export class GetPaidToPayComponent implements OnInit {
     claim() {
         this.loading.emit();
         this.boot.withdrawReward().then(res => {
-            this.loaded.emit();
         });
     }
 

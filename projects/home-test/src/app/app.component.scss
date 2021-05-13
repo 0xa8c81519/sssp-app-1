@@ -8,12 +8,46 @@
   box-sizing: border-box;
   padding-top: 107px;
   text-align: center;
+  position: relative;
+
+  .bg-j {
+    position: absolute;
+    width: 280px;
+    height: 140px;
+    background-size: 100% 100%;
+    top: 128px;
+    left: -8px;
+    background-image: url('../assets/static/img/bg-j.png');
+    z-index: 2;
+  }
+
+  .bg-j-2 {
+    position: absolute;
+    width: 280px;
+    height: 140px;
+    background-size: 100% 100%;
+    top: 317px;
+    left: -150px;
+    background-image: url('../assets/static/img/bg-j.png');
+    z-index: 2;
+  }
+
+  .bg-j-3 {
+    position: absolute;
+    width: 280px;
+    height: 140px;
+    background-size: 100% 100%;
+    top: 48px;
+    right: -55px;
+    background-image: url('../assets/static/img/bg-j-2.png');
+    z-index: 2;
+  }
 
   .nav-top-font-top {
-    font-size: 65px;
-    font-family: DIN-BlackItalicAlt, DIN;
+    font-size: 60px;
     font-weight: normal;
     line-height: 83px;
+    z-index: 10;
 
     p {
       color: #FFFFFF;
@@ -29,9 +63,10 @@
   .nav-top-font-bottom {
     font-size: 32px;
     font-weight: 400;
-    color: #E0E5F9;
+    color: rgba(224, 229, 249, 0.67);
     line-height: 65px;
     font-family: Poppins-Regular, Poppins;
+    z-index: 10;
 
     p {
       margin: 0;
@@ -168,7 +203,7 @@
       border: 1px solid transparent;
 
       .one-box {
-        padding-top: 48px;
+        padding-top: 25px;
       }
 
       > div {
@@ -178,7 +213,8 @@
           justify-content: center;
 
           img {
-            width: 213px;
+            width: 280px;
+            height: 265px;
           }
         }
 
@@ -206,7 +242,7 @@
           font-size: 16px;
           font-weight: 400;
           color: #8293AE;
-          line-height: 27px;
+          line-height: 8px;
           padding: 10px 23px;
           font-family: Poppins-Regular, Poppins;
         }
@@ -312,10 +348,11 @@
   display: flex;
   justify-content: center;
   background: #1E212D;
+  padding: 77px 0;
+  box-sizing: border-box;
 
   .footer-content-box {
     width: 1200px;
-    padding-top: 77px;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -363,6 +400,16 @@
                 height: 30px;
                 width: 30px;
               }
+
+              &:hover {
+                background: #2B2E3A;
+                border: 1px solid #c0cae9;
+
+                svg path {
+                  fill: #c0cae9;
+                  transition: 0.2s;
+                }
+              }
             }
 
           }
@@ -381,7 +428,7 @@
 
       .font-bottom {
         font-size: 12px;
-        font-family: DINAlternate-Bold, DINAlternate;
+        font-family: Poppins-Regular, Poppins;
         font-weight: bold;
         color: #9399B3;
       }
@@ -394,6 +441,7 @@
 
       dl {
         margin-right: 85px;
+        margin-top: -6px;
 
         dt {
           font-size: 20px;
@@ -406,10 +454,53 @@
           font-size: 14px;
           font-weight: 400;
           color: #7B8198;
-          margin: 0 0 10px 0;
+          margin: 0 0 11px 0;
           cursor: pointer;
+
+          &:hover {
+            color: #F9FAFF;
+          }
         }
       }
+    }
+  }
+}
+
+@media (max-width: 1360px) {
+  .nav-top {
+    height: 350px;
+    padding-top: 100px;
+
+    .bg-j {
+      width: 200px;
+      height: 70px;
+      top: 124px;
+      left: -4px;
+    }
+
+    .bg-j-2 {
+      width: 200px;
+      height: 70px;
+      top: 230px;
+      left: -124px;
+    }
+
+    .bg-j-3 {
+      width: 200px;
+      height: 100px;
+      top: 99px;
+      right: -84px;
+    }
+
+    .nav-top-font-top {
+      font-size: 35px;
+      line-height: 40px;
+      margin-bottom: 20px;
+    }
+
+    .nav-top-font-bottom {
+      font-size: 17px;
+      line-height: 25px;
     }
   }
 }
@@ -420,6 +511,27 @@
     height: 350px;
     padding-top: 70px;
 
+    .bg-j {
+      width: 105px;
+      height: 58px;
+      top: 154px;
+      left: -4px;
+    }
+
+    .bg-j-2 {
+      width: 105px;
+      height: 58px;
+      top: 245px;
+      left: -44px;
+    }
+
+    .bg-j-3 {
+      width: 270px;
+      height: 58px;
+      top: 199px;
+      right: -204px;
+    }
+
     .nav-top-font-top {
       font-size: 35px;
       line-height: 40px;
@@ -428,7 +540,7 @@
 
     .nav-top-font-bottom {
       font-size: 17px;
-      line-height: 45px;
+      line-height: 25px;
     }
   }
   .content-box {
@@ -524,7 +636,7 @@
       display: block;
 
       .big-box {
-        height: 380px;
+        min-height: 380px;
         margin-bottom: 10px;
 
         .one-box {

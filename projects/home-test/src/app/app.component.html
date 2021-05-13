@@ -21,7 +21,7 @@
     </div>
     <div class="list">
         <ul>
-            <app-menu-item *ngFor="let item of menu" [itemText]="item.text" [targetUrl]="item.url"
+            <app-menu-item *ngFor="let item of menu" [itemText]="item.text | translate" [targetUrl]="item.url"
                            [target]="item.target" [empty]="false"></app-menu-item>
             <app-menu-item [itemText]="lang.curLanguage === 'zh' ? 'English' : '中文简体'" [empty]="false"
                            (changeLanguageFn)="changeLanguageFn($event)"></app-menu-item>

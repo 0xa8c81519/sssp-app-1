@@ -1,9 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import {CoinsDlgComponent} from '../coins-dlg/coins-dlg.component';
-import {BootService} from '../services/boot.service';
-import {ethers} from 'ethers';
+import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
+import { BootService } from '../services/boot.service';
+import { ethers } from 'ethers';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -29,9 +29,9 @@ export class PaymentInfoComponent implements OnInit {
     left = 0;
     active = 1;
     slippageNumList: any = [
-        {num: 1},
-        {num: 2},
-        {num: 5}
+        { num: 1 },
+        { num: 2 },
+        { num: 5 }
     ];
 
     right = 1;
@@ -89,7 +89,8 @@ export class PaymentInfoComponent implements OnInit {
         if (this.amt) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            this.boot.approve(Number(this.left), this.amt, this.boot.paymentContract.address).then((res) => {
+            let amt = new BigNumber(this.amt).multipliedBy(1.003).toFixed(4, BigNumber.ROUND_DOWN);
+            this.boot.approve(Number(this.left), amt, this.boot.paymentContract.address).then((res) => {
                 if (!res) {
                     this.loadStatus = LoadStatus.Loaded;
                     this.loaded.emit();
@@ -128,7 +129,8 @@ export class PaymentInfoComponent implements OnInit {
         if (this.amt && this.address && this.isExchangeEnabled()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
-            this.boot.pay(Number(this.left), this.address, this.amt).then((res) => {
+            let amt = new BigNumber(this.amt).multipliedBy(1.003).toFixed(4, BigNumber.ROUND_DOWN);
+            this.boot.pay(Number(this.left), this.address, amt).then((res) => {
                 console.log(res);
                 if (!res) {
                     this.loaded.emit();

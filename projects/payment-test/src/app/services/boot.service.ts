@@ -429,6 +429,7 @@ export class BootService {
         }).catch(e => {
             this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
+            throw e;
         });
     }
 
@@ -450,16 +451,18 @@ export class BootService {
         }).catch(e => {
             this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
+            throw e;
         });
     }
 
     public withdrawReward(): Promise<any> {
-        return this.paymentContract.estimateGas.withdrawReward({from:this.accounts[0]}).then(gas => {
+        return this.paymentContract.estimateGas.withdrawReward({ from: this.accounts[0] }).then(gas => {
             let signer = this.web3.getSigner();
-            return this.paymentContract.connect(signer).withdrawReward({from:this.accounts[0]});
+            return this.paymentContract.connect(signer).withdrawReward({ from: this.accounts[0] });
         }).catch(e => {
             this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
+            throw e;
         });
     }
 }

@@ -20,6 +20,8 @@ export class GetPaidToPayComponent implements OnInit {
     claim() {
         this.loading.emit();
         this.boot.withdrawReward().then(res => {
+        }).catch(e => {
+            this.loaded.emit();
         });
     }
 

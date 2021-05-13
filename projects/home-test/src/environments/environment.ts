@@ -18,6 +18,12 @@ export const environment = {
             target: "_self"
         },
         {
+            text: "Pool 3",
+            active: false,
+            url: "/pool3",
+            target: "_self"
+        },
+        {
             text: "Stake BSLP-01",
             active: false,
             url: "/stake1",
@@ -28,8 +34,15 @@ export const environment = {
             active: false,
             url: "/stake2",
             target: "_self"
-        }, {
-            text: "Tutorial",
+        },
+        {
+            text: "Stake BSLP-03",
+            active: false,
+            url: "/stake3",
+            target: "_self"
+        },
+        {
+            text: "Docs",
             active: false,
             url: "https://www.notion.so/bStable-Docs-5614b5e416bc409baf24a0e2e6ca9035",
             target: "_blank"

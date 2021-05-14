@@ -89,7 +89,7 @@ export class PaymentInfoComponent implements OnInit {
         if (this.amt) {
             this.loadStatus = LoadStatus.Loading;
             this.loading.emit();
-            let amt = new BigNumber(this.amt).multipliedBy(1.003).toFixed(4, BigNumber.ROUND_DOWN);
+            let amt = new BigNumber(this.amt).div(1 - .003).toFixed(18, BigNumber.ROUND_DOWN);
             this.boot.approve(Number(this.left), amt, this.boot.paymentContract.address).then((res) => {
                 if (!res) {
                     this.loadStatus = LoadStatus.Loaded;
@@ -129,7 +129,7 @@ export class PaymentInfoComponent implements OnInit {
         if (this.amt && this.address && this.isExchangeEnabled()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
-            let amt = new BigNumber(this.amt).multipliedBy(1.003).toFixed(4, BigNumber.ROUND_DOWN);
+            let amt = new BigNumber(this.amt).div(1 - .003).toFixed(18, BigNumber.ROUND_DOWN);
             this.boot.pay(Number(this.left), this.address, amt).then((res) => {
                 console.log(res);
                 if (!res) {

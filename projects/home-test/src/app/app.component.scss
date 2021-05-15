@@ -2,6 +2,29 @@
   background: #1E212D !important;
 }
 
+.lang {
+  align-items: center;
+  color: #6b7595;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  line-height: 20px;
+  overflow: hidden;
+  word-break: keep-all;
+  margin: 20px 20px 0 0;
+
+  svg {
+    height: 20px;
+    width: 20px;
+    margin: 0 3px;
+  }
+
+  &:hover {
+    color: #fff;
+    transition: .5s;
+  }
+}
+
 .nav-top {
   height: 435px;
   background: #1E212D;
@@ -438,6 +461,29 @@
 
 //手机
 @media (max-width: 768px) {
+  .lang {
+    align-items: center;
+    color: #6b7595;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-start;
+    line-height: 20px;
+    overflow: hidden;
+    word-break: keep-all;
+    margin: 20px 20px 0 0;
+    font-size: 14px;
+
+    svg {
+      height: 20px;
+      width: 20px;
+      margin: 0 3px;
+    }
+
+    &:hover {
+      color: #6b7595;
+      transition: .5s;
+    }
+  }
   .nav-top {
     height: 350px;
     padding-top: 70px;

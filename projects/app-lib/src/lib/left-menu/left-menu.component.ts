@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { LanguageService } from '../services/language.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {LanguageService} from '../services/language.service';
 
 @Component({
     selector: 'lib-left-menu',
@@ -9,11 +9,12 @@ import { LanguageService } from '../services/language.service';
 export class LeftMenuComponent implements OnInit {
 
 
-    @Input('menuOpen')
-    menuOpen;
+    @Output('menuOpen') menuOpen = new EventEmitter<any>();
 
     @Input('activeIndex')
     activeIndex = 0;
+
+    IsMenuOpen = true;
 
     constructor(public lang: LanguageService) {
 
@@ -22,8 +23,10 @@ export class LeftMenuComponent implements OnInit {
 
     ngOnInit(): void {
     }
-    public openMenu() {
-        this.menuOpen = !this.menuOpen;
+
+    openMenu(tag) {
+        this.menuOpen.emit(tag);
+        this.IsMenuOpen = !this.IsMenuOpen;
     }
 
     toggleLang() {

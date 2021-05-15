@@ -1,11 +1,11 @@
-import { Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
-import { BootService } from './services/boot.service';
-import { HeaderComponent, LanguageService } from 'app-lib';
-import { MatDialog } from '@angular/material/dialog';
-import { ChooseWalletDlgComponent } from './choose-wallet-dlg/choose-wallet-dlg.component';
-import { LocalStorageService } from 'angular-web-storage';
-import { ConstVal } from './model/const-val';
-import { InstallWalletDlgComponent } from './intall-wallet-dlg/install-wallet-dlg.component';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild} from '@angular/core';
+import {BootService} from './services/boot.service';
+import {HeaderComponent, LanguageService} from 'app-lib';
+import {MatDialog} from '@angular/material/dialog';
+import {ChooseWalletDlgComponent} from './choose-wallet-dlg/choose-wallet-dlg.component';
+import {LocalStorageService} from 'angular-web-storage';
+import {ConstVal} from './model/const-val';
+import {InstallWalletDlgComponent} from './intall-wallet-dlg/install-wallet-dlg.component';
 
 @Component({
     selector: 'app-root',
@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
     isMobile = false;
 
-    menuOpen = false;
+    menuOpen = true;
 
     private static MAX_CLIENT_WIDTH = 1200;
 
@@ -146,5 +146,10 @@ export class AppComponent implements OnInit {
     addressLinkFn(v) {
         const str: any = v.slice(0, 6) + '...' + v.substring(v.length - 4);
         return str;
+    }
+
+    menuOpenFn(e) {
+        console.log(e);
+        this.menuOpen = e;
     }
 }

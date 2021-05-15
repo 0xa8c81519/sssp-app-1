@@ -61,7 +61,7 @@
         </div>
 
     </div>
-    <lib-left-menu [menuOpen]="menuOpen" [activeIndex]="7"></lib-left-menu>
+    <lib-left-menu [activeIndex]="7" (menuOpen)="menuOpenFn($event)"></lib-left-menu>
     <div class="bg-box-1">
         <div class="bg-box-cont"></div>
     </div>

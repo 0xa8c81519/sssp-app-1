@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
 
     isMobile = false;
 
-    menuOpen = false;
+    menuOpen = true;
 
     private static MAX_CLIENT_WIDTH = 1200;
 
@@ -155,5 +155,9 @@ export class AppComponent implements OnInit {
     addressLinkFn(v) {
         const str: any = v.slice(0, 6) + '...' + v.substring(v.length - 4);
         return str;
+    }
+
+    menuOpenFn(e) {
+        this.menuOpen = e;
     }
 }

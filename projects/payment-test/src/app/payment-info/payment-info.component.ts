@@ -294,7 +294,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     otherCurrency() {
-        if (Number(this.amt) > 0 && !this.isOtherCurrency) {
+        if (!this.isOtherCurrency) {
             this.calcNum();
             this.isOtherCurrency = !this.isOtherCurrency;
         } else {

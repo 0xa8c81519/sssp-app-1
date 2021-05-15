@@ -45,6 +45,10 @@
                   fill="#16A16A" p-id="2178"></path>
         </svg>
     </div>
+    <div class="slidingpPoint" *ngIf="!isOtherCurrency">
+        <p>{{"Actual Quantity Received" | translate}}：123</p>
+        <p>{{"Estimate" | translate}} gas {{"Fee"| translate}}：123</p>
+    </div>
     <div class="toBottom" [ngClass]="{toBottomActive:isOtherCurrency}" (click)="otherCurrency()">
         <span>
             {{"Payment in other currencies" | translate}}
@@ -108,13 +112,16 @@
             </div>
         </div>
         <div class="slidingpPoint">
-            <p>{{"Slippage Setting" | translate}}</p>
-            <div class="SlidingNum">
-                <div *ngFor="let item of slippageNumList;let i=index;"
-                     [ngClass]="{'activeS':active === item.num}"
-                     (click)="selectNumFn(item.num)">{{item.num}}%
-                </div>
-            </div>
+            <p>{{"Actual Quantity Received" | translate}}：123</p>
+            <p>{{"Estimate" | translate}} gas {{"Fee"| translate}}：123</p>
+            <!--            <p>{{"Slippage Setting" | translate}}</p>-->
+            <!--            <div class="SlidingNum">-->
+            <!--                <div *ngFor="let item of slippageNumList;let i=index;"-->
+            <!--                     [ngClass]="{'activeS':active === item.num}"-->
+            <!--                     (click)="selectNumFn(item.num)">{{item.num}}%-->
+            <!--                </div>-->
+            <!--            </div>-->
+
         </div>
     </ng-container>
 
@@ -124,9 +131,12 @@
         {{"Pay"|translate}}
     </div>
     <div [ngClass]="{'btn-disabled':!isExchangeEnabledRight(),'btn':isExchangeEnabledRight()}"
-         *ngIf="boot.accounts.length>0 && isOtherCurrency"
+         *ngIf="boot.accounts.length>0 && isOtherCurrency;else noBtn"
          (click)="payRight()">
         {{"Pay"|translate}}
+    </div>
+    <div #noBtn class="btn btn-disabled">
+        {{"Connect to a Wallet"|translate}}
     </div>
     <!--    <div class="btn" *ngIf="boot.accounts.length==0" (click)="connectWallet()">-->
     <!--        {{"Connect to a Wallet"|translate}}-->

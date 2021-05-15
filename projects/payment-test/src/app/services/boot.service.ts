@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import {
     ApplicationRef,
     Injectable
@@ -69,7 +70,7 @@ export class BootService {
     public denominator = new BigNumber(10).exponentiatedBy(18);
 
 
-    constructor(private dialog: MatDialog, private applicationRef: ApplicationRef, private localStorage: LocalStorageService) {
+    constructor(private dialog: MatDialog, private applicationRef: ApplicationRef, private localStorage: LocalStorageService, private http: HttpClient) {
         environment.coins.forEach(e => {
             this.balances.push(new BigNumber(0));
         });
@@ -399,10 +400,10 @@ export class BootService {
         });
     }
 
-    public async getExchangeOutAmt(i: number, j: number, amt: string) {
+    public getExchangeOutAmt(i: number, j: number, amt: string): Promise<BigNumber> {
         if (this.poolContract && !new BigNumber(amt).isNaN()) {
             amt = ethers.utils.parseEther(String(amt)).toString();
-            let decimals = await this.contracts[j].decimals({ from: this.accounts[0] });
+            let decimals = 18;
             return this.poolContract.get_dy(i, j, amt).then((res) => {
                 return new BigNumber(res.toString()).div(new BigNumber(10).exponentiatedBy(decimals.toString()));
             });
@@ -465,4 +466,39 @@ export class BootService {
             throw e;
         });
     }
+
+    public estimatePayGasFee(): Promise<any> {
+        // 134,548 approve 44,118
+        return this.getBNBUSDPrice().then(bnbPrice => {
+            return this.web3.getGasPrice().then(gasPrice => {
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(134548).plus(44118)).multipliedBy(bnbPrice).div(this.denominator), 'quote': 'USD' };
+            });
+        }).catch(e => {
+            return this.web3.getGasPrice().then(gasPrice => {
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(134548).plus(44118)).div(this.denominator), 'quote': 'BNB' };
+            });
+        });
+
+    }
+
+    public estimatePayWithSwapGasFee(): Promise<any> {
+        // 338,325 approve 44,118
+        return this.getBNBUSDPrice().then(bnbPrice => {
+            return this.web3.getGasPrice().then(gasPrice => {
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(338325).plus(44118)).multipliedBy(bnbPrice).div(this.denominator), 'quote': 'USD' };
+            });
+        }).catch(e => {
+            return this.web3.getGasPrice().then(gasPrice => {
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(338325).plus(44118)).div(this.denominator), 'quote': 'BNB' };
+            });
+        });
+    }
+
+    public getBNBUSDPrice(): Promise<BigNumber> {
+        return this.http.get('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd').toPromise().then((data: any) => {
+            return new BigNumber(data.binancecoin.usd);
+        });
+    }
+
+
 }

@@ -129,5 +129,6 @@
   "All Rights Reserved": "版权所有",
   "Docs": "文档",
   "Estimate": "估算",
-  "Actual Quantity Received": "实际收到数量"
+  "Estimated Receipt Amount": "预估收款金额",
+  "Estimated Gas Fee": "预估Gas Fee"
 }

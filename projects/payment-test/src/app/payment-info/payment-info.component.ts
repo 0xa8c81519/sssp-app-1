@@ -61,6 +61,12 @@ export class PaymentInfoComponent implements OnInit {
     @ViewChild('coinsDlgRight')
     coinsDlgRight: CoinsDlgComponent;
 
+    receiptAmt: String = '-';
+
+    gasFee: String = '-';
+
+    insufficientLiquidity: boolean = false;
+
     constructor(public boot: BootService, private dialog: MatDialog) {
         this.boot.initContractsCompleted.subscribe(res => {
             this.boot.approvalStatusChange.subscribe(res => {
@@ -119,8 +125,14 @@ export class PaymentInfoComponent implements OnInit {
             });
         }
     }
-
     pay() {
+        if (this.isOtherCurrency) {
+            this.paySwap();
+        } else {
+            this.payNoSwap();
+        }
+    }
+    payNoSwap() {
         if (!this.address || this.address === '') {
             this.showDialog = false;
             this.titleError = 'Please enter the receiver address';
@@ -146,7 +158,7 @@ export class PaymentInfoComponent implements OnInit {
         }
     }
 
-    payRight() {
+    paySwap() {
         if (!this.address || this.address === '') {
             this.showDialog = false;
             this.titleError = 'Please enter the receiver address';
@@ -198,6 +210,7 @@ export class PaymentInfoComponent implements OnInit {
 
     amtChanged(val) {
         this.amt = val;
+        this.rightAmt = val;
         this.updateApproveStatus();
         if (this.amt && this.amt !== '' && this.amt !== '0') {
             this.calcNum();
@@ -209,6 +222,7 @@ export class PaymentInfoComponent implements OnInit {
 
     amtChangedRight(val) {
         this.rightAmt = val;
+        this.calcNum();
         this.updateApproveStatusRight();
     }
 
@@ -237,7 +251,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isApproveEnabled() {
-        if (this.amt && Number(this.amt) > 0 && this.approveStatus === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
+        if (this.amt && Number(this.amt) > 0 && this.approveStatus === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading && !this.insufficientLiquidity) {
             return true;
         } else {
             return false;
@@ -245,7 +259,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isApproveEnabledRight() {
-        if (this.rightAmt && Number(this.rightAmt) > 0 && this.approveStatusRight === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading) {
+        if (this.rightAmt && Number(this.rightAmt) > 0 && this.approveStatusRight === ApproveStatus.NoApproved && this.loadStatus !== LoadStatus.Loading && !this.insufficientLiquidity) {
             return true;
         } else {
             return false;
@@ -253,7 +267,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isExchangeEnabled() {
-        if (this.amt && Number(this.amt) > 0 && this.loadStatus !== LoadStatus.Loading && this.approveStatus === ApproveStatus.Approved) {
+        if (this.amt && Number(this.amt) > 0 && this.loadStatus !== LoadStatus.Loading && this.approveStatus === ApproveStatus.Approved && !this.insufficientLiquidity) {
             return true;
         } else {
             return false;
@@ -261,7 +275,7 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     isExchangeEnabledRight() {
-        if (this.rightAmt && Number(this.rightAmt) > 0 && this.loadStatus !== LoadStatus.Loading && this.approveStatusRight === ApproveStatus.Approved) {
+        if (this.rightAmt && Number(this.rightAmt) > 0 && this.loadStatus !== LoadStatus.Loading && this.approveStatusRight === ApproveStatus.Approved && !this.insufficientLiquidity) {
             return true;
         } else {
             return false;
@@ -294,14 +308,12 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     otherCurrency() {
-        if (!this.isOtherCurrency) {
-            this.calcNum();
-            this.isOtherCurrency = !this.isOtherCurrency;
-        } else {
-            this.isOtherCurrency = false;
-            return;
-        }
+        this.isOtherCurrency = !this.isOtherCurrency;
+        this.calcNum();
         this.updateApproveStatusRight();
+        if (!this.isOtherCurrency) {
+            this.insufficientLiquidity = false;
+        }
     }
 
     selectNumFn(index) {
@@ -310,7 +322,26 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     calcNum() {
-        this.rightAmt = new BigNumber(this.amt).multipliedBy(new BigNumber(1).plus(new BigNumber(this.active).div(100))).toFixed(4, BigNumber.ROUND_DOWN);
+        if (this.isOtherCurrency) {
+            this.boot.estimatePayWithSwapGasFee().then(_gasFee => {
+                this.gasFee = (_gasFee.quote === 'USD' ? '$' : '') + _gasFee.data.toFormat(2, BigNumber.ROUND_DOWN) + " " + _gasFee.quote;
+            });
+            this.receiptAmt = '-';
+            this.boot.getExchangeOutAmt(this.right, this.left, this.rightAmt).then(amt => {
+                this.receiptAmt = amt.toFormat(2, BigNumber.ROUND_DOWN);
+                this.insufficientLiquidity = false;
+            }).catch(e => {
+                this.receiptAmt = '-';
+                this.insufficientLiquidity = true;
+            });
+        } else {
+            this.receiptAmt = new BigNumber(this.amt).multipliedBy(1 - .003).toFormat(2, BigNumber.ROUND_DOWN);
+            this.boot.estimatePayGasFee().then(_gasFee => {
+                this.gasFee = (_gasFee.quote === 'USD' ? '$' : '') + _gasFee.data.toFormat(2, BigNumber.ROUND_DOWN) + " " + _gasFee.quote;
+            }).catch(e => {
+                console.log(e);
+            });
+        }
     }
 
     editAddress(v) {

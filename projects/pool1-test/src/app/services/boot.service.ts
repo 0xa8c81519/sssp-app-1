@@ -8,7 +8,7 @@ import { BigNumber } from 'bignumber.js';
 import { interval, Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import LiquidityFarmingProxy from 'libs/abi/LiquidityFarmingProxy.json';
-import BEP20 from 'libs/abi/BEP20.json';
+import StableCoin from 'libs/abi/StableCoin.json';
 import BSTToken from 'libs/abi/BSTToken.json';
 import BStablePool from 'libs/abi/BStablePool.json';
 import { AddlpSlippageConfirmComponent } from '../addlp-slippage-confirm/addlp-slippage-confirm.component';
@@ -147,7 +147,7 @@ export class BootService {
                     }
                     return Promise.all(pArr).then(res => {
                         res.forEach(r => {
-                            let contract = new ethers.Contract(r, BEP20.abi, this.web3);
+                            let contract = new ethers.Contract(r, StableCoin.abi, this.web3);
                             this.contracts.push(contract);
                             this.contractsAddress.push(r);
                         });

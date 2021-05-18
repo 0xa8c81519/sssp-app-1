@@ -241,20 +241,6 @@ export class PaymentInfoComponent implements OnInit {
                 this.rightAmt = '0';
             }
         });
-        // this.boot.getExchangeOutAmt(this.right, this.left, this.rightAmt).then(amt => {
-        //     this.receiptAmt = amt.toFormat(2, BigNumber.ROUND_DOWN);
-        //     this.insufficientLiquidity = false;
-        // }).catch(e => {
-        //     this.receiptAmt = '-';
-        //     this.insufficientLiquidity = true;
-        // });
-        // this.updateApproveStatus();
-        // if (this.amt && this.amt !== '' && this.amt !== '0') {
-        //     this.calcNum();
-        // } else {
-        //     this.isOtherCurrency = false;
-        //     this.rightAmt = '0';
-        // }
     }
 
     amtChangedRight(val) {
@@ -323,12 +309,14 @@ export class PaymentInfoComponent implements OnInit {
         this.left = selectedIndex_;
         //this.chooseLeft(selectedIndex_);
         this.updateApproveStatus();
+        this.calcNum();
     }
 
     onRightCoinSelected(selectedIndex_) {
         this.right = selectedIndex_;
         //this.chooseRight(selectedIndex_);
         this.updateApproveStatus();
+        this.calcNum();
     }
 
     hiddenDialog(e) {

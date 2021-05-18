@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
 import BigNumber from 'bignumber.js';
-import { CoinsDlgComponent } from '../coins-dlg/coins-dlg.component';
-import { BootService } from '../services/boot.service';
-import { ethers } from 'ethers';
+import {CoinsDlgComponent} from '../coins-dlg/coins-dlg.component';
+import {BootService} from '../services/boot.service';
+import {ethers} from 'ethers';
 
 export enum ApproveStatus {
     None, Approved, NoApproved
@@ -29,9 +29,9 @@ export class PaymentInfoComponent implements OnInit {
     left = 0;
     active = 1;
     slippageNumList: any = [
-        { num: 1 },
-        { num: 2 },
-        { num: 5 }
+        {num: 1},
+        {num: 2},
+        {num: 5}
     ];
 
     right = 1;
@@ -125,6 +125,7 @@ export class PaymentInfoComponent implements OnInit {
             });
         }
     }
+
     pay() {
         if (this.isOtherCurrency) {
             this.paySwap();
@@ -132,6 +133,7 @@ export class PaymentInfoComponent implements OnInit {
             this.payNoSwap();
         }
     }
+
     payNoSwap() {
         if (!this.address || this.address === '') {
             this.showDialog = false;
@@ -361,7 +363,7 @@ export class PaymentInfoComponent implements OnInit {
     calcNum() {
         if (this.isOtherCurrency) {
             this.boot.estimatePayWithSwapGasFee().then(_gasFee => {
-                this.gasFee = (_gasFee.quote === 'USD' ? '$' : '') + _gasFee.data.toFormat(2, BigNumber.ROUND_DOWN) + " " + _gasFee.quote;
+                this.gasFee = (_gasFee.quote === 'USD' ? '$' : '') + _gasFee.data.toFormat(2, BigNumber.ROUND_DOWN) + ' ' + _gasFee.quote;
             });
             this.receiptAmt = '-';
             this.boot.getExchangeOutAmt(this.right, this.left, this.rightAmt).then(amt => {
@@ -374,7 +376,7 @@ export class PaymentInfoComponent implements OnInit {
         } else {
             this.receiptAmt = new BigNumber(this.amt).multipliedBy(1 - .003).toFormat(2, BigNumber.ROUND_DOWN);
             this.boot.estimatePayGasFee().then(_gasFee => {
-                this.gasFee = (_gasFee.quote === 'USD' ? '$' : '') + _gasFee.data.toFormat(2, BigNumber.ROUND_DOWN) + " " + _gasFee.quote;
+                this.gasFee = (_gasFee.quote === 'USD' ? '$' : '') + _gasFee.data.toFormat(2, BigNumber.ROUND_DOWN) + ' ' + _gasFee.quote;
             }).catch(e => {
                 console.log(e);
             });

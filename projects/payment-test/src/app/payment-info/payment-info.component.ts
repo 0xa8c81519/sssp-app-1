@@ -61,9 +61,9 @@ export class PaymentInfoComponent implements OnInit {
     @ViewChild('coinsDlgRight')
     coinsDlgRight: CoinsDlgComponent;
 
-    receiptAmt: String = '-';
+    receiptAmt = '-';
 
-    gasFee: String = '-';
+    gasFee = '-';
 
     insufficientLiquidity: boolean = false;
 
@@ -172,7 +172,7 @@ export class PaymentInfoComponent implements OnInit {
         if (this.rightAmt && this.address && this.isExchangeEnabledRight()) {
             this.loading.emit();
             this.loadStatus = LoadStatus.Loading;
-            this.boot.payWithSwap(Number(this.right), Number(this.left), this.rightAmt, this.amt, this.address).then((res) => {
+            this.boot.payWithSwap(Number(this.right), Number(this.left), this.rightAmt, this.receiptAmt, this.address).then((res) => {
                 if (!res) {
                     this.loaded.emit();
                     this.loadStatus = LoadStatus.Loaded;
@@ -210,14 +210,49 @@ export class PaymentInfoComponent implements OnInit {
 
     amtChanged(val) {
         this.amt = val;
-        this.rightAmt = val;
-        this.updateApproveStatus();
-        if (this.amt && this.amt !== '' && this.amt !== '0') {
-            this.calcNum();
-        } else {
-            this.isOtherCurrency = false;
-            this.rightAmt = '0';
+        let oAmt = new BigNumber(this.amt);
+        let arr = new Array();
+        for (let i = 1; i <= 5; i++) {
+            arr.push(this.boot.getExchangeOutAmt(this.right, this.left, oAmt.multipliedBy(new BigNumber(1.001).exponentiatedBy(i)).toFixed(2, BigNumber.ROUND_DOWN)));
         }
+        Promise.all(arr).then(res => {
+            for (let i = 0; i < res.length; i++) {
+                if (new BigNumber(res[i]).comparedTo(this.amt) >= 0) {
+                    this.rightAmt = new BigNumber(val).multipliedBy(new BigNumber(1.001).exponentiatedBy(i + 1)).toFixed(2, BigNumber.ROUND_DOWN);
+                    break;
+                }
+            }
+            this.updateApproveStatus();
+            if (this.amt && this.amt !== '' && this.amt !== '0') {
+                this.calcNum();
+            } else {
+                this.isOtherCurrency = false;
+                this.rightAmt = '0';
+            }
+        }).catch(e => {
+            this.rightAmt = new BigNumber(val).multipliedBy(1 + 0.004).toFixed(2, BigNumber.ROUND_DOWN);
+            this.updateApproveStatus();
+            if (this.amt && this.amt !== '' && this.amt !== '0') {
+                this.calcNum();
+            } else {
+                this.isOtherCurrency = false;
+                this.rightAmt = '0';
+            }
+        });
+        // this.boot.getExchangeOutAmt(this.right, this.left, this.rightAmt).then(amt => {
+        //     this.receiptAmt = amt.toFormat(2, BigNumber.ROUND_DOWN);
+        //     this.insufficientLiquidity = false;
+        // }).catch(e => {
+        //     this.receiptAmt = '-';
+        //     this.insufficientLiquidity = true;
+        // });
+        // this.updateApproveStatus();
+        // if (this.amt && this.amt !== '' && this.amt !== '0') {
+        //     this.calcNum();
+        // } else {
+        //     this.isOtherCurrency = false;
+        //     this.rightAmt = '0';
+        // }
     }
 
     amtChangedRight(val) {
@@ -308,11 +343,13 @@ export class PaymentInfoComponent implements OnInit {
     }
 
     otherCurrency() {
-        this.isOtherCurrency = !this.isOtherCurrency;
-        this.calcNum();
-        this.updateApproveStatusRight();
-        if (!this.isOtherCurrency) {
-            this.insufficientLiquidity = false;
+        if (new BigNumber(this.amt).comparedTo(0) > 0) {
+            this.isOtherCurrency = !this.isOtherCurrency;
+            this.calcNum();
+            this.updateApproveStatusRight();
+            if (!this.isOtherCurrency) {
+                this.insufficientLiquidity = false;
+            }
         }
     }
 

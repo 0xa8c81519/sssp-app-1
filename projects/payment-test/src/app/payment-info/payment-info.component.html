@@ -46,9 +46,9 @@
                 fill="#16A16A" p-id="2178"></path>
         </svg>
     </div>
-    <div class="slidingpPoint" *ngIf="!isOtherCurrency">
+    <div class="slidingpPoint" >
         <p>{{"Estimated Receipt Amount" | translate}}：{{receiptAmt}}</p>
-        <p>{{"Estimated Gas Fee"| translate}}：{{gasFee}}</p>
+        <p *ngIf="!isOtherCurrency">{{"Estimated Gas Fee"| translate}}：{{gasFee}}</p>
     </div>
     <div class="toBottom" [ngClass]="{toBottomActive:isOtherCurrency}" (click)="otherCurrency()">
         <span>
@@ -119,7 +119,7 @@
             </div>
         </div>
         <div class="slidingpPoint">
-            <p>{{"Estimated Receipt Amount" | translate}}:&nbsp;{{receiptAmt}}</p>
+            <!-- <p>{{"Estimated Receipt Amount" | translate}}:&nbsp;{{receiptAmt}}</p> -->
             <p>{{"Estimated Gas Fee"| translate}}:&nbsp;{{gasFee}}</p>
             <!--            <p>{{"Slippage Setting" | translate}}</p>-->
             <!--            <div class="SlidingNum">-->

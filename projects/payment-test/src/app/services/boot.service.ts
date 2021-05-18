@@ -428,7 +428,6 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.paymentContract.connect(signer).pay(this.contracts[i].address, receipt, amt, { from: this.accounts[0], gasLimit: gas.toHexString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
             throw e;
         });
@@ -450,7 +449,6 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.paymentContract.connect(signer).payWithSwap(this.contracts[i].address, this.contracts[j].address, payAmt, receiptAmt, receipt, { from: this.accounts[0], gasLimit: gas.toHexString() });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
             throw e;
         });
@@ -461,7 +459,6 @@ export class BootService {
             let signer = this.web3.getSigner();
             return this.paymentContract.connect(signer).withdrawReward({ from: this.accounts[0] });
         }).catch(e => {
-            this.dialog.open(WalletExceptionDlgComponent, { data: { content: 'exchange_exception' } });
             console.log(e);
             throw e;
         });
@@ -471,11 +468,11 @@ export class BootService {
         // 134,548 approve 44,118
         return this.getBNBUSDPrice().then(bnbPrice => {
             return this.web3.getGasPrice().then(gasPrice => {
-                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(134548).plus(44118)).multipliedBy(bnbPrice).div(this.denominator), 'quote': 'USD' };
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(134548)).multipliedBy(bnbPrice).div(this.denominator), 'quote': 'USD' };
             });
         }).catch(e => {
             return this.web3.getGasPrice().then(gasPrice => {
-                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(134548).plus(44118)).div(this.denominator), 'quote': 'BNB' };
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(134548)).div(this.denominator), 'quote': 'BNB' };
             });
         });
 
@@ -485,11 +482,11 @@ export class BootService {
         // 338,325 approve 44,118
         return this.getBNBUSDPrice().then(bnbPrice => {
             return this.web3.getGasPrice().then(gasPrice => {
-                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(338325).plus(44118)).multipliedBy(bnbPrice).div(this.denominator), 'quote': 'USD' };
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(261975)).multipliedBy(bnbPrice).div(this.denominator), 'quote': 'USD' };
             });
         }).catch(e => {
             return this.web3.getGasPrice().then(gasPrice => {
-                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(338325).plus(44118)).div(this.denominator), 'quote': 'BNB' };
+                return { data: new BigNumber(gasPrice.toString()).multipliedBy(new BigNumber(261975)).div(this.denominator), 'quote': 'BNB' };
             });
         });
     }

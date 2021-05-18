@@ -7,16 +7,21 @@
     <div class="GetPaidToPay-box-bottom">
         <div class="bottom-text1">
             <div class="top-1">
-                <span class="Reward">{{"Reward" | translate}}</span>
-                <span class="num-money">{{boot.bstPending.toFormat(4,1)}}</span>
+                <span class="Reward">{{"Pending Rewards" | translate}}</span>
+                <span class="num-money">{{boot.bstPending.toFormat(4, 1)}}</span>
                 <span class="bottom-name">BST</span>
             </div>
             <div class="top-1">
-                <span class="balance-top-box">{{"Balance" | translate}}: {{boot.bstBalance.toFormat(4,1)}} BST</span>
+                <span class="balance-top-box">{{"Balance" | translate}}: {{boot.bstBalance.toFormat(4, 1)}} BST</span>
             </div>
         </div>
-        <div class="bottom-text2" style="cursor: pointer;" (click)="claim()">
-            <div >
+        <div class="bottom-text2" style="cursor: pointer;" *ngIf="boot.bstPending.comparedTo(0)>0" (click)="claim()">
+            <div>
+                {{"Claim" | translate}}
+            </div>
+        </div>
+        <div class="bottom-text2" style="cursor: pointer;" *ngIf="boot.bstPending.comparedTo(0)<=0">
+            <div>
                 {{"Claim" | translate}}
             </div>
         </div>

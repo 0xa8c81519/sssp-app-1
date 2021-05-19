@@ -146,8 +146,11 @@
                 <span>{{"Strategic Investors" | translate}}</span>
             </div>
             <div class="logoList">
-                <div *ngFor="let item of Strategic" class="item-box-1">
-                    <img [src]="'assets/static/img/'+item.imgUrl+'.png'" alt="">
+<!--                <div *ngFor="let item of Strategic" class="item-box-1">-->
+                <!--                    <img [src]="'assets/static/img/'+item.imgUrl+'.png'" alt="">-->
+                <!--                </div>-->
+                <div class="coming-soon-box bg1">
+                    <p>Coming Soon</p>
                 </div>
             </div>
         </ng-container>
@@ -156,8 +159,11 @@
                 <span>{{"Partners" | translate}}</span>
             </div>
             <div class="logoList">
-                <div *ngFor="let item of Partners" class="item-box-2">
-                    <img [src]="'assets/static/img/'+item.imgUrl+'.png'" alt="">
+<!--                <div *ngFor="let item of Partners" class="item-box-2">-->
+<!--                    <img [src]="'assets/static/img/'+item.imgUrl+'.png'" alt="">-->
+<!--                </div>-->
+                <div class="coming-soon-box bg2">
+                    <p>Coming Soon</p>
                 </div>
             </div>
         </ng-container>
@@ -240,25 +246,37 @@
         <div class="footer-content-box-right">
             <dl>
                 <dt>{{"Docs" | translate}}</dt>
-                <dd>{{"Introduction" | translate}}</dd>
-                <dd>{{"FAQ" | translate}}</dd>
-                <dd>{{"Protocol Overview" | translate}}</dd>
-                <dd>BST</dd>
-                <dd>{{"The bStable DAO" | translate}}</dd>
+                <dd><a href="https://docs.bstable.finance/introduction"
+                       target="_blank">{{"Introduction" | translate}}</a></dd>
+                <dd><a href="https://docs.bstable.finance/faqs" target="_blank">{{"FAQ" | translate}}</a></dd>
+                <dd><a href="https://docs.bstable.finance/protocol-overview"
+                       target="_blank">{{"Protocol Overview" | translate}}</a></dd>
+                <dd><a href="https://docs.bstable.finance/bst" target="_blank">BST</a></dd>
+                <dd><a href="javascript://">{{"The bStable DAO" | translate}}</a></dd>
             </dl>
             <dl>
                 <dt>{{"How to" | translate}}</dt>
-                <dd>{{"Swap" | translate}}</dd>
-                <dd>{{"Manage Liquidity" | translate}}</dd>
-                <dd>{{"Pay" | translate}}</dd>
-                <dd>{{"Stake and earn" | translate}}</dd>
-                <dd>{{"Mine" | translate}} BST</dd>
+                <dd><a href="https://docs.bstable.finance/tutorials/swap-currencies"
+                       target="_blank">{{"Swap" | translate}}</a></dd>
+                <dd>
+                    <a href="https://docs.bstable.finance/tutorials/manage-liquidity"
+                       target="_blank">{{"Manage Liquidity" | translate}}</a>
+                </dd>
+                <dd><a href="https://docs.bstable.finance/tutorials/make-payment-get-bst"
+                       target="_blank">{{"Pay" | translate}}</a></dd>
+                <dd>
+                    <a href="https://docs.bstable.finance/tutorials/stake-bstable-lps-get-bst"
+                       target="_blank">{{"Stake and earn" | translate}}</a>
+                </dd>
+                <dd><a href="https://docs.bstable.finance/tutorials/make-payment-get-bst"
+                       target="_blank">{{"Mine" | translate}} BST</a></dd>
             </dl>
             <dl>
                 <dt>{{"About" | translate}}</dt>
-                <dd>{{"Announcements" | translate}}</dd>
-                <dd>BST {{"reward allocations" | translate}}</dd>
-                <dd>{{"Contact" | translate}}:contact@bstable.finance</dd>
+                <dd><a href="javascript://">{{"Announcements" | translate}}</a></dd>
+                <dd><a href="https://docs.bstable.finance/bst"
+                       target="_blank">BST {{"reward allocations" | translate}}</a></dd>
+                <dd><a href="javascript://">{{"Contact" | translate}}:contact@bstable.finance</a></dd>
             </dl>
         </div>
     </div>

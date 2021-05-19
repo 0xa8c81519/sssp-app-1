@@ -48,12 +48,12 @@
   "NO": "取消",
   "Price Exception!": "币池不平衡，请谨慎操作！",
   "Warning_1": "风险提示",
-  "Warning_2": "出错了。请重试！",
+  "Warning_2": "交易失败",
   "vpWarning": "流动性均价偏离 {{vpDiff}}%, 流动性投资风险高！",
   "Confirm": "确认",
   "approve_label": "同意划转 {{symbol}} 的数量",
   "infinite_approval": "同意无限划转",
-  "exchange_exception": "合约出现异常，无法完成交易。",
+  "exchange_exception": "原因可能有：1、流动性不足2、合约执行错误3、网络拥堵 4、gas费不足。请稍后再试。",
   "redeem_ImBalance_exception": "您的流动性（{{symbol}}）余额不足以赎回期望的数量。",
   "redeem_allcoin_exception": "您的流动性（{{symbol}}）余额不足以赎回期望的数量。",
   "redeem_onecoin_exception": "您的流动性（{{symbol}}）余额不足以赎回期望的数量。",
@@ -131,5 +131,6 @@
   "Estimate": "估算",
   "Estimated Receipt Amount": "预估收款金额",
   "Estimated Gas Fee": "预估Gas Fee",
-  "Pending Rewards": "领取奖励"
+  "Pending Rewards": "领取奖励",
+  "Coming Soon": ""
 }

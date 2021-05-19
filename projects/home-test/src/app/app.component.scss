@@ -252,7 +252,7 @@
 
 .Audited {
   width: 100%;
-  min-height: 1000px;
+  min-height: 600px;
   background: #F6F6F6;
   padding: 87px 0 109px 0;
   border-radius: 50px 50px 0px 0px;
@@ -283,7 +283,6 @@
         height: 122px;
         background: #FFFFFF;
         border-radius: 40px;
-        margin-right: 100px;
         padding: 34px 106px;
         box-sizing: border-box;
         display: flex;
@@ -300,7 +299,6 @@
         height: 122px;
         background: #FFFFFF;
         border-radius: 40px;
-        margin-right: 60px;
         margin-bottom: 33px;
         padding: 24px 86px;
         box-sizing: border-box;
@@ -329,6 +327,30 @@
         img {
           width: 100%;
         }
+      }
+
+      .coming-soon-box {
+        width: 100%;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        p {
+          font-size: 60px;
+          font-family: Poppins;
+          color: rgba(12, 12, 12, 0.12);
+        }
+      }
+
+      .bg1 {
+        background-image: url('../assets/static/img/coming-soon1.jpg');
+        background-size: 101% 101%;
+      }
+
+      .bg2 {
+        background-image: url('../assets/static/img/coming-soon2.jpg');
+        background-size: 101% 101%;
       }
     }
   }
@@ -444,15 +466,21 @@
         }
 
         dd {
-          font-size: 14px;
-          font-weight: 400;
-          color: #7B8198;
-          margin: 0 0 11px 0;
-          cursor: pointer;
+          margin: 0;
 
-          &:hover {
-            color: #F9FAFF;
+          a {
+            font-size: 14px;
+            font-weight: 400;
+            color: #7B8198;
+            margin: 0 0 11px 0;
+            cursor: pointer;
+            text-decoration: none;
+
+            &:hover {
+              color: #F9FAFF;
+            }
           }
+
         }
       }
     }
@@ -689,6 +717,17 @@
           margin-right: 5px;
           margin-bottom: 25px;
           padding: 5px 10px;
+        }
+
+        .coming-soon-box {
+          height: 150px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          p {
+            font-size: 40px;
+          }
         }
       }
     }
